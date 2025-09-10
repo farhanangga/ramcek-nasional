@@ -19,7 +19,7 @@ export default function Home() {
           className="w-[15vh] h-[15vh] object-contain"
         />
         <h1 className="font-bold text-lg mb-auto text-center mt-4 text-black">
-        RAMPCHECK KEMENHUB
+        RAMPCHECK KEMENHU
         </h1>
       </div>
 
