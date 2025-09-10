@@ -2,8 +2,9 @@
 
 export default function MenuPage() {
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center">
-      <div className="max-w-[414px]">
+    <div className="bg-gray-100 flex items-center justify-center" >
+    <div className="min-h-screen bg-gray-100 flex flex-col w-[414px]">
+      
       {/* Status bar */}
 
       {/* Header */}
@@ -20,7 +21,7 @@ export default function MenuPage() {
       <div className="flex flex-col space-y-6 mt-10 px-6">
         <button className="bg-yellow-500 rounded-2xl flex items-center p-4 shadow-md hover:bg-yellow-600 transition">
           <img src="/img/assets/checklist.png" alt="Pemeriksaan" className="w-10 h-10 mr-4" />
-          <span className="font-bold text-white text-lg">PEMERIKSAAN</span>
+          <span className="font-bold text-white text-lg" >PEMERIKSAAN</span>
         </button>
 
         <button className="bg-yellow-500 rounded-2xl flex items-center p-4 shadow-md hover:bg-yellow-600 transition">
@@ -28,7 +29,7 @@ export default function MenuPage() {
           <span className="font-bold text-white text-lg">RIWAYAT PEMERIKSAAN</span>
         </button>
       </div>
-      </div>
+    </div>
     </div>
   );
 }
