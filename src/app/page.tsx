@@ -2,11 +2,14 @@
 
 import { useState } from "react";
 import { Inter } from "next/font/google";
+import { useRouter } from "next/navigation";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
 
   return (
     <div className={`min-h-screen bg-white flex flex-col items-center ${inter.className}`}>
@@ -19,12 +22,12 @@ export default function Home() {
           className="w-[15vh] h-[15vh] object-contain"
         />
         <h1 className="font-bold text-lg mb-auto text-center mt-4 text-black">
-        RAMPCHECK KEMENHU
+        RAMPCHECK KEMENHUB
         </h1>
       </div>
 
       {/* Form box */}
-      <div className="bg-purple-900 w-full flex flex-col justify-start rounded-t-3xl px-6 pt-12 pb-8 text-white h-[70vh] max-w-[414px]">
+      <div className="bg-[#29005E] w-full flex flex-col justify-start rounded-t-3xl px-6 pt-12 pb-8 text-white h-[70vh] max-w-[414px]">
       <h2 className="text-center font-semibold text-lg mb-6">
         Masuk Dengan Akun Anda
       </h2>
@@ -86,12 +89,21 @@ export default function Home() {
               viewBox="0 0 24 24"
               stroke="currentColor"
             >
+              {/* outline mata */}
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth={2}
-                d="M13.875 18.825A10.05 10.05 0 0112 19c-5.523 0-10-4.478-10-10a9.965 9.965 0 011.175-4.425M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
               />
+              {/* pupil (circle di tengah) */}
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+              />
+              {/* garis slash untuk menandakan 'tertutup' */}
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -99,13 +111,15 @@ export default function Home() {
                 d="M3 3l18 18"
               />
             </svg>
+
           )}
         </button>
       </div>
 
       <button
-        className="mt-8 bg-yellow-600 w-full py-3 rounded-md font-bold text-white hover:bg-yellow-700 transition"
+        className="mt-8 bg-[#EBA100] w-full py-3 rounded-md font-bold text-white hover:bg-yellow-700 transition"
         type="button"
+        onClick={() => router.push("/menu")}
       >
         MASUK
       </button>
