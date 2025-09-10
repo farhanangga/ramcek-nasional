@@ -27,7 +27,7 @@ export default function DataPemeriksaan() {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-6 h-6"
+            className="w-4 h-4"
           >
             <path
               strokeLinecap="round"
@@ -42,12 +42,12 @@ export default function DataPemeriksaan() {
       </div>
         </div>
       {/* Judul besar */}
-      <h1 className="text-center font-bold text-sm px-4 py-4 mt-13 text-black">
+      <h1 className="text-center font-bold text-sm px-4 py-4 mt-15 mb-3 text-black">
         INSPEKSI KESELAMATAN LALU LINTAS DAN ANGKUTAN JALAN UNTUK ANGKUTAN UMUM
       </h1>
 
       {/* Form */}
-      <div className=" rounded-lg shadow mx-4">
+      <div className=" rounded-lg mx-4">
         <h2 className="text-lg font-bold mb-4 text-black">Data Pemeriksaan</h2>
 
         {/* Tanggal */}
@@ -56,7 +56,7 @@ export default function DataPemeriksaan() {
           type="date"
           value={tanggal}
           onChange={(e) => setTanggal(e.target.value)}
-          className="w-full border rounded-md p-3 mb-4 text-black"
+          className="w-full border rounded-md p-3 mb-4 text-black bg-white border-[#E0E0E0]"
         />
 
         {/* Lokasi */}
@@ -64,7 +64,7 @@ export default function DataPemeriksaan() {
         <select
           value={lokasi}
           onChange={(e) => setLokasi(e.target.value)}
-          className="w-full border rounded-md p-3 mb-4 text-black"
+          className="w-full border rounded-md p-3 mb-4 text-black bg-white border-[#E0E0E0]"
         >
           <option value="">Pilih Lokasi</option>
           <option value="terminal">Terminal</option>
@@ -75,13 +75,13 @@ export default function DataPemeriksaan() {
         {/* Latitude & Longitude */}
         <div className="flex gap-3 mb-4">
           <div className="flex-1">
-            <label className="block mb-2 font-medium text-black">Latitude</label>
+            <label className="block mb-2 font-medium text-black ">Latitude</label>
             <input
               type="text"
               value={latitude}
               onChange={(e) => setLatitude(e.target.value)}
               placeholder="Masukkan Latitude"
-              className="w-full border rounded-md p-3 text-black"
+              className="w-full border rounded-md p-3 text-black bg-white border-[#E0E0E0]"
             />
           </div>
           <div className="flex-1">
@@ -91,7 +91,7 @@ export default function DataPemeriksaan() {
               value={longitude}
               onChange={(e) => setLongitude(e.target.value)}
               placeholder="Masukkan Longitude"
-              className="w-full border rounded-md p-3 text-black"
+              className="w-full border rounded-md p-3 text-black bg-white border-[#E0E0E0]"
             />
           </div>
         </div>
@@ -106,14 +106,14 @@ export default function DataPemeriksaan() {
       </div>
 
       {/* Tombol lanjut fixed di bawah */}
-      <div className="fixed bottom-0 left-0 w-full bg-white shadow-lg">
+      <div className="fixed bottom-0 left-0 w-full  shadow-lg bg-gray-100">
         <div className="max-w-md mx-auto px-4 py-3">
             <button
                 type="button"
                 disabled={!semuaTerisi}
                 onClick={() => {
                 if (semuaTerisi) {
-                    router.push("/pemeriksaan/dataPemeriksaan1");
+                    router.push("/pemeriksaan/dataPemeriksaan-1");
                 }
                 }}
                 className={`w-full py-3 font-bold text-white rounded-md transition
