@@ -16,7 +16,7 @@ export default function Home() {
         <img
           src="/img/assets/logo.png"
           alt="Logo"
-          className="w-35 h-35 object-contain"
+          className="w-[15vh] h-[15vh] object-contain"
         />
         <h1 className="font-bold text-lg mb-auto text-center mt-4 text-black">
         RAMPCHECK KEMENHUB
@@ -24,19 +24,19 @@ export default function Home() {
       </div>
 
       {/* Form box */}
-      <div className="bg-purple-900 w-full flex flex-col justify-start rounded-t-3xl px-6 pt-12 pb-8 text-white mt-auto">
+      <div className="bg-purple-900 w-full flex flex-col justify-start rounded-t-3xl px-6 pt-12 pb-8 text-white h-[70vh] max-w-[414px]">
       <h2 className="text-center font-semibold text-lg mb-6">
         Masuk Dengan Akun Anda
       </h2>
 
-      <label className="block mb-3 text-sm font-medium" htmlFor="email">
+      <label className="block mb-3 text-sm font-medium " htmlFor="email">
         Email
       </label>
       <input
         id="email"
         type="email"
         placeholder="Masukkan Email"
-        className="w-full rounded-md px-3 py-2 mb-5 text-gray-700"
+        className="w-full rounded-md px-3 py-2 mb-5 text-gray-700 bg-white"
       />
 
       <label className="block mb-3 text-sm font-medium" htmlFor="password">
@@ -109,9 +109,6 @@ export default function Home() {
       >
         MASUK
       </button>
-      <div className="h-15">
-
-      </div>
     </div>
 
     </div>
