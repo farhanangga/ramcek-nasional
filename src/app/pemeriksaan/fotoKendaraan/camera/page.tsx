@@ -1,10 +1,12 @@
 "use client";
 import { useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function KameraPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const videoRef = useRef<HTMLVideoElement>(null);
+  const target = searchParams.get("target");
 
   useEffect(() => {
     if (!videoRef.current) return;
@@ -80,7 +82,7 @@ export default function KameraPage() {
                   />
                 </svg>
               </button>
-              <span className="font-semibold">Ambil Gambar KIR Kendaraan</span>
+              <span className="font-semibold">Ambil Foto Kendaraan</span>
             </div>
           </div>
         </div>
@@ -93,11 +95,23 @@ export default function KameraPage() {
             playsInline
             className="w-full h-full object-cover"
           />
+
+          {/* Overlay khusus plat */}
+          {target === "plat" && (
+            <div className="absolute top-0 left-0 w-full h-full bg-black/10">
+              <div
+                className="absolute top-1/2 left-1/2 w-[400px] h-[200px] 
+                          -translate-x-1/2 -translate-y-1/2 
+                          rounded-md bg-transparent"
+                style={{ boxShadow: "0 0 0 9999px rgba(0, 0, 0, 0.3)" }}
+              />
+            </div>
+          )}
         </div>
 
         {/* Tombol ambil gambar */}
         <div className="fixed bottom-0 left-0 w-full shadow-lg">
-          <div className="bg-black w-[414px] h-[25vh] mx-auto flex items-center justify-center">
+          <div className="bg-black w-full h-[25vh] mx-auto flex items-center justify-center">
             <button
               onClick={ambilGambar}
               className="w-16 h-16 rounded-full bg-white shadow-lg border-2 border-gray-300"

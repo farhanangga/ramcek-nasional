@@ -103,7 +103,7 @@ export default function KameraPage() {
 
         {/* Tombol ambil gambar */}
         <div className="fixed bottom-0 left-0 w-full shadow-lg">
-          <div className="bg-black w-[414px] h-[25vh] mx-auto flex items-center justify-center">
+          <div className="bg-black w-full h-[25vh] mx-auto flex items-center justify-center">
             <button
               onClick={ambilGambar}
               className="w-16 h-16 rounded-full bg-white shadow-lg border-2 border-gray-300"
