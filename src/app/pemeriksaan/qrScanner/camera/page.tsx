@@ -1,0 +1,96 @@
+"use client";
+import { useEffect, useRef } from "react";
+import QrScanner from "qr-scanner";
+import { useRouter } from "next/navigation";
+
+export default function HasilScan() {
+  const router = useRouter();
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const qrScannerRef = useRef<QrScanner | null>(null);
+
+  useEffect(() => {
+    if (!videoRef.current) return;
+
+    const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+    const preferredCamera = isMobile ? "environment" : "user";
+
+    const qrScanner = new QrScanner(
+      videoRef.current,
+      (result) => {
+        qrScanner.stop();
+        router.push("/pemeriksaan/qrScanner/preview");
+      },
+      { preferredCamera }
+    );
+
+    qrScanner.start();
+    qrScannerRef.current = qrScanner;
+
+    return () => {
+      qrScannerRef.current?.stop();
+      qrScannerRef.current?.destroy();
+      qrScannerRef.current = null;
+      if (videoRef.current) {
+        videoRef.current.srcObject = null;
+      }
+    };
+  }, [router]);
+
+  return (
+    <div className="bg-black flex items-center justify-center">
+      <div className="min-h-screen bg-gray-100 pb-20 w-[414px]">
+        {/* Header fixed */}
+        <div className="fixed w-full p-auto max-w-[414px]">
+          <div className="top-0 left-0 w-full flex items-center justify-between bg-black text-white px-4 py-3 shadow z-50">
+            <div className="flex items-center gap-2">
+              {/* Tombol back */}
+              <button onClick={() => router.push("/pemeriksaan/dataPemeriksaan-1")}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+                  />
+                </svg>
+              </button>
+              <span className="font-semibold">Pindai QRCode KIR Kendaraan</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Frame Kamera */}
+        <div className="fixed w-full h-[70vh] mt-12 max-w-[414px] overflow-hidden">
+          {/* Video Kamera */}
+          <video
+            ref={videoRef}
+            autoPlay
+            playsInline
+            className="w-full h-full object-cover"
+          />
+
+          {/* Overlay + Lubang kotak */}
+          <div className="absolute top-0 left-0 w-full h-full bg-black/10">
+            <div
+              className="absolute top-1/2 left-1/2 w-[250px] h-[250px] 
+                        -translate-x-1/2 -translate-y-1/2 
+                        rounded-md bg-transparent"
+              style={{ boxShadow: "0 0 0 9999px rgba(0, 0, 0, 0.3)" }}
+            />
+          </div>
+        </div>
+
+        {/* Tombol fixed */}
+        <div className="fixed bottom-0 left-0 w-full shadow-lg">
+          <div className="bg-black w-[414px] h-[25vh] mx-auto h-70 "></div>
+        </div>
+      </div>
+    </div>
+  );
+}

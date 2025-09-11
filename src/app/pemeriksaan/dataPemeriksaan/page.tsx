@@ -38,7 +38,7 @@ export default function DataPemeriksaan() {
           </button>   
           <span className="font-semibold">Data Pemeriksaan</span>
         </div>
-        <img src="/img/assets/logo.png" alt="logo" className="w-5 h-5" />
+        <img src="/img/assets/logo.png" alt="logo" className="w-5" />
       </div>
         </div>
       {/* Judul besar */}
@@ -56,7 +56,7 @@ export default function DataPemeriksaan() {
           type="date"
           value={tanggal}
           onChange={(e) => setTanggal(e.target.value)}
-          className="w-full border rounded-md p-3 mb-4 text-black bg-white border-[#E0E0E0]"
+          className="w-full border rounded-md p-3 mb-4 text-black bg-white border-[#E0E0E0] focus:outline-none focus:border-[#29005E]"
         />
 
         {/* Lokasi */}
@@ -64,7 +64,7 @@ export default function DataPemeriksaan() {
         <select
           value={lokasi}
           onChange={(e) => setLokasi(e.target.value)}
-          className="w-full border rounded-md p-3 mb-4 text-black bg-white border-[#E0E0E0]"
+          className="w-full border rounded-md p-3 mb-4 text-black bg-white border-[#E0E0E0] focus:outline-none focus:border-[#29005E]"
         >
           <option value="">Pilih Lokasi</option>
           <option value="terminal">Terminal</option>
@@ -81,7 +81,7 @@ export default function DataPemeriksaan() {
               value={latitude}
               onChange={(e) => setLatitude(e.target.value)}
               placeholder="Masukkan Latitude"
-              className="w-full border rounded-md p-3 text-black bg-white border-[#E0E0E0]"
+              className="w-full border rounded-md p-3 text-black bg-white border-[#E0E0E0] focus:outline-none focus:border-[#29005E]"
             />
           </div>
           <div className="flex-1">
@@ -91,7 +91,7 @@ export default function DataPemeriksaan() {
               value={longitude}
               onChange={(e) => setLongitude(e.target.value)}
               placeholder="Masukkan Longitude"
-              className="w-full border rounded-md p-3 text-black bg-white border-[#E0E0E0]"
+              className="w-full border rounded-md p-3 text-black bg-white border-[#E0E0E0] focus:outline-none focus:border-[#29005E]"
             />
           </div>
         </div>
@@ -99,7 +99,7 @@ export default function DataPemeriksaan() {
         {/* Gunakan lokasi saya */}
         <button
           type="button"
-          className="w-full py-3 bg-purple-100 text-[#29005E] font-bold rounded-md mb-6"
+          className="w-full py-3 bg-purple-100 hover:bg-purple-200 text-[#29005E] font-bold rounded-md mb-6"
         >
           GUNAKAN LOKASI SAYA
         </button>

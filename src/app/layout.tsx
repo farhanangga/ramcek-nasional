@@ -1,7 +1,10 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ 
+  subsets: ["latin"], 
+  weight: ["500"]  // tambahkan weight di sini
+});
 
 export const metadata = {
   title: "Rampcheck",

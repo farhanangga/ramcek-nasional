@@ -9,8 +9,10 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.886.0",
     "@heroicons/react": "^2.2.0",
     "lucide-react": "^0.543.0",
+    "minio": "^8.0.5",
     "next": "15.5.2",
     "qr-scanner": "^1.4.2",
     "react": "19.1.0",
