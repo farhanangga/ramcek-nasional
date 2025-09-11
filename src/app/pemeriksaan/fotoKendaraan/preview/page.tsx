@@ -211,7 +211,7 @@ export default function FotoKendaraan() {
               disabled={!semuaTerisi}
               onClick={() => {
                 if (semuaTerisi) {
-                  router.push("/pemeriksaan/qrScanner/preview");
+                  router.push("");
                 }
               }}
               className={`w-full py-3 font-bold text-white rounded-md transition
