@@ -7,9 +7,8 @@ export default function DataPemeriksaan() {
   const [lokasi, setLokasi] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
-  const [jenisKendaraan, setJenisKendaraan] = useState("");
 
-  const semuaTerisi = tanggal && lokasi && latitude && longitude && jenisKendaraan;
+  const semuaTerisi = tanggal && lokasi && latitude && longitude;
 
   const router = useRouter();
 
@@ -53,13 +52,13 @@ export default function DataPemeriksaan() {
           {/* Custom Tanggal */}
           <label className="block mb-2 font-medium text-black">Tanggal Pemeriksaan</label> 
           <input type="date" value={tanggal} onChange={(e) => setTanggal(e.target.value)} className="w-full border rounded-md p-3 mb-4 text-black bg-white border-[#E0E0E0] focus:outline-none focus:border-[#29005E]" />
-          
+
           {/* Lokasi */}
           <label className="block mb-2 font-medium text-black">Lokasi</label>
           <div className="relative mb-4">
             <select
-              value={jenisKendaraan}
-              onChange={(e) => setJenisKendaraan(e.target.value)}
+              value={lokasi}
+              onChange={(e) => setLokasi(e.target.value)}
               className="appearance-none w-full border rounded-md p-3 text-black bg-white border-[#E0E0E0] focus:outline-none focus:border-[#29005E]"
             >
               <option value="" className="text-grey">Pilih Lokasi</option>
