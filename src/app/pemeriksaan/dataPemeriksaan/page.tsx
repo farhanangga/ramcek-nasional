@@ -51,35 +51,9 @@ export default function DataPemeriksaan() {
           <h2 className="text-lg font-bold mb-4 text-black">Data Pemeriksaan</h2>
 
           {/* Custom Tanggal */}
-          <label className="block mb-2 font-medium text-black">Tanggal Pemeriksaan</label>
-          <div className="relative mb-4">
-            <input
-              type="text"
-              value={tanggal}
-              readOnly
-              onClick={(e) => (e.currentTarget.showPicker ? e.currentTarget.showPicker() : null)}
-              placeholder="Pilih tanggal"
-              onFocus={(e) => (e.target.type = "date")}
-              onBlur={(e) => (e.target.type = "text")}
-              className="w-full border rounded-md p-3 text-black bg-white border-[#E0E0E0] focus:outline-none focus:border-[#29005E]"
-              onChange={(e) => setTanggal(e.target.value)}
-            />
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-5 h-5 absolute right-3 top-3 text-gray-500 pointer-events-none"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-              />
-            </svg>
-          </div>
-
+          <label className="block mb-2 font-medium text-black">Tanggal Pemeriksaan</label> 
+          <input type="date" value={tanggal} onChange={(e) => setTanggal(e.target.value)} className="w-full border rounded-md p-3 mb-4 text-black bg-white border-[#E0E0E0] focus:outline-none focus:border-[#29005E]" />
+          
           {/* Lokasi */}
           <label className="block mb-2 font-medium text-black">Lokasi</label>
           <div className="relative mb-4">
