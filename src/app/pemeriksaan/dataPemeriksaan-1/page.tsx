@@ -86,7 +86,7 @@ export default function DataPemeriksaan() {
                 onClick={hapusFoto}
                 className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-red-200 text-red-700 rounded-full shadow hover:bg-red-700 hover:text-white"
               >
-                x
+                ✕
               </button>
             </div>
           ) : (

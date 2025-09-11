@@ -1,8 +1,18 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
+// Komponen utama (hanya wrapper Suspense)
 export default function KameraPage() {
+  return (
+    <Suspense fallback={<div className="text-white">Loading kamera...</div>}>
+      <KameraContent />
+    </Suspense>
+  );
+}
+
+// Komponen isi kamera
+function KameraContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -35,28 +45,24 @@ export default function KameraPage() {
   }, []);
 
   const ambilGambar = () => {
-  if (!videoRef.current) return;
+    if (!videoRef.current) return;
 
-  const canvas = document.createElement("canvas");
-  canvas.width = videoRef.current.videoWidth;
-  canvas.height = videoRef.current.videoHeight;
+    const canvas = document.createElement("canvas");
+    canvas.width = videoRef.current.videoWidth;
+    canvas.height = videoRef.current.videoHeight;
 
-  const ctx = canvas.getContext("2d");
-  if (ctx) {
-    ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
-    const dataUrl = canvas.toDataURL("image/png");
+    const ctx = canvas.getContext("2d");
+    if (ctx) {
+      ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
+      const dataUrl = canvas.toDataURL("image/png");
 
-    // ambil target dari query
-    const searchParams = new URLSearchParams(window.location.search);
-    const target = searchParams.get("target"); // depan, belakang, dll
+      if (target) {
+        localStorage.setItem(`fotoKendaraan_${target}`, dataUrl);
+      }
 
-    if (target) {
-      localStorage.setItem(`fotoKendaraan_${target}`, dataUrl);
+      router.push("/pemeriksaan/fotoKendaraan/preview");
     }
-
-    router.push("/pemeriksaan/fotoKendaraan/preview");
-  }
-};
+  };
 
   return (
     <div className="bg-black flex items-center justify-center">
