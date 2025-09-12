@@ -1,10 +1,10 @@
-// app/pemeriksaan/pemeriksaanAdministrasi/camera/page.tsx
+// src/app/pemeriksaan/pemeriksaanAdministrasi/camera/page.tsx
 "use client";
 
 import { useEffect, useRef, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-function KameraPageContent() {
+function KameraPageInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -95,5 +95,14 @@ function KameraPageContent() {
         </div>
       </div>
     </div>
+  );
+}
+
+// ✅ Page component valid untuk App Router
+export default function KameraPage() {
+  return (
+    <Suspense fallback={<div>Loading kamera...</div>}>
+      <KameraPageInner />
+    </Suspense>
   );
 }
