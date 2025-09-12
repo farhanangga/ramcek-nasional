@@ -1,4 +1,3 @@
-
 "use client";
 import { useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -8,15 +7,17 @@ export default function KameraPage() {
   const searchParams = useSearchParams();
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // Ambil query param (harus qId & option)
   const qId = searchParams.get("qId");
   const option = searchParams.get("option");
 
   useEffect(() => {
-    if (!videoRef.current) return;
+    // 🚀 Cek apakah running di browser
+    if (typeof navigator === "undefined" || !videoRef.current) return;
 
     const isMobile = /Mobi|Android/i.test(navigator.userAgent);
-    const facingMode = isMobile ? { facingMode: "environment" } : { facingMode: "user" };
+    const facingMode = isMobile
+      ? { facingMode: { exact: "environment" } }
+      : { facingMode: "user" };
 
     navigator.mediaDevices
       .getUserMedia({ video: facingMode })
@@ -31,7 +32,9 @@ export default function KameraPage() {
 
     return () => {
       if (videoRef.current?.srcObject) {
-        (videoRef.current.srcObject as MediaStream).getTracks().forEach((t) => t.stop());
+        (videoRef.current.srcObject as MediaStream)
+          .getTracks()
+          .forEach((t) => t.stop());
       }
     };
   }, []);
@@ -49,20 +52,16 @@ export default function KameraPage() {
     ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
     const dataUrl = canvas.toDataURL("image/png");
 
-    // Simpan hasil ke localStorage (camera -> form)
-    localStorage.setItem(
-    `capturedPhoto_${qId}`,
-    JSON.stringify({
-        photo: dataUrl,
-        qId,
-        option,
-    })
-    );
+    // Simpan ke localStorage
+    if (typeof window !== "undefined") {
+      localStorage.setItem(
+        `capturedPhoto_${qId}`,
+        JSON.stringify({ photo: dataUrl, qId, option })
+      );
+    }
 
-    // Kembali ke halaman form (atau router.back())
     router.push("/pemeriksaan/pemeriksaanAdministrasi");
   };
-
 
   return (
     <div className="bg-black flex items-center justify-center">
@@ -72,20 +71,7 @@ export default function KameraPage() {
           <div className="top-0 left-0 w-full flex items-center justify-between bg-black text-white px-4 py-3 shadow z-50">
             <div className="flex items-center gap-2">
               <button onClick={() => router.back()}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-4 h-4"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
-                  />
-                </svg>
+                ←
               </button>
               <span className="font-semibold">Ambil Gambar</span>
             </div>
@@ -100,7 +86,6 @@ export default function KameraPage() {
             playsInline
             className="w-full h-full object-cover"
           />
-
           {/* Overlay */}
           <div className="absolute top-0 left-0 w-full h-full bg-black/10">
             <div
