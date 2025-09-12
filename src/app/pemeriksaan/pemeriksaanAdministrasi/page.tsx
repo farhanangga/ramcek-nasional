@@ -1,0 +1,248 @@
+"use client";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+
+interface Option {
+  value: string;
+  label: string;
+  showPhoto?: boolean;
+  showText?: boolean;
+}
+
+interface Question {
+  id: string;
+  label: string;
+  options: Option[];
+}
+
+// Jawaban gabungan Option + field tambahan
+interface Answer extends Option {
+  text?: string;
+  photo?: string;
+}
+
+export default function PemeriksaanAdministrasi() {
+  const router = useRouter();
+  const [answers, setAnswers] = useState<Record<string, Answer>>({});
+
+  // Data pertanyaan
+  const questions: Question[] = [
+    {
+      id: "stuk",
+      label: "Kartu Uji/STUK",
+      options: [
+        { value: "ada", label: "Ada, Berlaku", showPhoto: true },
+        { value: "tidak_berlaku", label: "Tidak Berlaku", showPhoto: true },
+        { value: "tidak_ada", label: "Tidak Ada", showText: true },
+        { value: "tidak_sesuai", label: "Tidak Sesuai Fisik" },
+      ],
+    },
+    {
+      id: "kp_reguler",
+      label: "KP Reguler",
+      options: [
+        { value: "ada", label: "Ada, Berlaku", showPhoto: true },
+        { value: "tidak_berlaku", label: "Tidak Berlaku", showPhoto: true },
+        { value: "tidak_ada", label: "Tidak Ada", showText: true },
+        { value: "tidak_sesuai", label: "Tidak Sesuai Fisik" },
+      ],
+    },
+    {
+      id: "kp_cadangan",
+      label: "KP Cadangan (Untuk Kendaraan Cadangan)",
+      options: [
+        { value: "ada", label: "Ada, Berlaku", showPhoto: true },
+        { value: "tidak_berlaku", label: "Tidak Berlaku", showPhoto: true },
+        { value: "tidak_ada", label: "Tidak Ada", showText: true },
+        { value: "tidak_sesuai", label: "Tidak Sesuai Fisik" },
+      ],
+    },
+    {
+      id: "sim",
+      label: "SIM Pengemudi",
+      options: [
+        { value: "a", label: "A Umum", showPhoto: true },
+        { value: "b1", label: "B1 Umum", showPhoto: true },
+        { value: "b2", label: "B2 Umum", showPhoto: true },
+        { value: "tidak_sesuai", label: "SIM Tidak Sesuai", showText: true },
+      ],
+    },
+  ];
+
+  // Handler pilih opsi
+  const handleSelect = (qId: string, option: Option) => {
+    setAnswers((prev) => ({
+      ...prev,
+      [qId]: { ...option }, // reset supaya photo / text hilang kalau ganti opsi
+    }));
+  };
+
+  // Handler input teks
+  const handleTextChange = (qId: string, value: string) => {
+    setAnswers((prev) => ({
+      ...prev,
+      [qId]: { ...prev[qId], text: value },
+    }));
+  };
+
+  // Ambil foto dari localStorage setelah balik dari kamera
+  useEffect(() => {
+    const saved = localStorage.getItem("capturedPhoto");
+    if (saved) {
+      const { photo, qId, option } = JSON.parse(saved);
+
+      setAnswers((prev) => ({
+        ...prev,
+        [qId]: {
+          ...(prev[qId] || {}),
+          value: option,
+          photo,
+        },
+      }));
+
+      localStorage.removeItem("capturedPhoto");
+    }
+  }, []);
+
+  const semuaTerisi = questions.every((q) => answers[q.id]);
+
+  return (
+    <div className="bg-gray-100 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-100 pb-20 w-[414px]">
+        {/* Header */}
+        <div className="fixed w-full p-auto max-w-[414px]">
+          <div className="top-0 left-0 w-full flex items-center justify-between bg-[#29005E] text-white px-4 py-3 shadow z-50">
+            <div className="flex items-center gap-2">
+              <button onClick={() => router.push("/fotoKendaraan/preview")}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+                  />
+                </svg>
+              </button>
+              <span className="font-semibold">Pemeriksaan Administrasi</span>
+            </div>
+            <img src="/img/assets/logo.png" alt="logo" className="w-5" />
+          </div>
+        </div>
+
+        {/* Isi */}
+        <div className="pt-16 px-4">
+          <p className="text-sm text-black mb-4">
+            Lengkapi Data Administrasi Berikut Sesuai Dengan Kondisi Yang
+            Sebenarnya
+          </p>
+
+          {questions.map((q) => (
+            <div key={q.id} className="mb-4 bg-white rounded-lg shadow">
+              {/* Judul */}
+              <div className="bg-[#F6A609] text-white px-3 py-2 rounded-t-lg font-bold">
+                {q.label}
+              </div>
+
+              {/* Pilihan */}
+              <div className="p-3 space-y-2">
+                {q.options.map((opt) => (
+                  <div key={opt.value}>
+                    <label className="flex items-center gap-2 text-black">
+                      <input
+                        type="radio"
+                        name={q.id}
+                        value={opt.value}
+                        checked={answers[q.id]?.value === opt.value}
+                        onChange={() => handleSelect(q.id, opt)}
+                        className="w-4 h-4 text-[#29005E] focus:ring-[#29005E]"
+                      />
+                      {opt.label}
+                    </label>
+
+                    {/* Kondisional tepat di bawah opsi terpilih */}
+                    {answers[q.id]?.value === opt.value && opt.showPhoto && (
+                      answers[q.id]?.photo ? (
+                        <div className="relative w-52 h-32 border rounded-lg overflow-hidden">
+                          <img
+                            src={answers[q.id].photo}
+                            alt="Preview"
+                            className="object-cover w-full h-full"
+                          />
+                          <button
+                            onClick={() =>
+                              setAnswers((prev) => ({
+                                ...prev,
+                                [q.id]: { ...prev[q.id], photo: undefined },
+                              }))
+                            }
+                            className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-red-200 text-red-700 rounded-full shadow hover:bg-red-700 hover:text-white"
+                          >
+                            ✕
+                          </button>
+                        </div>
+                      ) : (
+                        <div
+                          onClick={() =>
+                            router.push(
+                              `/pemeriksaan/pemeriksaanAdministrasi/camera?qId=${q.id}&option=${opt.value}`
+                            )
+                          }
+                          className="flex flex-col items-center justify-center h-32 w-52 border-2 border-dashed border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer"
+                        >
+                          <img
+                            src="/img/icon/camera.png"
+                            className="w-6 mb-1"
+                          />
+                          <span className="text-sm text-gray-700">
+                            Ambil Foto
+                          </span>
+                        </div>
+                      )
+                    )}
+
+                    {answers[q.id]?.value === opt.value && opt.showText && (
+                      <div className="ml-6 mt-2">
+                        <input
+                          type="text"
+                          value={answers[q.id]?.text || ""}
+                          onChange={(e) =>
+                            handleTextChange(q.id, e.target.value)
+                          }
+                          placeholder={`Keterangan ${q.label}`}
+                          className="w-full border rounded-md p-3 text-black bg-white border-[#E0E0E0] focus:outline-none focus:border-[#29005E]"
+                        />
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Tombol lanjut */}
+        <div className="fixed bottom-0 left-0 w-full bg-gray-100 shadow-lg">
+          <div className="max-w-[414px] mx-auto px-4 py-3">
+            <button
+              disabled={!semuaTerisi}
+              onClick={() => router.push("/pemeriksaan/administrasi/preview")}
+              className={`w-full py-3 font-bold text-white rounded-md transition ${
+                semuaTerisi
+                  ? "bg-[#29005E]"
+                  : "bg-gray-300 cursor-not-allowed"
+              }`}
+            >
+              LANJUT
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

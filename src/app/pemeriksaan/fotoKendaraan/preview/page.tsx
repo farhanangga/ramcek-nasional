@@ -211,12 +211,12 @@ export default function FotoKendaraan() {
               disabled={!semuaTerisi}
               onClick={() => {
                 if (semuaTerisi) {
-                  router.push("");
+                  router.push("/pemeriksaan/pemeriksaanAdministrasi");
                 }
               }}
               className={`w-full py-3 font-bold text-white rounded-md transition
                 ${semuaTerisi ? "bg-[#29005E]" : "bg-gray-300 cursor-not-allowed"}`}
-            >
+              >
               SIMPAN DAN LANJUT
             </button>
           </div>
