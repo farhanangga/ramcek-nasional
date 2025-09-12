@@ -51,12 +51,12 @@ export default function KameraPage() {
 
     // Simpan hasil ke localStorage (camera -> form)
     localStorage.setItem(
-      "capturedPhoto",
-      JSON.stringify({
+    `capturedPhoto_${qId}`,
+    JSON.stringify({
         photo: dataUrl,
         qId,
         option,
-      })
+    })
     );
 
     // Kembali ke halaman form (atau router.back())

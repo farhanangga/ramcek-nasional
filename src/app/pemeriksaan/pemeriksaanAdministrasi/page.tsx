@@ -87,10 +87,10 @@ export default function PemeriksaanAdministrasi() {
 
   // Ambil foto dari localStorage setelah balik dari kamera
   useEffect(() => {
-    const saved = localStorage.getItem("capturedPhoto");
+  questions.forEach((q) => {
+    const saved = localStorage.getItem(`capturedPhoto_${q.id}`);
     if (saved) {
       const { photo, qId, option } = JSON.parse(saved);
-
       setAnswers((prev) => ({
         ...prev,
         [qId]: {
@@ -99,10 +99,9 @@ export default function PemeriksaanAdministrasi() {
           photo,
         },
       }));
-
-      localStorage.removeItem("capturedPhoto");
     }
-  }, []);
+  });
+}, []);
 
   const semuaTerisi = questions.every((q) => answers[q.id]);
 
@@ -110,7 +109,7 @@ export default function PemeriksaanAdministrasi() {
     <div className="bg-gray-100 flex items-center justify-center">
       <div className="min-h-screen bg-gray-100 pb-20 w-[414px]">
         {/* Header */}
-        <div className="fixed w-full p-auto max-w-[414px]">
+        <div className="fixed w-full p-auto max-w-[414px] z-50">
           <div className="top-0 left-0 w-full flex items-center justify-between bg-[#29005E] text-white px-4 py-3 shadow z-50">
             <div className="flex items-center gap-2">
               <button onClick={() => router.push("/fotoKendaraan/preview")}>
@@ -175,16 +174,19 @@ export default function PemeriksaanAdministrasi() {
                             className="object-cover w-full h-full"
                           />
                           <button
-                            onClick={() =>
-                              setAnswers((prev) => ({
+                            onClick={() => {
+                                setAnswers((prev) => ({
                                 ...prev,
                                 [q.id]: { ...prev[q.id], photo: undefined },
-                              }))
-                            }
-                            className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-red-200 text-red-700 rounded-full shadow hover:bg-red-700 hover:text-white"
-                          >
+                                }));
+                                localStorage.removeItem(`capturedPhoto_${q.id}`); // 🔥 hapus juga dari localStorage
+                            }}
+                            className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center 
+                                        bg-red-200 text-red-700 rounded-full shadow 
+                                        hover:bg-red-700 hover:text-white z-10"
+                            >
                             ✕
-                          </button>
+                            </button>
                         </div>
                       ) : (
                         <div
