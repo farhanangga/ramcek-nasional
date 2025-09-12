@@ -84,7 +84,7 @@ export default function FotoKendaraan() {
                 <img src={fotoDepan} className="w-full h-full object-cover" />
                 <button
                 onClick={() => hapusFoto("depan", setFotoDepan)}
-                className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-red-200 text-red-700 rounded-full shadow hover:bg-red-700 hover:text-white"
+                className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-red-200 text-red-700 rounded-full shadow hover:bg-red-400 hover:text-white"
                 >
                     ✕
                 </button>
@@ -108,7 +108,7 @@ export default function FotoKendaraan() {
                 <img src={fotoBelakang} className="w-full h-full object-cover" />
                 <button
                 onClick={() => hapusFoto("belakang", setFotoBelakang)}
-                className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-red-200 text-red-700 rounded-full shadow hover:bg-red-700 hover:text-white"
+                className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-red-200 text-red-700 rounded-full shadow hover:bg-red-400 hover:text-white"
                 >
                     ✕
                 </button>
@@ -132,7 +132,7 @@ export default function FotoKendaraan() {
                 <img src={fotoKanan} className="w-full h-full object-cover" />
                 <button
                 onClick={() => hapusFoto("kanan", setFotoKanan)}
-                className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-red-200 text-red-700 rounded-full shadow hover:bg-red-700 hover:text-white"
+                className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-red-200 text-red-700 rounded-full shadow hover:bg-red-400 hover:text-white"
                 >
                     ✕
                 </button>
@@ -156,7 +156,7 @@ export default function FotoKendaraan() {
                 <img src={fotoKiri} className="w-full h-full object-cover" />
                 <button
                 onClick={() => hapusFoto("kiri", setFotoKiri)}
-                className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-red-200 text-red-700 rounded-full shadow hover:bg-red-700 hover:text-white"
+                className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-red-200 text-red-700 rounded-full shadow hover:bg-red-400 hover:text-white"
                 >
                     ✕
                 </button>
@@ -183,7 +183,7 @@ export default function FotoKendaraan() {
                 <img src={fotoPlat} className="w-full h-full object-cover" />
                 <button
                     onClick={() => hapusFoto("plat", setFotoPlat)}
-                    className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-red-200 text-red-700 rounded-full shadow hover:bg-red-700 hover:text-white"
+                    className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-red-200 text-red-700 rounded-full shadow hover:bg-red-400 hover:text-white"
                 >
                     ✕
                 </button>

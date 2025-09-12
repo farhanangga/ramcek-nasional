@@ -15,7 +15,6 @@ interface Question {
   options: Option[];
 }
 
-// Jawaban gabungan Option + field tambahan
 interface Answer extends Option {
   text?: string;
   photo?: string;
@@ -25,7 +24,6 @@ export default function PemeriksaanAdministrasi() {
   const router = useRouter();
   const [answers, setAnswers] = useState<Record<string, Answer>>({});
 
-  // Data pertanyaan
   const questions: Question[] = [
     {
       id: "stuk",
@@ -69,39 +67,48 @@ export default function PemeriksaanAdministrasi() {
     },
   ];
 
-  // Handler pilih opsi
+  // Pilih opsi baru
   const handleSelect = (qId: string, option: Option) => {
-    setAnswers((prev) => ({
-      ...prev,
-      [qId]: { ...option }, // reset supaya photo / text hilang kalau ganti opsi
-    }));
+    setAnswers((prev) => {
+      // Reset jawaban lama supaya tidak dobel foto + teks
+      const newAnswer: Answer = { ...option };
+
+      return {
+        ...prev,
+        [qId]: newAnswer,
+      };
+    });
+
+    // Kalau ganti ke opsi teks, hapus foto yang tersimpan
+    localStorage.removeItem(`capturedPhoto_${qId}`);
   };
 
-  // Handler input teks
+  // Input teks
   const handleTextChange = (qId: string, value: string) => {
     setAnswers((prev) => ({
       ...prev,
-      [qId]: { ...prev[qId], text: value },
+      [qId]: { ...prev[qId], text: value, photo: undefined }, // 🔥 hapus foto kalau isi teks
     }));
+
+    localStorage.removeItem(`capturedPhoto_${qId}`);
   };
 
-  // Ambil foto dari localStorage setelah balik dari kamera
+  // Ambil foto yang tersimpan setelah balik dari kamera
   useEffect(() => {
-  questions.forEach((q) => {
-    const saved = localStorage.getItem(`capturedPhoto_${q.id}`);
-    if (saved) {
-      const { photo, qId, option } = JSON.parse(saved);
-      setAnswers((prev) => ({
-        ...prev,
-        [qId]: {
-          ...(prev[qId] || {}),
-          value: option,
-          photo,
-        },
-      }));
-    }
-  });
-}, []);
+    questions.forEach((q) => {
+      const saved = localStorage.getItem(`capturedPhoto_${q.id}`);
+      if (saved) {
+        const { photo, qId, option } = JSON.parse(saved);
+        setAnswers((prev) => ({
+          ...prev,
+          [qId]: {
+            value: option,
+            photo,
+          },
+        }));
+      }
+    });
+  }, []);
 
   const semuaTerisi = questions.every((q) => answers[q.id]);
 
@@ -113,20 +120,7 @@ export default function PemeriksaanAdministrasi() {
           <div className="top-0 left-0 w-full flex items-center justify-between bg-[#29005E] text-white px-4 py-3 shadow z-50">
             <div className="flex items-center gap-2">
               <button onClick={() => router.push("/fotoKendaraan/preview")}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-4 h-4"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
-                  />
-                </svg>
+                ←
               </button>
               <span className="font-semibold">Pemeriksaan Administrasi</span>
             </div>
@@ -136,19 +130,12 @@ export default function PemeriksaanAdministrasi() {
 
         {/* Isi */}
         <div className="pt-16 px-4">
-          <p className="text-sm text-black mb-4">
-            Lengkapi Data Administrasi Berikut Sesuai Dengan Kondisi Yang
-            Sebenarnya
-          </p>
-
           {questions.map((q) => (
             <div key={q.id} className="mb-4 bg-white rounded-lg shadow">
-              {/* Judul */}
               <div className="bg-[#F6A609] text-white px-3 py-2 rounded-t-lg font-bold">
                 {q.label}
               </div>
 
-              {/* Pilihan */}
               <div className="p-3 space-y-2">
                 {q.options.map((opt) => (
                   <div key={opt.value}>
@@ -164,7 +151,7 @@ export default function PemeriksaanAdministrasi() {
                       {opt.label}
                     </label>
 
-                    {/* Kondisional tepat di bawah opsi terpilih */}
+                    {/* Foto */}
                     {answers[q.id]?.value === opt.value && opt.showPhoto && (
                       answers[q.id]?.photo ? (
                         <div className="relative w-52 h-32 border rounded-lg overflow-hidden">
@@ -175,18 +162,17 @@ export default function PemeriksaanAdministrasi() {
                           />
                           <button
                             onClick={() => {
-                                setAnswers((prev) => ({
+                              setAnswers((prev) => ({
                                 ...prev,
                                 [q.id]: { ...prev[q.id], photo: undefined },
-                                }));
-                                localStorage.removeItem(`capturedPhoto_${q.id}`); // 🔥 hapus juga dari localStorage
+                              }));
+                              localStorage.removeItem(`capturedPhoto_${q.id}`);
                             }}
                             className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center 
-                                        bg-red-200 text-red-700 rounded-full shadow 
-                                        hover:bg-red-700 hover:text-white z-10"
-                            >
+                              bg-red-200 text-red-700 rounded-full shadow hover:bg-red-400 hover:text-white z-10"
+                          >
                             ✕
-                            </button>
+                          </button>
                         </div>
                       ) : (
                         <div
@@ -197,10 +183,7 @@ export default function PemeriksaanAdministrasi() {
                           }
                           className="flex flex-col items-center justify-center h-32 w-52 border-2 border-dashed border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer"
                         >
-                          <img
-                            src="/img/icon/camera.png"
-                            className="w-6 mb-1"
-                          />
+                          <img src="/img/icon/camera.png" className="w-6 mb-1" />
                           <span className="text-sm text-gray-700">
                             Ambil Foto
                           </span>
@@ -208,6 +191,7 @@ export default function PemeriksaanAdministrasi() {
                       )
                     )}
 
+                    {/* Input teks */}
                     {answers[q.id]?.value === opt.value && opt.showText && (
                       <div className="ml-6 mt-2">
                         <input
@@ -217,7 +201,8 @@ export default function PemeriksaanAdministrasi() {
                             handleTextChange(q.id, e.target.value)
                           }
                           placeholder={`Keterangan ${q.label}`}
-                          className="w-full border rounded-md p-3 text-black bg-white border-[#E0E0E0] focus:outline-none focus:border-[#29005E]"
+                          className="w-full border rounded-md p-3 text-black bg-white border-[#E0E0E0] 
+                            focus:outline-none focus:border-[#29005E]"
                         />
                       </div>
                     )}
