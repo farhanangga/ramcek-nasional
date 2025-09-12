@@ -85,30 +85,35 @@ export default function PemeriksaanAdministrasi() {
 
   // Input teks
   const handleTextChange = (qId: string, value: string) => {
-    setAnswers((prev) => ({
-      ...prev,
-      [qId]: { ...prev[qId], text: value, photo: undefined }, // 🔥 hapus foto kalau isi teks
-    }));
-
-    localStorage.removeItem(`capturedPhoto_${qId}`);
-  };
+  setAnswers((prev) => {
+    const updated = { ...prev[qId], text: value, photo: undefined }; // hapus foto
+    localStorage.setItem(`answer_${qId}`, JSON.stringify(updated)); // 🔥 auto-save teks
+    localStorage.removeItem(`capturedPhoto_${qId}`); // hapus foto lama
+    return { ...prev, [qId]: updated };
+  });
+};
 
   // Ambil foto yang tersimpan setelah balik dari kamera
   useEffect(() => {
-    questions.forEach((q) => {
-      const saved = localStorage.getItem(`capturedPhoto_${q.id}`);
-      if (saved) {
-        const { photo, qId, option } = JSON.parse(saved);
-        setAnswers((prev) => ({
-          ...prev,
-          [qId]: {
-            value: option,
-            photo,
-          },
-        }));
-      }
-    });
-  }, []);
+  questions.forEach((q) => {
+    const saved = localStorage.getItem(`answer_${q.id}`);
+    if (saved) {
+      setAnswers((prev) => ({
+        ...prev,
+        [q.id]: JSON.parse(saved),
+      }));
+    }
+
+    const savedPhoto = localStorage.getItem(`capturedPhoto_${q.id}`);
+    if (savedPhoto) {
+      const { photo, qId, option } = JSON.parse(savedPhoto);
+      setAnswers((prev) => ({
+        ...prev,
+        [qId]: { value: option, photo },
+      }));
+    }
+  });
+}, []);
 
   const semuaTerisi = questions.every((q) => answers[q.id]);
 
@@ -119,8 +124,21 @@ export default function PemeriksaanAdministrasi() {
         <div className="fixed w-full p-auto max-w-[414px] z-50">
           <div className="top-0 left-0 w-full flex items-center justify-between bg-[#29005E] text-white px-4 py-3 shadow z-50">
             <div className="flex items-center gap-2">
-              <button onClick={() => router.push("/fotoKendaraan/preview")}>
-                ←
+              <button onClick={() => router.push("/pemeriksaan/fotoKendaraan/preview")}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+                  />
+                </svg>
               </button>
               <span className="font-semibold">Pemeriksaan Administrasi</span>
             </div>
