@@ -20,12 +20,15 @@ export default function HasilScan() {
       (result) => {
         qrScanner.stop();
 
-        // contoh validasi hasil QR
-        if (result.data && result.data.includes("NOMOR_KENDARAAN_VALID")) {
-          router.push("/pemeriksaan/qrScanner/preview");
-        } else {
-          setError(true); // tampilkan notif error
-        }
+        // Validasi QR (sementara dijadikan komentar)
+        // if (result.data && result.data.includes("NOMOR_KENDARAAN_VALID")) {
+        //   router.push("/pemeriksaan/qrScanner/preview");
+        // } else {
+        //   setError(true);
+        // }
+
+        // Langsung arahkan ke preview setelah berhasil scan
+        router.push("/pemeriksaan/qrScanner/preview");
       },
       { preferredCamera }
     );
@@ -96,9 +99,9 @@ export default function HasilScan() {
           <div className="bg-black w-[414px] h-[25vh] mx-auto"></div>
         </div>
 
-        {/* Modal Error */}
-        {error && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+        {/* Modal Error (sementara dikomentari) */}
+        {/* {error && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
             <div className="bg-white rounded-lg p-6 w-80 text-center shadow-lg">
               <div className="flex justify-center mb-4">
                 <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center">
@@ -132,7 +135,7 @@ export default function HasilScan() {
               </button>
             </div>
           </div>
-        )}
+          )} */}
       </div>
     </div>
   );

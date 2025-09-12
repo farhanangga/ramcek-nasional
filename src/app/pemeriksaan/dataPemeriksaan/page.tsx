@@ -7,10 +7,32 @@ export default function DataPemeriksaan() {
   const [lokasi, setLokasi] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
+  const [loadingLokasi, setLoadingLokasi] = useState(false);
 
   const semuaTerisi = tanggal && lokasi && latitude && longitude;
-
   const router = useRouter();
+
+  // Fungsi ambil lokasi otomatis
+  const handleGunakanLokasi = () => {
+    if (!navigator.geolocation) {
+      alert("Browser Anda tidak mendukung Geolocation");
+      return;
+    }
+
+    setLoadingLokasi(true);
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        setLatitude(pos.coords.latitude.toString());
+        setLongitude(pos.coords.longitude.toString());
+        setLoadingLokasi(false);
+      },
+      (err) => {
+        console.error(err);
+        alert("Gagal mengambil lokasi. Pastikan GPS aktif & izin lokasi diizinkan.");
+        setLoadingLokasi(false);
+      }
+    );
+  };
 
   return (
     <div className="bg-gray-100 flex items-center justify-center">
@@ -49,9 +71,14 @@ export default function DataPemeriksaan() {
         <div className="rounded-lg mx-4">
           <h2 className="text-lg font-bold mb-4 text-black">Data Pemeriksaan</h2>
 
-          {/* Custom Tanggal */}
-          <label className="block mb-2 font-medium text-black">Tanggal Pemeriksaan</label> 
-          <input type="date" value={tanggal} onChange={(e) => setTanggal(e.target.value)} className="w-full border rounded-md p-3 mb-4 text-black bg-white border-[#E0E0E0] focus:outline-none focus:border-[#29005E]" />
+          {/* Tanggal */}
+          <label className="block mb-2 font-medium text-black">Tanggal Pemeriksaan</label>
+          <input
+            type="date"
+            value={tanggal}
+            onChange={(e) => setTanggal(e.target.value)}
+            className="w-full border rounded-md p-3 mb-4 text-black bg-white border-[#E0E0E0] focus:outline-none focus:border-[#29005E]"
+          />
 
           {/* Lokasi */}
           <label className="block mb-2 font-medium text-black">Lokasi</label>
@@ -61,7 +88,7 @@ export default function DataPemeriksaan() {
               onChange={(e) => setLokasi(e.target.value)}
               className="appearance-none w-full border rounded-md p-3 text-black bg-white border-[#E0E0E0] focus:outline-none focus:border-[#29005E]"
             >
-              <option value="" className="text-grey">Pilih Lokasi</option>
+              <option value="">Pilih Lokasi</option>
               <option value="terminal">Terminal</option>
               <option value="pool">Pool</option>
               <option value="jalan">Jalan Raya</option>
@@ -78,7 +105,7 @@ export default function DataPemeriksaan() {
             </svg>
           </div>
 
-          {/* Latitude & Longitude */}
+          {/* Latitude & Longitude sejajar */}
           <div className="flex gap-3 mb-4">
             <div className="flex-1">
               <label className="block mb-2 font-medium text-black">Latitude</label>
@@ -102,12 +129,13 @@ export default function DataPemeriksaan() {
             </div>
           </div>
 
-          {/* Gunakan lokasi saya */}
+          {/* Tombol gunakan lokasi */}
           <button
             type="button"
+            onClick={handleGunakanLokasi}
             className="w-full py-3 bg-purple-100 hover:bg-purple-200 text-[#29005E] font-bold rounded-md mb-6"
           >
-            GUNAKAN LOKASI SAYA
+            {loadingLokasi ? "Mengambil lokasi..." : "GUNAKAN LOKASI SAYA"}
           </button>
         </div>
 
@@ -129,3 +157,4 @@ export default function DataPemeriksaan() {
     </div>
   );
 }
+
