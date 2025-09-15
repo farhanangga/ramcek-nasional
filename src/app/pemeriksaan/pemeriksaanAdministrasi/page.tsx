@@ -119,7 +119,20 @@ export default function PemeriksaanAdministrasi() {
           <div className="top-0 left-0 w-full flex items-center justify-between bg-[#29005E] text-white px-4 py-3 shadow z-50">
             <div className="flex items-center gap-2">
               <button onClick={() => router.push("/pemeriksaan/fotoKendaraan/preview")}>
-                ←
+                  <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+                  />
+                </svg>
               </button>
               <span className="font-semibold">Pemeriksaan Administrasi</span>
             </div>
@@ -165,10 +178,11 @@ export default function PemeriksaanAdministrasi() {
                               }));
                               localStorage.removeItem(`capturedPhoto_${q.id}`);
                             }}
-                            className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1"
+                            className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-red-200 text-red-700 rounded-full shadow hover:bg-red-400 hover:text-white"
                           >
                             ✕
                           </button>
+                          
                         </div>
                       ) : (
                         <div
