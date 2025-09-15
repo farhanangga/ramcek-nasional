@@ -129,7 +129,8 @@ function KameraPageInner() {
               <button
                 onClick={ambilGambar}
                 className="w-16 h-16 rounded-full bg-white shadow-lg m-1"
-              />
+              >
+              </button>
             </div>
           </div>
         </div>
