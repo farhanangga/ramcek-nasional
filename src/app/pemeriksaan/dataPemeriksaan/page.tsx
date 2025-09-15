@@ -110,21 +110,23 @@ export default function DataPemeriksaan() {
             <div className="flex-1">
               <label className="block mb-2 font-medium text-black">Latitude</label>
               <input
+                disabled
                 type="text"
                 value={latitude}
                 onChange={(e) => setLatitude(e.target.value)}
                 placeholder="Masukkan Latitude"
-                className="w-full border rounded-md p-3 text-black bg-white border-[#E0E0E0] focus:outline-none focus:border-[#29005E]"
+                className="w-full border rounded-md p-3 text-black cursor-not-allowed bg-white border-[#E0E0E0] focus:outline-none focus:border-[#29005E]"
               />
             </div>
             <div className="flex-1">
               <label className="block mb-2 font-medium text-black">Longitude</label>
               <input
+                disabled
                 type="text"
                 value={longitude}
                 onChange={(e) => setLongitude(e.target.value)}
                 placeholder="Masukkan Longitude"
-                className="w-full border rounded-md p-3 text-black bg-white border-[#E0E0E0] focus:outline-none focus:border-[#29005E]"
+                className="w-full border rounded-md p-3 text-black cursor-not-allowed bg-white border-[#E0E0E0] focus:outline-none focus:border-[#29005E]"
               />
             </div>
           </div>
