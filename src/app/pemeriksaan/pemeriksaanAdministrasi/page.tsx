@@ -157,6 +157,7 @@ export default function PemeriksaanAdministrasi() {
                         value={opt.value}
                         checked={answers[q.id]?.value === opt.value}
                         onChange={() => handleSelect(q.id, opt)}
+                        className="accent-[#29005E]"
                       />
                       {opt.label}
                     </label>
