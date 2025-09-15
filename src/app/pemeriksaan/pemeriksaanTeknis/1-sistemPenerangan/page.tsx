@@ -22,13 +22,31 @@ export default function SistemPeneranganPage() {
   const router = useRouter();
   const [answers, setAnswers] = useState<Record<string, Answer>>({});
 
-  // 🔹 Load jawaban dari localStorage saat halaman dibuka
-  useEffect(() => {
-    const saved = localStorage.getItem("sistemPeneranganAnswers");
-    if (saved) {
-      setAnswers(JSON.parse(saved));
+// Tambahkan useEffect untuk merge data foto/video yang baru ditangkap
+useEffect(() => {
+  questions.forEach((q) => {
+    const savedPhoto = localStorage.getItem(`capturedPhoto_${q.id}`);
+    if (savedPhoto) {
+      const { photo } = JSON.parse(savedPhoto);
+      setAnswers((prev) => ({
+        ...prev,
+        [q.id]: { ...prev[q.id], photo },
+      }));
+      localStorage.removeItem(`capturedPhoto_${q.id}`); // hapus biar tidak numpuk
     }
-  }, []);
+
+    const savedVideo = localStorage.getItem(`capturedVideo_${q.id}`);
+    if (savedVideo) {
+      const { video } = JSON.parse(savedVideo);
+      setAnswers((prev) => ({
+        ...prev,
+        [q.id]: { ...prev[q.id], video },
+      }));
+      localStorage.removeItem(`capturedVideo_${q.id}`);
+    }
+  });
+}, []);
+
 
   // 🔹 Simpan jawaban ke localStorage tiap kali berubah
   useEffect(() => {
