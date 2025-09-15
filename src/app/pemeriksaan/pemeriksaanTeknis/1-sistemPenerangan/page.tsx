@@ -123,8 +123,35 @@ export default function SistemPeneranganPage() {
           </div>
         </div>
 
+        {/* Stepper */}
+        <div className=" px-4 py-3 pt-16">
+        <p className="text-sm text-black mb-6">
+            Langkah 1 dari 8 <br />
+            <span className="font-semibold">Sistem Penerangan</span>
+        </p>
+
+        <div className="flex items-center justify-between mx-4">
+        {[...Array(8)].map((_, idx) => (
+            <div key={idx} className="flex items-center w-full">
+            {/* Lingkaran */}
+            <div
+                className={`flex items-center justify-center w-4 h-4 rounded-full text-xs font-bold
+                ${idx === 0 ? "bg-white border border-[#29005E]" : "bg-gray-300"}
+                `}
+            ></div>
+
+            {/* Garis penghubung (jangan taruh di step terakhir) */}
+            {idx < 7 && (
+                <div className="flex-1 h-0.5 bg-gray-300"></div>
+            )}
+            </div>
+        ))}
+        </div>
+
+        </div>
+
         {/* Isi */}
-        <div className="pt-16 px-4">
+        <div className="pt-4 px-4">
           {questions.map((q) => (
             <div key={q.id} className="mb-4 bg-white rounded-lg shadow">
               {/* Judul */}
