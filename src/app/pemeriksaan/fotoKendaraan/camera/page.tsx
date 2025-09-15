@@ -129,7 +129,7 @@ function KameraContent() {
             </p>
 
             {/* Tombol */}
-            <div className="rounded-full border-2 border-white">
+            <div className="rounded-full border-2 border-white h-19 w-19">
               <button
                 onClick={ambilGambar}
                 className="w-16 h-16 rounded-full bg-white shadow-lg m-1"

@@ -41,25 +41,42 @@ function KameraPageInner() {
   }, []);
 
   const ambilGambar = () => {
-    if (!videoRef.current) return;
+  if (!videoRef.current) return;
 
-    const canvas = document.createElement("canvas");
-    canvas.width = videoRef.current.videoWidth;
-    canvas.height = videoRef.current.videoHeight;
+  const video = videoRef.current;
 
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+  // Pastikan video sudah siap
+  if (video.videoWidth === 0 || video.videoHeight === 0) {
+    alert("Kamera belum siap, coba lagi sebentar...");
+    return;
+  }
 
-    ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
-    const dataUrl = canvas.toDataURL("image/png");
+  // Resize agar tidak terlalu besar
+  const maxWidth = 1024;
+  const scale = Math.min(1, maxWidth / video.videoWidth);
 
+  const canvas = document.createElement("canvas");
+  canvas.width = video.videoWidth * scale;
+  canvas.height = video.videoHeight * scale;
+
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+
+  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+  const dataUrl = canvas.toDataURL("image/jpeg", 0.8); // pakai JPEG lebih kecil
+
+  try {
     localStorage.setItem(
       `capturedPhoto_${qId}`,
       JSON.stringify({ photo: dataUrl, qId, option })
     );
+  } catch (err) {
+    console.error("Gagal simpan ke localStorage:", err);
+  }
 
-    router.push("/pemeriksaan/pemeriksaanAdministrasi");
-  };
+  router.push("/pemeriksaan/pemeriksaanAdministrasi");
+};
 
   return (
     <div className="bg-black flex items-center justify-center">
@@ -125,7 +142,7 @@ function KameraPageInner() {
             </p>
 
             {/* Tombol */}
-            <div className="rounded-full border-2 border-white">
+            <div className="rounded-full border-2 border-white h-19 w-19">
               <button
                 onClick={ambilGambar}
                 className="w-16 h-16 rounded-full bg-white shadow-lg m-1"
