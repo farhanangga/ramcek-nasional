@@ -71,7 +71,24 @@ const handleSideChange = (qId: string, side: "kanan" | "kiri") => {
         <div className="fixed w-full max-w-[414px] z-50">
           <div className="flex items-center justify-between bg-[#29005E] text-white px-4 py-3 shadow">
             <div className="flex items-center gap-2">
-              <button onClick={() => router.back()}>←</button>
+              <button onClick={() =>
+                  router.push("/pemeriksaan/pemeriksaanAdministrasi")
+                }>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+                  />
+                </svg>
+              </button>
               <span className="font-semibold">Sistem Penerangan</span>
             </div>
             <img src="/img/assets/logo.png" alt="logo" className="w-5" />
@@ -162,7 +179,7 @@ const handleSideChange = (qId: string, side: "kanan" | "kiri") => {
                             `/pemeriksaan/pemeriksaanTeknis/1-sistemPenerangan/cameraFoto?qId=${q.id}`
                           )
                         }
-                        className="flex flex-col items-center justify-center h-32 w-52 border-2 border-dashed border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer"
+                        className="flex flex-col items-center justify-center h-32 w-full border-2 border-dashed border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer"
                       >
                         <img src="/img/icon/camera.png" className="w-6 mb-1" />
                         <span className="text-sm text-gray-700">Ambil Foto</span>
@@ -191,7 +208,7 @@ const handleSideChange = (qId: string, side: "kanan" | "kiri") => {
                             `/pemeriksaan/pemeriksaanTeknis/1-sistemPenerangan/cameraVideo?qId=${q.id}`
                           )
                         }
-                        className="flex flex-col items-center justify-center h-32 w-52 border-2 border-dashed border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer"
+                        className="flex flex-col items-center justify-center h-32 w-full border-2 border-dashed border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer"
                       >
                         <img src="/img/icon/camera.png" className="w-6 mb-1" />
                         <span className="text-sm text-gray-700">Ambil Video</span>

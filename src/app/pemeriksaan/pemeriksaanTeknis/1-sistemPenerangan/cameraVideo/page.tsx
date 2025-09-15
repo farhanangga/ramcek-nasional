@@ -123,23 +123,12 @@ function CameraVideoInner() {
             muted
             className="w-full h-full object-cover"
           />
-
-          {/* Overlay */}
-          <div className="absolute top-0 left-0 w-full h-full bg-black/10">
-            <div
-              className="absolute top-1/2 left-1/2 w-[340px] h-[220px] 
-                        -translate-x-1/2 -translate-y-1/2 
-                        rounded-md bg-transparent"
-              style={{ boxShadow: "0 0 0 9999px rgba(0, 0, 0, 0.3)" }}
-            />
-          </div>
         </div>
 
         {/* Tombol Rekam */}
         <div className="fixed bottom-0 left-0 w-full shadow-lg">
         <div className="bg-black w-full h-[25vh] mx-auto flex flex-col items-center justify-center">
-            <p className="text-white">Pastikan video terlihat jelas</p>
-            <p className="text-white mb-4">dan berada di area terang</p>
+            <p className="text-white mb-4">Pastikan video terlihat jelas</p>
 
             {/* Wrapper tombol */}
             <div

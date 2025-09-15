@@ -114,23 +114,11 @@ function CameraFotoInner() {
             playsInline
             className="w-full h-full object-cover"
           />
-
-          {/* Overlay */}
-          <div className="absolute top-0 left-0 w-full h-full bg-black/10">
-            <div
-              className="absolute top-1/2 left-1/2 w-[340px] h-[220px] 
-                        -translate-x-1/2 -translate-y-1/2 
-                        rounded-md bg-transparent"
-              style={{ boxShadow: "0 0 0 9999px rgba(0, 0, 0, 0.3)" }}
-            />
-          </div>
         </div>
-
         {/* Tombol ambil gambar */}
         <div className="fixed bottom-0 left-0 w-full shadow-lg">
           <div className="bg-black w-full h-[25vh] mx-auto flex flex-col items-center justify-center">
-            <p className="text-white">Pastikan objek terlihat jelas</p>
-            <p className="text-white mb-4">dan berada di area terang</p>
+            <p className="text-white mb-4">Pastikan foto terlihat jelas</p>
 
             <div className="rounded-full border-2 border-white h-19 w-19">
               <button
