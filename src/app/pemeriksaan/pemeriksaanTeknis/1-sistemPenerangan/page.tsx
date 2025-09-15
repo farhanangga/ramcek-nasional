@@ -186,7 +186,7 @@ export default function SistemPeneranganPage() {
                   <div className="flex gap-3 mt-2">
                     {/* Foto */}
                     {answers[q.id]?.photo ? (
-                      <div className="relative w-32 h-full border rounded-lg overflow-hidden">
+                      <div className="relative w-full h-32 border rounded-lg overflow-hidden">
                         <img
                           src={answers[q.id]?.photo}
                           alt="foto"
@@ -215,7 +215,7 @@ export default function SistemPeneranganPage() {
 
                     {/* Video */}
                     {answers[q.id]?.video ? (
-                      <div className="relative w-32 h-full border rounded-lg overflow-hidden">
+                      <div className="relative w-full h-32 border rounded-lg overflow-hidden">
                         <video
                           src={answers[q.id]?.video}
                           className="object-cover w-full h-full"
