@@ -72,7 +72,7 @@ function KameraContent() {
           <div className="top-0 left-0 w-full flex items-center justify-between bg-black text-white px-4 py-3 shadow z-50">
             <div className="flex items-center gap-2">
               {/* Tombol back */}
-              <button onClick={() => router.back()}>
+              <button onClick={() => router.push("/pemeriksaan/fotoKendaraan/preview")}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -88,7 +88,11 @@ function KameraContent() {
                   />
                 </svg>
               </button>
-              <span className="font-semibold">Ambil Foto Kendaraan</span>
+              <span className="font-semibold">
+                {target === "plat"
+                  ? "Foto Plat"
+                  : `Foto Kendaraan tampak ${target ?? ""}`}
+              </span>
             </div>
           </div>
         </div>
@@ -106,7 +110,7 @@ function KameraContent() {
           {target === "plat" && (
             <div className="absolute top-0 left-0 w-full h-full bg-black/10">
               <div
-                className="absolute top-1/2 left-1/2 w-[400px] h-[200px] 
+                className="absolute top-1/2 left-1/2 w-[414px] h-[200px] 
                           -translate-x-1/2 -translate-y-1/2 
                           rounded-md bg-transparent"
                 style={{ boxShadow: "0 0 0 9999px rgba(0, 0, 0, 0.3)" }}
@@ -117,11 +121,20 @@ function KameraContent() {
 
         {/* Tombol ambil gambar */}
         <div className="fixed bottom-0 left-0 w-full shadow-lg">
-          <div className="bg-black w-full h-[25vh] mx-auto flex items-center justify-center">
-            <button
-              onClick={ambilGambar}
-              className="w-16 h-16 rounded-full bg-white shadow-lg border-2 border-gray-300"
-            />
+          <div className="bg-black w-full h-[25vh] mx-auto flex flex-col items-center justify-center">
+            
+            {/* Teks di atas tombol */}
+            <p className="text-white mb-4">
+              Pastikan kendaraan terlihat jelas
+            </p>
+
+            {/* Tombol */}
+            <div className="rounded-full border-2 border-white">
+              <button
+                onClick={ambilGambar}
+                className="w-16 h-16 rounded-full bg-white shadow-lg m-1"
+              />
+            </div>
           </div>
         </div>
       </div>

@@ -68,7 +68,7 @@ function KameraPageInner() {
         <div className="fixed w-full p-auto max-w-[414px]">
           <div className="top-0 left-0 w-full flex items-center justify-between bg-black text-white px-4 py-3 shadow z-50">
             <div className="flex items-center gap-2">
-              <button onClick={() => router.back()}>←</button>
+              <button onClick={() => router.push("/pemeriksaan/pemeriksaanAdministrasi")}>←</button>
               <span className="font-semibold">Ambil Gambar</span>
             </div>
           </div>
@@ -82,15 +82,40 @@ function KameraPageInner() {
             playsInline
             className="w-full h-full object-cover"
           />
+
+          {/* Overlay */}
+          <div className="absolute top-0 left-0 w-full h-full bg-black/10">
+            <div
+              className="absolute top-1/2 left-1/2 w-[340px] h-[220px] 
+                        -translate-x-1/2 -translate-y-1/2 
+                        rounded-md bg-transparent"
+              style={{ boxShadow: "0 0 0 9999px rgba(0, 0, 0, 0.3)" }}
+            />
+          
+
+        </div>
+
         </div>
 
         {/* Tombol ambil gambar */}
         <div className="fixed bottom-0 left-0 w-full shadow-lg">
-          <div className="bg-black w-full h-[25vh] mx-auto flex items-center justify-center">
-            <button
-              onClick={ambilGambar}
-              className="w-16 h-16 rounded-full bg-white shadow-lg border-2 border-gray-300"
-            />
+          <div className="bg-black w-full h-[25vh] mx-auto flex flex-col items-center justify-center">
+            
+            {/* Teks di atas tombol */}
+            <p className="text-white">
+              Pastikan kartu berada di area terang dan
+            </p>
+            <p className="text-white mb-4">
+              terlihat jelas
+            </p>
+
+            {/* Tombol */}
+            <div className="rounded-full border-2 border-white">
+              <button
+                onClick={ambilGambar}
+                className="w-16 h-16 rounded-full bg-white shadow-lg m-1"
+              />
+            </div>
           </div>
         </div>
       </div>

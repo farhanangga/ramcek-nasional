@@ -60,7 +60,7 @@ export default function KameraPage() {
           <div className="top-0 left-0 w-full flex items-center justify-between bg-black text-white px-4 py-3 shadow z-50">
             <div className="flex items-center gap-2">
               {/* Tombol back */}
-              <button onClick={() => router.back()}>
+              <button onClick={() => router.push("pemeriksaan/fotoKendaraan/preview")}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -103,11 +103,14 @@ export default function KameraPage() {
 
         {/* Tombol ambil gambar */}
         <div className="fixed bottom-0 left-0 w-full shadow-lg">
-          <div className="bg-black w-full h-[25vh] mx-auto flex items-center justify-center">
-            <button
-              onClick={ambilGambar}
-              className="w-16 h-16 rounded-full bg-white shadow-lg border-2 border-gray-300"
-            />
+          <div className="bg-black w-full h-[25vh] mx-auto flex flex-col items-center justify-center">
+            {/* Tombol */}
+            <div className="rounded-full border-2 border-white">
+              <button
+                onClick={ambilGambar}
+                className="w-16 h-16 rounded-full bg-white shadow-lg m-1"
+              />
+            </div>
           </div>
         </div>
       </div>
