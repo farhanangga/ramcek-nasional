@@ -186,7 +186,7 @@ export default function SistemPeneranganPage() {
                   <div className="flex gap-3 mt-2">
                     {/* Foto */}
                     {answers[q.id]?.photo ? (
-                      <div className="relative w-28 h-20 border rounded-lg overflow-hidden">
+                      <div className="relative w-32 h-full border rounded-lg overflow-hidden">
                         <img
                           src={answers[q.id]?.photo}
                           alt="foto"
@@ -194,7 +194,7 @@ export default function SistemPeneranganPage() {
                         />
                         <button
                           onClick={() => handleRemoveFile(q.id, "photo")}
-                          className="absolute top-1 right-1 w-6 h-6 bg-red-500 text-white rounded-full"
+                          className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-red-200 text-red-700 rounded-full shadow hover:bg-red-400 hover:text-white"
                         >
                           ✕
                         </button>
@@ -215,7 +215,7 @@ export default function SistemPeneranganPage() {
 
                     {/* Video */}
                     {answers[q.id]?.video ? (
-                      <div className="relative w-28 h-20 border rounded-lg overflow-hidden">
+                      <div className="relative w-32 h-full border rounded-lg overflow-hidden">
                         <video
                           src={answers[q.id]?.video}
                           className="object-cover w-full h-full"
@@ -223,7 +223,7 @@ export default function SistemPeneranganPage() {
                         />
                         <button
                           onClick={() => handleRemoveFile(q.id, "video")}
-                          className="absolute top-1 right-1 w-6 h-6 bg-red-500 text-white rounded-full"
+                          className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-red-200 text-red-700 rounded-full shadow hover:bg-red-400 hover:text-white"
                         >
                           ✕
                         </button>
