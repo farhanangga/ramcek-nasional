@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 
 interface Answer {
   status?: "semua" | "tidak";
-  side?: { kanan: boolean; kiri: boolean };
+  side?: { kanan?: boolean; kiri?: boolean }; // pakai optional
   photo?: string;
   video?: string;
 }
@@ -44,15 +44,15 @@ export default function SistemPeneranganPage() {
 
 const handleSideChange = (qId: string, side: "kanan" | "kiri") => {
   setAnswers((prev) => ({
-    ...prev,
-    [qId]: {
-      ...prev[qId],
-      side: {
-        ...prev[qId]?.side,
-        [side]: !prev[qId]?.side?.[side],
-      },
+  ...prev,
+  [qId]: {
+    ...prev[qId],
+    side: {
+      ...prev[qId]?.side,
+      [side]: !prev[qId]?.side?.[side],
     },
-  }));
+  },
+}));
 };
 
   const handleRemoveFile = (qId: string, type: "photo" | "video") => {
