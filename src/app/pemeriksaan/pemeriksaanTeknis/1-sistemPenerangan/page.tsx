@@ -102,11 +102,18 @@ export default function SistemPeneranganPage() {
   }, [answers]);
 
   const handleStatusChange = (qId: string, status: "semua" | "tidak") => {
-    setAnswers((prev) => ({
-      ...prev,
-      [qId]: { ...prev[qId], status, side: { kanan: false, kiri: false } },
-    }));
-  };
+  setAnswers((prev) => ({
+    ...prev,
+    [qId]: {
+      ...prev[qId],
+      status,
+      side: { kanan: false, kiri: false },
+      photo: undefined,   // reset foto
+      video: undefined,   // reset video
+    },
+  }));
+};
+
 
   const handleSideChange = (qId: string, side: "kanan" | "kiri") => {
     setAnswers((prev) => ({
@@ -244,7 +251,7 @@ export default function SistemPeneranganPage() {
                           ) : (
                             <div
                               onClick={() =>
-                                router.push(`/pemeriksaan/pemeriksaanTeknis/cameraFoto?qId=${q.id}`)
+                                router.push(`/pemeriksaan/pemeriksaanTeknis/1-sistemPenerangan/cameraFoto?qId=${q.id}`)
                               }
                               className="flex flex-col items-center justify-center h-32 w-full border-2 border-dashed border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer"
                             >
@@ -267,7 +274,7 @@ export default function SistemPeneranganPage() {
                           ) : (
                             <div
                               onClick={() =>
-                                router.push(`/pemeriksaan/pemeriksaanTeknis/cameraVideo?qId=${q.id}`)
+                                router.push(`/pemeriksaan/pemeriksaanTeknis/1-sistemPenerangan/cameraVideo?qId=${q.id}`)
                               }
                               className="flex flex-col items-center justify-center h-32 w-full border-2 border-dashed border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer"
                             >

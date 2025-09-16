@@ -1,16 +1,15 @@
+// src/app/pemeriksaan/pemeriksaanTeknis/1-sistemPenerangan/cameraFoto/page.tsx
 "use client";
 
 import { useEffect, useRef, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-function InputKameraInner() {
+function CameraFotoInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // ambil parameter dari query
   const qId = searchParams.get("qId");
-  const returnTo = searchParams.get("returnTo") || "/pemeriksaan/pemeriksaanTeknis";
 
   useEffect(() => {
     if (!videoRef.current) return;
@@ -28,10 +27,9 @@ function InputKameraInner() {
         }
       })
       .catch((err) => {
-        console.error("❌ Gagal buka kamera:", err);
+        console.error("Error membuka kamera:", err);
       });
 
-    // stop kamera saat keluar halaman
     return () => {
       if (videoRef.current?.srcObject) {
         (videoRef.current.srcObject as MediaStream)
@@ -41,8 +39,8 @@ function InputKameraInner() {
     };
   }, []);
 
-  const ambilFoto = () => {
-    if (!videoRef.current || !qId) return;
+  const ambilGambar = () => {
+    if (!videoRef.current) return;
 
     const video = videoRef.current;
     if (video.videoWidth === 0 || video.videoHeight === 0) {
@@ -61,20 +59,19 @@ function InputKameraInner() {
     if (!ctx) return;
 
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
     const dataUrl = canvas.toDataURL("image/jpeg", 0.8);
 
-    // simpan hasil foto ke localStorage
     try {
       localStorage.setItem(
         `capturedPhoto_${qId}`,
         JSON.stringify({ photo: dataUrl, qId })
       );
     } catch (err) {
-      console.error("❌ Gagal simpan ke localStorage:", err);
+      console.error("Gagal simpan ke localStorage:", err);
     }
 
-    // balik ke halaman asal
-    router.push(returnTo);
+    router.push("/pemeriksaan/pemeriksaanTeknis/1-sistemPenerangan");
   };
 
   return (
@@ -84,7 +81,11 @@ function InputKameraInner() {
         <div className="fixed w-full max-w-[414px]">
           <div className="top-0 left-0 w-full flex items-center justify-between bg-black text-white px-4 py-3 shadow z-50">
             <div className="flex items-center gap-2">
-              <button onClick={() => router.push(returnTo)}>
+              <button
+                onClick={() =>
+                  router.push("/pemeriksaan/pemeriksaanTeknis/1-sistemPenerangan")
+                }
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -114,14 +115,14 @@ function InputKameraInner() {
             className="w-full h-full object-cover"
           />
         </div>
-
         {/* Tombol ambil gambar */}
         <div className="fixed bottom-0 left-0 w-full shadow-lg">
           <div className="bg-black w-full h-[25vh] mx-auto flex flex-col items-center justify-center">
             <p className="text-white mb-4">Pastikan foto terlihat jelas</p>
+
             <div className="rounded-full border-2 border-white h-19 w-19">
               <button
-                onClick={ambilFoto}
+                onClick={ambilGambar}
                 className="w-16 h-16 rounded-full bg-white shadow-lg m-1"
               ></button>
             </div>
@@ -132,11 +133,11 @@ function InputKameraInner() {
   );
 }
 
-// ✅ wrapper dengan Suspense
-export default function InputKameraPage() {
+// ✅ Page wrapper dengan Suspense
+export default function CameraFotoPage() {
   return (
     <Suspense fallback={<div>Loading kamera...</div>}>
-      <InputKameraInner />
+      <CameraFotoInner />
     </Suspense>
   );
 }
