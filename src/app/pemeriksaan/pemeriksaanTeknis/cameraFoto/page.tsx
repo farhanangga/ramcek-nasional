@@ -8,8 +8,9 @@ function CameraFotoInner() {
   const searchParams = useSearchParams();
   const videoRef = useRef<HTMLVideoElement>(null);
 
+  // Ambil query param
   const qId = searchParams.get("qId");
-  const back = searchParams.get("back") || "/pemeriksaan/pemeriksaanTeknis"; // default
+  const returnTo = searchParams.get("returnTo") || "/pemeriksaan/pemeriksaanTeknis";
 
   useEffect(() => {
     if (!videoRef.current) return;
@@ -40,7 +41,7 @@ function CameraFotoInner() {
   }, []);
 
   const ambilGambar = () => {
-    if (!videoRef.current) return;
+    if (!videoRef.current || !qId) return;
 
     const video = videoRef.current;
     if (video.videoWidth === 0 || video.videoHeight === 0) {
@@ -59,7 +60,6 @@ function CameraFotoInner() {
     if (!ctx) return;
 
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
     const dataUrl = canvas.toDataURL("image/jpeg", 0.8);
 
     try {
@@ -71,7 +71,8 @@ function CameraFotoInner() {
       console.error("Gagal simpan ke localStorage:", err);
     }
 
-    router.push(back); // balik ke halaman asal
+    // Balik ke halaman asal
+    router.push(returnTo);
   };
 
   return (
@@ -81,7 +82,7 @@ function CameraFotoInner() {
         <div className="fixed w-full max-w-[414px]">
           <div className="top-0 left-0 w-full flex items-center justify-between bg-black text-white px-4 py-3 shadow z-50">
             <div className="flex items-center gap-2">
-              <button onClick={() => router.push(back)}>
+              <button onClick={() => router.push(returnTo)}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -116,7 +117,6 @@ function CameraFotoInner() {
         <div className="fixed bottom-0 left-0 w-full shadow-lg">
           <div className="bg-black w-full h-[25vh] mx-auto flex flex-col items-center justify-center">
             <p className="text-white mb-4">Pastikan foto terlihat jelas</p>
-
             <div className="rounded-full border-2 border-white h-19 w-19">
               <button
                 onClick={ambilGambar}
@@ -130,7 +130,7 @@ function CameraFotoInner() {
   );
 }
 
-// ✅ Page wrapper dengan Suspense
+// ✅ Page wrapper
 export default function CameraFotoPage() {
   return (
     <Suspense fallback={<div>Loading kamera...</div>}>
