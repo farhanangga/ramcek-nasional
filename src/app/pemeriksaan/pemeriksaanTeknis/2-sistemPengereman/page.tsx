@@ -144,7 +144,7 @@ export default function SistemPengeremanPage() {
                     </label>
                     {/* Input foto & video (hanya muncul di bawah radio yg dipilih) */}
                     {answers[q.id]?.status === opt.value && (
-                      <div className = "mt-4">
+                      <div className = "ml-2 mt-4">
                         <div className="mb-2">
                           <label className="font-bold text-black">Unggah Foto & Video</label>
                         </div>
@@ -193,7 +193,7 @@ export default function SistemPengeremanPage() {
                             className="flex flex-col items-center justify-center h-32 w-full border-2 border-dashed 
                             border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer"
                           >
-                            <img src="/img/icon/camera.png" className="w-6 mb-1" />
+                            <img src="/img/icon/video.png" className="w-7 mb-1" />
                             <span className="text-sm text-gray-700">Ambil Video</span>
                           </div>
                         )}

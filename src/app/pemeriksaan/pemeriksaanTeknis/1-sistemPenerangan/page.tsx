@@ -199,10 +199,10 @@ export default function SistemPeneranganPage() {
 
                     {/* Kalau radio ini kepilih → tampilkan side + media */}
                     {answers[q.id]?.status === opt.value && (
-                      <div className="space-y-3">
+                      <div className="ml-2 space-y-3">
                         {/* Checkbox kanan kiri hanya untuk "tidak" */}
                         {opt.value === "tidak" && (
-                          <div className="flex gap-4">
+                          <div className="flex gap-4 mt-2">
                             <label className="flex items-center gap-1 text-black">
                               <input
                                 type="checkbox"
@@ -271,7 +271,7 @@ export default function SistemPeneranganPage() {
                               }
                               className="flex flex-col items-center justify-center h-32 w-full border-2 border-dashed border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer"
                             >
-                              <img src="/img/icon/camera.png" className="w-6 mb-1" />
+                              <img src="/img/icon/video.png" className="w-7 mb-1" />
                               <span className="text-sm text-gray-700">Ambil Video</span>
                             </div>
                           )}
