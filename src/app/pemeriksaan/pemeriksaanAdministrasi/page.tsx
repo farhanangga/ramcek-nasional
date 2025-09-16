@@ -12,6 +12,7 @@ interface Option {
 interface Question {
   id: string;
   label: string;
+  labelFoto: string;
   options: Option[];
 }
 
@@ -29,6 +30,7 @@ export default function PemeriksaanAdministrasi() {
     {
       id: "stuk",
       label: "Kartu Uji/STUK",
+      labelFoto: "Foto Kartu UJI/STUK",
       options: [
         { value: "ada", label: "Ada, Berlaku", showPhoto: true },
         { value: "tidak_berlaku", label: "Tidak Berlaku", showPhoto: true },
@@ -39,6 +41,7 @@ export default function PemeriksaanAdministrasi() {
     {
       id: "kp_reguler",
       label: "KP Reguler",
+      labelFoto: "Foto KP Reguler",
       options: [
         { value: "ada", label: "Ada, Berlaku", showPhoto: true },
         { value: "tidak_berlaku", label: "Tidak Berlaku", showPhoto: true },
@@ -49,6 +52,7 @@ export default function PemeriksaanAdministrasi() {
     {
       id: "kp_cadangan",
       label: "KP Cadangan (Untuk Kendaraan Cadangan)",
+      labelFoto: "Foto KP Cadangan",
       options: [
         { value: "ada", label: "Ada, Berlaku", showPhoto: true },
         { value: "tidak_berlaku", label: "Tidak Berlaku", showPhoto: true },
@@ -59,6 +63,7 @@ export default function PemeriksaanAdministrasi() {
     {
       id: "sim",
       label: "SIM Pengemudi",
+      labelFoto: "Kartu SIM A Pengemudi",
       options: [
         { value: "a", label: "A Umum", showPhoto: true },
         { value: "b1", label: "B1 Umum", showPhoto: true },
@@ -164,45 +169,56 @@ export default function PemeriksaanAdministrasi() {
 
                     {/* Foto */}
                     {answers[q.id]?.value === opt.value && opt.showPhoto && (
-                      answers[q.id]?.photo ? (
-                        <div className="relative w-52 h-32 border rounded-lg overflow-hidden">
-                          <img
-                            src={answers[q.id].photo}
-                            alt="Preview"
-                            className="object-cover w-full h-full"
-                          />
-                          <button
-                            onClick={() => {
-                              setAnswers((prev) => ({
-                                ...prev,
-                                [q.id]: { ...prev[q.id], photo: undefined },
-                              }));
-                              localStorage.removeItem(`capturedPhoto_${q.id}`);
-                            }}
-                            className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-red-200 text-red-700 rounded-full shadow hover:bg-red-400 hover:text-white"
+                      <div className="mt-3 mb-3">
+                        {/* Label Foto */}
+                        <div className="mb-3">
+                          <label className="font-bold text-black">{q.labelFoto}</label>
+                        </div>
+                      
+                        {answers[q.id]?.photo ? (
+                          <div className="relative w-52 h-32 border rounded-lg overflow-hidden">
+                            <img
+                              src={answers[q.id].photo}
+                              alt="Preview"
+                              className="object-cover w-full h-full"
+                            />
+                            <button
+                              onClick={() => {
+                                setAnswers((prev) => ({
+                                  ...prev,
+                                  [q.id]: { ...prev[q.id], photo: undefined },
+                                }));
+                                localStorage.removeItem(`capturedPhoto_${q.id}`);
+                              }}
+                              className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-red-200 text-red-700 rounded-full shadow hover:bg-red-400 hover:text-white"
+                            >
+                              ✕
+                            </button>
+                          </div>
+                        ) : (
+                          <div
+                            onClick={() =>
+                              router.push(
+                                `/pemeriksaan/pemeriksaanAdministrasi/camera?qId=${q.id}&option=${opt.value}`
+                              )
+                            }
+                            className="flex flex-col items-center justify-center h-32 w-52 border-2 border-dashed border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer"
                           >
-                            ✕
-                          </button>
-                          
-                        </div>
-                      ) : (
-                        <div
-                          onClick={() =>
-                            router.push(
-                              `/pemeriksaan/pemeriksaanAdministrasi/camera?qId=${q.id}&option=${opt.value}`
-                            )
-                          }
-                          className="flex flex-col items-center justify-center h-32 w-52 border-2 border-dashed border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer"
-                        >
-                          <img src="/img/icon/camera.png" className="w-6 mb-1" />
-                          <span className="text-sm text-gray-700">Ambil Foto</span>
-                        </div>
-                      )
+                            <img src="/img/icon/camera.png" className="w-6 mb-1" />
+                            <span className="text-sm text-gray-700">Ambil Foto</span>
+                          </div>
+                        )}
+                      </div>
                     )}
+
 
                     {/* Input teks */}
                     {answers[q.id]?.value === opt.value && opt.showText && (
-                      <div className="ml-6 mt-2">
+                      
+                      <div className="ml-6 mt-2 mb-2">
+                        <div className="mb-3">
+                          <label className="font-bold text-black">Keterangan</label>
+                        </div>
                         <input
                           type="text"
                           value={answers[q.id]?.text || ""}
