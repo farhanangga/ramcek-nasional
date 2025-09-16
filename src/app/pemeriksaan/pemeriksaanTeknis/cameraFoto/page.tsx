@@ -1,4 +1,3 @@
-// src/app/pemeriksaan/pemeriksaanTeknis/1-sistemPenerangan/cameraFoto/page.tsx
 "use client";
 
 import { useEffect, useRef, Suspense } from "react";
@@ -10,6 +9,7 @@ function CameraFotoInner() {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const qId = searchParams.get("qId");
+  const back = searchParams.get("back") || "/pemeriksaan/pemeriksaanTeknis"; // default
 
   useEffect(() => {
     if (!videoRef.current) return;
@@ -71,7 +71,7 @@ function CameraFotoInner() {
       console.error("Gagal simpan ke localStorage:", err);
     }
 
-    router.push("/pemeriksaan/pemeriksaanTeknis/1-sistemPenerangan");
+    router.push(back); // balik ke halaman asal
   };
 
   return (
@@ -81,11 +81,7 @@ function CameraFotoInner() {
         <div className="fixed w-full max-w-[414px]">
           <div className="top-0 left-0 w-full flex items-center justify-between bg-black text-white px-4 py-3 shadow z-50">
             <div className="flex items-center gap-2">
-              <button
-                onClick={() =>
-                  router.push("/pemeriksaan/pemeriksaanTeknis/1-sistemPenerangan")
-                }
-              >
+              <button onClick={() => router.push(back)}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -115,6 +111,7 @@ function CameraFotoInner() {
             className="w-full h-full object-cover"
           />
         </div>
+
         {/* Tombol ambil gambar */}
         <div className="fixed bottom-0 left-0 w-full shadow-lg">
           <div className="bg-black w-full h-[25vh] mx-auto flex flex-col items-center justify-center">
