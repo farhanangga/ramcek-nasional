@@ -62,12 +62,29 @@ export default function SistemPengeremanPage() {
     }
   }, [answers]);
 
+  // ⬇️ Ubah: reset photo & video ketika status diganti
   const handleStatusChange = (qId: string, status: "berfungsi" | "tidak") => {
-    setAnswers((prev) => ({ ...prev, [qId]: { ...prev[qId], status } }));
+    setAnswers((prev) => ({
+      ...prev,
+      [qId]: {
+        ...prev[qId],
+        status,
+        photo: undefined,
+        video: undefined,
+      },
+    }));
+    // Hapus juga dari localStorage biar benar-benar kosong
+    localStorage.removeItem(`capturedPhoto_${qId}`);
+    localStorage.removeItem(`capturedVideo_${qId}`);
   };
 
+  // ⬇️ Ubah: hapus dari state & localStorage
   const handleRemoveFile = (qId: string, type: "photo" | "video") => {
-    setAnswers((prev) => ({ ...prev, [qId]: { ...prev[qId], [type]: undefined } }));
+    setAnswers((prev) => ({
+      ...prev,
+      [qId]: { ...prev[qId], [type]: undefined },
+    }));
+    localStorage.removeItem(`captured${type === "photo" ? "Photo" : "Video"}_${qId}`);
   };
 
   const semuaTerisi = questions.every((q) => answers[q.id]?.status);
@@ -93,33 +110,32 @@ export default function SistemPengeremanPage() {
         </div>
 
         {/* Stepper */}
-<div className="px-4 py-3 pt-16">
-  <p className="text-sm text-black mb-6">
-    Langkah 2 dari 8 <br />
-    <span className="font-semibold">Sistem Pengereman</span>
-  </p>
-  <div className="flex items-center justify-between mx-4">
-    {[...Array(8)].map((_, idx) => (
-      <div key={idx} className="flex items-center w-full">
-        <div
-          className={`flex items-center justify-center w-5 h-5 rounded-full text-[10px] font-bold
-            ${idx === 0 ? "bg-[#29005E] text-white" :
-              idx === 1 ? "bg-white border border-[#29005E] text-[#29005E]" : "bg-gray-300 text-transparent"}
-          `}
-        >
-          {idx === 0 ? "✓" : ""}
+        <div className="px-4 py-3 pt-16">
+          <p className="text-sm text-black mb-6">
+            Langkah 2 dari 8 <br />
+            <span className="font-semibold">Sistem Pengereman</span>
+          </p>
+          <div className="flex items-center justify-between mx-4">
+            {[...Array(8)].map((_, idx) => (
+              <div key={idx} className="flex items-center w-full">
+                <div
+                  className={`flex items-center justify-center w-5 h-5 rounded-full text-[10px] font-bold
+                    ${idx === 0 ? "bg-[#29005E] text-white" :
+                      idx === 1 ? "bg-white border border-[#29005E] text-[#29005E]" : "bg-gray-300 text-transparent"}
+                  `}
+                >
+                  {idx === 0 ? "✓" : ""}
+                </div>
+                {idx < 7 && (
+                  <div
+                    className={`flex-1 h-0.5 
+                      ${idx === 0 ? "bg-[#29005E]" : "bg-gray-300"}`}
+                  ></div>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
-        {idx < 7 && (
-          <div
-            className={`flex-1 h-0.5 
-              ${idx === 0 ? "bg-[#29005E]" : "bg-gray-300"}`}
-          ></div>
-        )}
-      </div>
-    ))}
-  </div>
-</div>
-
 
         {/* Isi pertanyaan */}
         <div className="pt-4 px-4">
@@ -142,62 +158,62 @@ export default function SistemPengeremanPage() {
                       />
                       {opt.label}
                     </label>
+
                     {/* Input foto & video (hanya muncul di bawah radio yg dipilih) */}
                     {answers[q.id]?.status === opt.value && (
-                      <div className = "ml-2 mt-4">
+                      <div className="ml-2 mt-4">
                         <div className="mb-2">
                           <label className="font-bold text-black">Unggah Foto & Video</label>
                         </div>
-                      <div className="flex gap-3 mt-2 ">
-                        
-                        {/* Foto */}
-                        {answers[q.id]?.photo ? (
-                          <div className="relative w-full h-32 border rounded-lg overflow-hidden">
-                            <img src={answers[q.id]?.photo} alt="foto"
-                              className="object-cover w-full h-full" />
-                            <button
-                              onClick={() => handleRemoveFile(q.id, "photo")}
-                              className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center 
-                              bg-red-200 text-red-700 rounded-full shadow hover:bg-red-400 hover:text-white"
+                        <div className="flex gap-3 mt-2">
+                          {/* Foto */}
+                          {answers[q.id]?.photo ? (
+                            <div className="relative w-full h-32 border rounded-lg overflow-hidden">
+                              <img src={answers[q.id]?.photo} alt="foto"
+                                className="object-cover w-full h-full" />
+                              <button
+                                onClick={() => handleRemoveFile(q.id, "photo")}
+                                className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center 
+                                bg-red-200 text-red-700 rounded-full shadow hover:bg-red-400 hover:text-white"
+                              >
+                                ✕
+                              </button>
+                            </div>
+                          ) : (
+                            <div
+                              onClick={() => router.push(`/pemeriksaan/pemeriksaanTeknis/2-sistemPengereman/cameraFoto?qId=${q.id}`)}
+                              className="flex flex-col items-center justify-center h-32 w-full border-2 border-dashed 
+                              border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer"
                             >
-                              ✕
-                            </button>
-                          </div>
-                        ) : (
-                          <div
-                            onClick={() => router.push(`/pemeriksaan/pemeriksaanTeknis/2-sistemPengereman/cameraFoto?qId=${q.id}`)}
-                            className="flex flex-col items-center justify-center h-32 w-full border-2 border-dashed 
-                            border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer"
-                          >
-                            <img src="/img/icon/camera.png" className="w-6 mb-1" />
-                            <span className="text-sm text-gray-700">Ambil Foto</span>
-                          </div>
-                        )}
+                              <img src="/img/icon/camera.png" className="w-6 mb-1" />
+                              <span className="text-sm text-gray-700">Ambil Foto</span>
+                            </div>
+                          )}
 
-                        {/* Video */}
-                        {answers[q.id]?.video ? (
-                          <div className="relative w-full h-32 border rounded-lg overflow-hidden">
-                            <video src={answers[q.id]?.video}
-                              className="object-cover w-full h-full" controls />
-                            <button
-                              onClick={() => handleRemoveFile(q.id, "video")}
-                              className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center 
-                              bg-red-200 text-red-700 rounded-full shadow hover:bg-red-400 hover:text-white"
+                          {/* Video */}
+                          {answers[q.id]?.video ? (
+                            <div className="relative w-full h-32 border rounded-lg overflow-hidden">
+                              <video src={answers[q.id]?.video}
+                                className="object-cover w-full h-full" controls />
+                              <button
+                                onClick={() => handleRemoveFile(q.id, "video")}
+                                className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center 
+                                bg-red-200 text-red-700 rounded-full shadow hover:bg-red-400 hover:text-white"
+                              >
+                                ✕
+                              </button>
+                            </div>
+                          ) : (
+                            <div
+                              onClick={() => router.push(`/pemeriksaan/pemeriksaanTeknis/2-sistemPengereman/cameraVideo?qId=${q.id}`)}
+                              className="flex flex-col items-center justify-center h-32 w-full border-2 border-dashed 
+                              border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer"
                             >
-                              ✕
-                            </button>
-                          </div>
-                        ) : (
-                          <div
-                            onClick={() => router.push(`/pemeriksaan/pemeriksaanTeknis/2-sistemPengereman/cameraVideo?qId=${q.id}`)}
-                            className="flex flex-col items-center justify-center h-32 w-full border-2 border-dashed 
-                            border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer"
-                          >
-                            <img src="/img/icon/video.png" className="w-7 mb-1" />
-                            <span className="text-sm text-gray-700">Ambil Video</span>
-                          </div>
-                        )}
-                      </div>
+                              <img src="/img/icon/video.png" className="w-7 mb-1" />
+                              <span className="text-sm text-gray-700">Ambil Video</span>
+                            </div>
+                          )}
+                        </div>
                       </div>
                     )}
                   </div>
