@@ -3,12 +3,12 @@
 import { useEffect, useRef, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-function CameraFotoInner() {
+function InputKameraInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // Ambil query param
+  // ambil parameter dari query
   const qId = searchParams.get("qId");
   const returnTo = searchParams.get("returnTo") || "/pemeriksaan/pemeriksaanTeknis";
 
@@ -28,9 +28,10 @@ function CameraFotoInner() {
         }
       })
       .catch((err) => {
-        console.error("Error membuka kamera:", err);
+        console.error("❌ Gagal buka kamera:", err);
       });
 
+    // stop kamera saat keluar halaman
     return () => {
       if (videoRef.current?.srcObject) {
         (videoRef.current.srcObject as MediaStream)
@@ -40,7 +41,7 @@ function CameraFotoInner() {
     };
   }, []);
 
-  const ambilGambar = () => {
+  const ambilFoto = () => {
     if (!videoRef.current || !qId) return;
 
     const video = videoRef.current;
@@ -62,16 +63,17 @@ function CameraFotoInner() {
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
     const dataUrl = canvas.toDataURL("image/jpeg", 0.8);
 
+    // simpan hasil foto ke localStorage
     try {
       localStorage.setItem(
         `capturedPhoto_${qId}`,
         JSON.stringify({ photo: dataUrl, qId })
       );
     } catch (err) {
-      console.error("Gagal simpan ke localStorage:", err);
+      console.error("❌ Gagal simpan ke localStorage:", err);
     }
 
-    // Balik ke halaman asal
+    // balik ke halaman asal
     router.push(returnTo);
   };
 
@@ -119,7 +121,7 @@ function CameraFotoInner() {
             <p className="text-white mb-4">Pastikan foto terlihat jelas</p>
             <div className="rounded-full border-2 border-white h-19 w-19">
               <button
-                onClick={ambilGambar}
+                onClick={ambilFoto}
                 className="w-16 h-16 rounded-full bg-white shadow-lg m-1"
               ></button>
             </div>
@@ -130,11 +132,11 @@ function CameraFotoInner() {
   );
 }
 
-// ✅ Page wrapper
-export default function CameraFotoPage() {
+// ✅ wrapper dengan Suspense
+export default function InputKameraPage() {
   return (
     <Suspense fallback={<div>Loading kamera...</div>}>
-      <CameraFotoInner />
+      <InputKameraInner />
     </Suspense>
   );
 }
