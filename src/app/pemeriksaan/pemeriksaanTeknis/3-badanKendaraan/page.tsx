@@ -27,13 +27,13 @@ const questions = [
   },
 ];
 
-export default function BadanKendaraanPage() {
+export default function SistemPengeremanPage() {
   const router = useRouter();
   const [answers, setAnswers] = useState<Record<string, Answer>>({});
 
   // Load jawaban lama + merge foto/video baru
   useEffect(() => {
-    const savedAnswers = localStorage.getItem("badanKendaraanAnswers");
+    const savedAnswers = localStorage.getItem("sistemPengeremanAnswers");
     if (savedAnswers) {
       setAnswers(JSON.parse(savedAnswers));
     }
@@ -58,12 +58,22 @@ export default function BadanKendaraanPage() {
   // Simpan jawaban tiap kali berubah
   useEffect(() => {
     if (Object.keys(answers).length > 0) {
-      localStorage.setItem("badanKendaraanAnswers", JSON.stringify(answers));
+      localStorage.setItem("sistemPengeremanAnswers", JSON.stringify(answers));
     }
   }, [answers]);
 
+  // ⬇️ Perbaikan: reset photo & video ketika option diganti
   const handleStatusChange = (qId: string, status: string) => {
-    setAnswers((prev) => ({ ...prev, [qId]: { ...prev[qId], status } }));
+    setAnswers((prev) => ({
+      ...prev,
+      [qId]: {
+        status,
+        photo: undefined,
+        video: undefined,
+      },
+    }));
+    localStorage.removeItem(`capturedPhoto_${qId}`);
+    localStorage.removeItem(`capturedVideo_${qId}`);
   };
 
   const handleRemoveFile = (qId: string, type: "photo" | "video") => {
@@ -109,7 +119,8 @@ export default function BadanKendaraanPage() {
                     className={`flex items-center justify-center w-5 h-5 rounded-full text-[10px] font-bold
                       ${isCompleted ? "bg-[#29005E] text-white" :
                         isActive ? "bg-white border border-[#29005E] text-[#29005E]" :
-                        "bg-gray-300 text-transparent"}`}
+                        "bg-gray-300 text-transparent"}
+                    `}
                   >
                     {isCompleted ? "✓" : ""}
                   </div>
@@ -170,7 +181,7 @@ export default function BadanKendaraanPage() {
                             </div>
                           ) : (
                             <div
-                              onClick={() => router.push(`/pemeriksaan/pemeriksaanTeknis/3-badanKendaraan/cameraFoto?qId=${q.id}`)}
+                              onClick={() => router.push(`/pemeriksaan/pemeriksaanTeknis/2-sistemPengereman/cameraFoto?qId=${q.id}`)}
                               className="flex flex-col items-center justify-center h-32 w-full border-2 border-dashed 
                               border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer"
                             >
@@ -194,7 +205,7 @@ export default function BadanKendaraanPage() {
                             </div>
                           ) : (
                             <div
-                              onClick={() => router.push(`/pemeriksaan/pemeriksaanTeknis/3-badanKendaraan/cameraVideo?qId=${q.id}`)}
+                              onClick={() => router.push(`/pemeriksaan/pemeriksaanTeknis/2-sistemPengereman/cameraVideo?qId=${q.id}`)}
                               className="flex flex-col items-center justify-center h-32 w-full border-2 border-dashed 
                               border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer"
                             >
