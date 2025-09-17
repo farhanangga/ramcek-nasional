@@ -77,23 +77,24 @@ export default function SistemPengeremanPage() {
     }
   }, [answers]);
 
-  const handleStatusChange = (qId: string, status: string, opt: any) => {
-    setAnswers((prev) => {
-      let updated: Answer = { ...prev[qId], status };
+const handleStatusChange = (qId: string, status: string, opt: any) => {
+  setAnswers((prev) => {
+    let updated: Answer = { status };
 
-      // 🔥 kalau pilih teks, hapus foto & video
-      if (opt.inputext) {
-        updated = { status, text: "", photo: undefined, video: undefined };
-      }
+    if (opt.inputext) {
+      // kalau pilih teks → reset foto & video
+      updated = { status, text: "" };
+    }
 
-      // 🔥 kalau pilih foto/video, hapus teks
-      if (opt.inputFoto || opt.inputVideo) {
-        updated = { status, photo: undefined, video: undefined, text: undefined };
-      }
+    if (opt.inputFoto || opt.inputVideo) {
+      // kalau pilih foto/video → reset teks
+      updated = { status, photo: undefined, video: undefined };
+    }
 
-      return { ...prev, [qId]: updated };
-    });
-  };
+    return { ...prev, [qId]: updated };
+  });
+};
+
 
   const handleRemoveFile = (qId: string, type: "photo" | "video") => {
     setAnswers((prev) => ({
@@ -102,12 +103,13 @@ export default function SistemPengeremanPage() {
     }));
   };
 
-  const handleTextChange = (qId: string, value: string) => {
-    setAnswers((prev) => ({
-      ...prev,
-      [qId]: { ...prev[qId], text: value },
-    }));
-  };
+const handleTextChange = (qId: string, value: string) => {
+  setAnswers((prev) => ({
+    ...prev,
+    [qId]: { ...prev[qId], text: value },
+  }));
+};
+
 
   const semuaTerisi = questions.every((q) => answers[q.id]?.status);
 
@@ -223,7 +225,7 @@ export default function SistemPengeremanPage() {
                             <div
                               onClick={() =>
                                 router.push(
-                                  `/pemeriksaan/pemeriksaanTeknis/2-sistemPengereman/cameraFoto?qId=${q.id}`
+                                  `/pemeriksaan/pemeriksaanTeknis/8-tanggapDarurat/cameraFoto?qId=${q.id}`
                                 )
                               }
                               className="flex flex-col items-center justify-center h-32 w-full border-2 border-dashed 
@@ -254,7 +256,7 @@ export default function SistemPengeremanPage() {
                             <div
                               onClick={() =>
                                 router.push(
-                                  `/pemeriksaan/pemeriksaanTeknis/2-sistemPengereman/cameraVideo?qId=${q.id}`
+                                  `/pemeriksaan/pemeriksaanTeknis/8-tanggapDarurat/cameraVideo?qId=${q.id}`
                                 )
                               }
                               className="flex flex-col items-center justify-center h-32 w-full border-2 border-dashed 
@@ -294,7 +296,7 @@ export default function SistemPengeremanPage() {
         <div className="fixed bottom-0 left-0 w-full bg-gray-100 shadow-lg">
           <div className="max-w-[414px] mx-auto px-4 py-3 flex gap-3">
             <button
-              onClick={() => router.push("/pemeriksaan/pemeriksaanTeknis/4-kondisiBan")}
+              onClick={() => router.push("/pemeriksaan/pemeriksaanTeknis/7-kondisiBan")}
               className="w-1/2 py-3 font-bold text-[#29005E] border border-[#29005E] rounded-md"
             >
               SEBELUMNYA
