@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 interface Answer {
-  status?: "berfungsi" | "tidak";
+  status?: string;
   photo?: string;
   video?: string;
 }
@@ -22,18 +22,18 @@ const questions = [
     label: "Pintu Utama",
     options: [
       { value: "Berfungsi", label: "Berfungsi", inputFoto: true, inputVideo: true },
-      { value: "tidak", label: "Tidak Berfungsi", inputFoto: true, inputVideo: true },
+      { value: "Tidak Berfungsi", label: "Tidak Berfungsi", inputFoto: true, inputVideo: true },
     ],
   },
 ];
 
-export default function SistemPengeremanPage() {
+export default function BadanKendaraanPage() {
   const router = useRouter();
   const [answers, setAnswers] = useState<Record<string, Answer>>({});
 
   // Load jawaban lama + merge foto/video baru
   useEffect(() => {
-    const savedAnswers = localStorage.getItem("sistemPengeremanAnswers");
+    const savedAnswers = localStorage.getItem("badanKendaraanAnswers");
     if (savedAnswers) {
       setAnswers(JSON.parse(savedAnswers));
     }
@@ -58,11 +58,11 @@ export default function SistemPengeremanPage() {
   // Simpan jawaban tiap kali berubah
   useEffect(() => {
     if (Object.keys(answers).length > 0) {
-      localStorage.setItem("sistemPengeremanAnswers", JSON.stringify(answers));
+      localStorage.setItem("badanKendaraanAnswers", JSON.stringify(answers));
     }
   }, [answers]);
 
-  const handleStatusChange = (qId: string, status: "berfungsi" | "tidak") => {
+  const handleStatusChange = (qId: string, status: string) => {
     setAnswers((prev) => ({ ...prev, [qId]: { ...prev[qId], status } }));
   };
 
@@ -94,37 +94,36 @@ export default function SistemPengeremanPage() {
 
         {/* Stepper */}
         <div className="px-4 py-3 pt-16">
-        <p className="text-sm text-black mb-6">
+          <p className="text-sm text-black mb-6">
             Langkah 3 dari 8 <br />
             <span className="font-semibold">Badan Kendaraan</span>
-        </p>
-        <div className="flex items-center justify-between mx-4">
+          </p>
+          <div className="flex items-center justify-between mx-4">
             {[...Array(8)].map((_, idx) => {
-            const isCompleted = idx < 2; // step 1 & 2 selesai
-            const isActive = idx === 2;  // step 3 aktif
+              const isCompleted = idx < 2; // step 1 & 2 selesai
+              const isActive = idx === 2;  // step 3 aktif
 
-            return (
+              return (
                 <div key={idx} className="flex items-center w-full">
-                <div
+                  <div
                     className={`flex items-center justify-center w-5 h-5 rounded-full text-[10px] font-bold
-                    ${isCompleted ? "bg-[#29005E] text-white" :
+                      ${isCompleted ? "bg-[#29005E] text-white" :
                         isActive ? "bg-white border border-[#29005E] text-[#29005E]" :
-                        "bg-gray-300 text-transparent"}
-                    `}
-                >
+                        "bg-gray-300 text-transparent"}`}
+                  >
                     {isCompleted ? "✓" : ""}
-                </div>
+                  </div>
 
-                {idx < 7 && (
+                  {idx < 7 && (
                     <div
-                    className={`flex-1 h-0.5 
+                      className={`flex-1 h-0.5 
                         ${isCompleted ? "bg-[#29005E]" : "bg-gray-300"}`}
                     ></div>
-                )}
+                  )}
                 </div>
-            );
+              );
             })}
-        </div>
+          </div>
         </div>
 
         {/* Isi pertanyaan */}
@@ -143,7 +142,7 @@ export default function SistemPengeremanPage() {
                         type="radio"
                         name={q.id}
                         checked={answers[q.id]?.status === opt.value}
-                        onChange={() => handleStatusChange(q.id, opt.value as "berfungsi" | "tidak")}
+                        onChange={() => handleStatusChange(q.id, opt.value)}
                         className="accent-[#29005E]"
                       />
                       {opt.label}
@@ -155,55 +154,55 @@ export default function SistemPengeremanPage() {
                         <div className="mb-2">
                           <label className="font-bold text-black">Unggah Foto & Video</label>
                         </div>
-                      <div className="flex gap-3 mt-2">
-                        {/* Foto */}
-                        {answers[q.id]?.photo ? (
-                          <div className="relative w-full h-32 border rounded-lg overflow-hidden">
-                            <img src={answers[q.id]?.photo} alt="foto"
-                              className="object-cover w-full h-full" />
-                            <button
-                              onClick={() => handleRemoveFile(q.id, "photo")}
-                              className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center 
-                              bg-red-200 text-red-700 rounded-full shadow hover:bg-red-400 hover:text-white"
+                        <div className="flex gap-3 mt-2">
+                          {/* Foto */}
+                          {answers[q.id]?.photo ? (
+                            <div className="relative w-full h-32 border rounded-lg overflow-hidden">
+                              <img src={answers[q.id]?.photo} alt="foto"
+                                className="object-cover w-full h-full" />
+                              <button
+                                onClick={() => handleRemoveFile(q.id, "photo")}
+                                className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center 
+                                bg-red-200 text-red-700 rounded-full shadow hover:bg-red-400 hover:text-white"
+                              >
+                                ✕
+                              </button>
+                            </div>
+                          ) : (
+                            <div
+                              onClick={() => router.push(`/pemeriksaan/pemeriksaanTeknis/3-badanKendaraan/cameraFoto?qId=${q.id}`)}
+                              className="flex flex-col items-center justify-center h-32 w-full border-2 border-dashed 
+                              border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer"
                             >
-                              ✕
-                            </button>
-                          </div>
-                        ) : (
-                          <div
-                            onClick={() => router.push(`/pemeriksaan/pemeriksaanTeknis/2-sistemPengereman/cameraFoto?qId=${q.id}`)}
-                            className="flex flex-col items-center justify-center h-32 w-full border-2 border-dashed 
-                            border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer"
-                          >
-                            <img src="/img/icon/camera.png" className="w-6 mb-1" />
-                            <span className="text-sm text-gray-700">Ambil Foto</span>
-                          </div>
-                        )}
+                              <img src="/img/icon/camera.png" className="w-6 mb-1" />
+                              <span className="text-sm text-gray-700">Ambil Foto</span>
+                            </div>
+                          )}
 
-                        {/* Video */}
-                        {answers[q.id]?.video ? (
-                          <div className="relative w-full h-32 border rounded-lg overflow-hidden">
-                            <video src={answers[q.id]?.video}
-                              className="object-cover w-full h-full" controls />
-                            <button
-                              onClick={() => handleRemoveFile(q.id, "video")}
-                              className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center 
-                              bg-red-200 text-red-700 rounded-full shadow hover:bg-red-400 hover:text-white"
+                          {/* Video */}
+                          {answers[q.id]?.video ? (
+                            <div className="relative w-full h-32 border rounded-lg overflow-hidden">
+                              <video src={answers[q.id]?.video}
+                                className="object-cover w-full h-full" controls />
+                              <button
+                                onClick={() => handleRemoveFile(q.id, "video")}
+                                className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center 
+                                bg-red-200 text-red-700 rounded-full shadow hover:bg-red-400 hover:text-white"
+                              >
+                                ✕
+                              </button>
+                            </div>
+                          ) : (
+                            <div
+                              onClick={() => router.push(`/pemeriksaan/pemeriksaanTeknis/3-badanKendaraan/cameraVideo?qId=${q.id}`)}
+                              className="flex flex-col items-center justify-center h-32 w-full border-2 border-dashed 
+                              border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer"
                             >
-                              ✕
-                            </button>
-                          </div>
-                        ) : (
-                          <div
-                            onClick={() => router.push(`/pemeriksaan/pemeriksaanTeknis/2-sistemPengereman/cameraVideo?qId=${q.id}`)}
-                            className="flex flex-col items-center justify-center h-32 w-full border-2 border-dashed 
-                            border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer"
-                          >
-                            <img src="/img/icon/video.png" className="w-7 mb-1" />
-                            <span className="text-sm text-gray-700">Ambil Video</span>
-                          </div>
-                        )}
-                      </div>
+                              <img src="/img/icon/video.png" className="w-7 mb-1" />
+                              <span className="text-sm text-gray-700">Ambil Video</span>
+                            </div>
+                          )}
+                        </div>
                       </div>
                     )}
                   </div>
