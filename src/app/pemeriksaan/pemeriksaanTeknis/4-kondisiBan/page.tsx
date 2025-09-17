@@ -196,7 +196,7 @@ export default function KondisiBanPage() {
                             <div
                               onClick={() =>
                                 router.push(
-                                  `/pemeriksaan/pemeriksaanTeknis/2-sistemPengereman/cameraFoto?qId=${q.id}`
+                                  `/pemeriksaan/pemeriksaanTeknis/4-kondisiBan/cameraFoto?qId=${q.id}`
                                 )
                               }
                               className="flex flex-col items-center justify-center h-32 w-full border-2 border-dashed 
@@ -229,7 +229,7 @@ export default function KondisiBanPage() {
                             <div
                               onClick={() =>
                                 router.push(
-                                  `/pemeriksaan/pemeriksaanTeknis/2-sistemPengereman/cameraVideo?qId=${q.id}`
+                                  `/pemeriksaan/pemeriksaanTeknis/4-kondisiBan/cameraVideo?qId=${q.id}`
                                 )
                               }
                               className="flex flex-col items-center justify-center h-32 w-full border-2 border-dashed 
