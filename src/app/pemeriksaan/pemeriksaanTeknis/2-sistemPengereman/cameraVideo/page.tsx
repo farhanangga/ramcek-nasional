@@ -91,7 +91,7 @@ function CameraVideoInner() {
             <div className="flex items-center gap-2">
               <button
                 onClick={() =>
-                  router.push("/pemeriksaan/pemeriksaanTeknis/1-sistemPenerangan")
+                  router.push("/pemeriksaan/pemeriksaanTeknis/2-sistemPengereman")
                 }
               >
                 <svg
