@@ -296,7 +296,7 @@ const handleTextChange = (qId: string, value: string) => {
         <div className="fixed bottom-0 left-0 w-full bg-gray-100 shadow-lg">
           <div className="max-w-[414px] mx-auto px-4 py-3 flex gap-3">
             <button
-              onClick={() => router.push("/pemeriksaan/pemeriksaanTeknis/7-kondisiBan")}
+              onClick={() => router.push("/pemeriksaan/pemeriksaanTeknis/7-penghapusKaca")}
               className="w-1/2 py-3 font-bold text-[#29005E] border border-[#29005E] rounded-md"
             >
               SEBELUMNYA
