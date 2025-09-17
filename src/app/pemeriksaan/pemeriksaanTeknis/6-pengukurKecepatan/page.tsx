@@ -14,8 +14,20 @@ const questions = [
     id: "pengukur_kecepatan",
     label: "Pengukur Kecepatan",
     options: [
-      { value: "adaBerfungsi", label: "Ada dan Berfungsi", inputFoto: true, inputVideo: true, inputText: true },
-      { value: "tidakBerfungsi", label: "Tidak Berfungsi", inputFoto: true, inputVideo: true, inputText: true },
+      {
+        value: "adaBerfungsi",
+        label: "Ada dan Berfungsi",
+        inputFoto: true,
+        inputVideo: true,
+        inputText: true,
+      },
+      {
+        value: "tidakBerfungsi",
+        label: "Tidak Berfungsi",
+        inputFoto: true,
+        inputVideo: true,
+        inputText: true,
+      },
       { value: "tidakAda", label: "Tidak Ada", inputText: true },
     ],
   },
@@ -25,7 +37,7 @@ export default function SistemPengeremanPage() {
   const router = useRouter();
   const [answers, setAnswers] = useState<Record<string, Answer>>({});
 
-  // Ambil jawaban lama + merge foto/video baru
+  // Ambil jawaban lama + merge foto/video baru dari localStorage kamera
   useEffect(() => {
     const savedAnswers = localStorage.getItem("sistemPengeremanAnswers");
     if (savedAnswers) {
@@ -56,16 +68,36 @@ export default function SistemPengeremanPage() {
     }
   }, [answers]);
 
+  // Reset semua input selain status ketika user ganti pilihan
   const handleStatusChange = (qId: string, status: string) => {
-    setAnswers((prev) => ({ ...prev, [qId]: { ...prev[qId], status } }));
+    setAnswers((prev) => ({
+      ...prev,
+      [qId]: {
+        status,
+        photo: undefined,
+        video: undefined,
+        text: undefined,
+      },
+    }));
   };
 
+  // Simpan teks langsung
   const handleTextChange = (qId: string, value: string) => {
-    setAnswers((prev) => ({ ...prev, [qId]: { ...prev[qId], text: value } }));
+    setAnswers((prev) => ({
+      ...prev,
+      [qId]: {
+        ...prev[qId],
+        text: value,
+      },
+    }));
   };
 
+  // Hapus foto/video manual
   const handleRemoveFile = (qId: string, type: "photo" | "video") => {
-    setAnswers((prev) => ({ ...prev, [qId]: { ...prev[qId], [type]: undefined } }));
+    setAnswers((prev) => ({
+      ...prev,
+      [qId]: { ...prev[qId], [type]: undefined },
+    }));
   };
 
   const semuaTerisi = questions.every((q) => answers[q.id]?.status);
@@ -77,11 +109,24 @@ export default function SistemPengeremanPage() {
         <div className="fixed w-full max-w-[414px] z-50">
           <div className="flex items-center justify-between bg-[#29005E] text-white px-4 py-3 shadow">
             <div className="flex items-center gap-2">
-              <button onClick={() => router.push("/pemeriksaan/pemeriksaanTeknis/5-perlengkapan")}>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                  strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                  <path strokeLinecap="round" strokeLinejoin="round"
-                    d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+              <button
+                onClick={() =>
+                  router.push("/pemeriksaan/pemeriksaanTeknis/5-perlengkapan")
+                }
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+                  />
                 </svg>
               </button>
               <span className="font-semibold">Pemeriksaan Teknis Utama</span>
@@ -104,14 +149,22 @@ export default function SistemPengeremanPage() {
                 <div key={idx} className="flex items-center w-full">
                   <div
                     className={`flex items-center justify-center w-5 h-5 rounded-full text-[10px] font-bold
-                      ${isCompleted ? "bg-[#29005E] text-white" :
-                        isActive ? "bg-white border border-[#29005E] text-[#29005E]" :
-                        "bg-gray-300 text-transparent"}`}
+                      ${
+                        isCompleted
+                          ? "bg-[#29005E] text-white"
+                          : isActive
+                          ? "bg-white border border-[#29005E] text-[#29005E]"
+                          : "bg-gray-300 text-transparent"
+                      }`}
                   >
                     {isCompleted ? "✓" : ""}
                   </div>
                   {idx < 7 && (
-                    <div className={`flex-1 h-0.5 ${isCompleted ? "bg-[#29005E]" : "bg-gray-300"}`} />
+                    <div
+                      className={`flex-1 h-0.5 ${
+                        isCompleted ? "bg-[#29005E]" : "bg-gray-300"
+                      }`}
+                    />
                   )}
                 </div>
               );
@@ -144,31 +197,49 @@ export default function SistemPengeremanPage() {
                     {/* Input berdasarkan pilihan */}
                     {answers[q.id]?.status === opt.value && (
                       <div className="ml-2 mt-4 space-y-4">
-                        {/* Input teks (Kecepatan atau Keterangan) */}
-                        <div>
-                          <label className="font-bold text-black">
-                            {opt.value === "tidakAda" ? "Keterangan" : "Kecepatan KM/Jam"}
-                          </label>
-                          <input
-                            type="text"
-                            value={answers[q.id]?.text || ""}
-                            onChange={(e) => handleTextChange(q.id, e.target.value)}
-                            placeholder={opt.value === "tidakAda" ? `Keterangan ${q.label}` : "Masukkan angka kecepatan"}
-                            className="w-full border rounded-md p-3 text-black mt-2"
-                          />
-                        </div>
-
-                        {/* Foto & Video hanya jika bukan "tidakAda" */}
-                        {opt.value !== "tidakAda" && (
+                        {/* Input teks */}
+                        {opt.inputText && (
                           <div>
-                            <label className="font-bold text-black">Unggah Foto & Video</label>
+                            <label className="font-bold text-black">
+                              {opt.value === "tidakAda"
+                                ? "Keterangan"
+                                : "Kecepatan KM/Jam"}
+                            </label>
+                            <input
+                              type="text"
+                              value={answers[q.id]?.text || ""}
+                              onChange={(e) =>
+                                handleTextChange(q.id, e.target.value)
+                              }
+                              placeholder={
+                                opt.value === "tidakAda"
+                                  ? `Keterangan ${q.label}`
+                                  : "Masukkan angka kecepatan"
+                              }
+                              className="w-full border rounded-md p-3 text-black mt-2"
+                            />
+                          </div>
+                        )}
+
+                        {/* Foto & Video */}
+                        {opt.inputFoto && opt.inputVideo && opt.value !== "tidakAda" && (
+                          <div>
+                            <label className="font-bold text-black">
+                              Unggah Foto & Video
+                            </label>
                             <div className="flex gap-3 mt-2">
                               {/* Foto */}
                               {answers[q.id]?.photo ? (
                                 <div className="relative w-full h-32 border rounded-lg overflow-hidden">
-                                  <img src={answers[q.id]?.photo} alt="foto" className="object-cover w-full h-full" />
+                                  <img
+                                    src={answers[q.id]?.photo}
+                                    alt="foto"
+                                    className="object-cover w-full h-full"
+                                  />
                                   <button
-                                    onClick={() => handleRemoveFile(q.id, "photo")}
+                                    onClick={() =>
+                                      handleRemoveFile(q.id, "photo")
+                                    }
                                     className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center 
                                     bg-red-200 text-red-700 rounded-full shadow hover:bg-red-400 hover:text-white"
                                   >
@@ -177,21 +248,36 @@ export default function SistemPengeremanPage() {
                                 </div>
                               ) : (
                                 <div
-                                  onClick={() => router.push(`/pemeriksaan/pemeriksaanTeknis/2-sistemPengereman/cameraFoto?qId=${q.id}`)}
+                                  onClick={() =>
+                                    router.push(
+                                      `/pemeriksaan/pemeriksaanTeknis/2-sistemPengereman/cameraFoto?qId=${q.id}`
+                                    )
+                                  }
                                   className="flex flex-col items-center justify-center h-32 w-full border-2 border-dashed 
                                   border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer"
                                 >
-                                  <img src="/img/icon/camera.png" className="w-6 mb-1" />
-                                  <span className="text-sm text-gray-700">Ambil Foto</span>
+                                  <img
+                                    src="/img/icon/camera.png"
+                                    className="w-6 mb-1"
+                                  />
+                                  <span className="text-sm text-gray-700">
+                                    Ambil Foto
+                                  </span>
                                 </div>
                               )}
 
                               {/* Video */}
                               {answers[q.id]?.video ? (
                                 <div className="relative w-full h-32 border rounded-lg overflow-hidden">
-                                  <video src={answers[q.id]?.video} className="object-cover w-full h-full" controls />
+                                  <video
+                                    src={answers[q.id]?.video}
+                                    className="object-cover w-full h-full"
+                                    controls
+                                  />
                                   <button
-                                    onClick={() => handleRemoveFile(q.id, "video")}
+                                    onClick={() =>
+                                      handleRemoveFile(q.id, "video")
+                                    }
                                     className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center 
                                     bg-red-200 text-red-700 rounded-full shadow hover:bg-red-400 hover:text-white"
                                   >
@@ -200,12 +286,21 @@ export default function SistemPengeremanPage() {
                                 </div>
                               ) : (
                                 <div
-                                  onClick={() => router.push(`/pemeriksaan/pemeriksaanTeknis/2-sistemPengereman/cameraVideo?qId=${q.id}`)}
+                                  onClick={() =>
+                                    router.push(
+                                      `/pemeriksaan/pemeriksaanTeknis/2-sistemPengereman/cameraVideo?qId=${q.id}`
+                                    )
+                                  }
                                   className="flex flex-col items-center justify-center h-32 w-full border-2 border-dashed 
                                   border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer"
                                 >
-                                  <img src="/img/icon/video.png" className="w-7 mb-1" />
-                                  <span className="text-sm text-gray-700">Ambil Video</span>
+                                  <img
+                                    src="/img/icon/video.png"
+                                    className="w-7 mb-1"
+                                  />
+                                  <span className="text-sm text-gray-700">
+                                    Ambil Video
+                                  </span>
                                 </div>
                               )}
                             </div>
@@ -224,16 +319,24 @@ export default function SistemPengeremanPage() {
         <div className="fixed bottom-0 left-0 w-full bg-gray-100 shadow-lg">
           <div className="max-w-[414px] mx-auto px-4 py-3 flex gap-3">
             <button
-              onClick={() => router.push("/pemeriksaan/pemeriksaanTeknis/5-perlengkapan")}
+              onClick={() =>
+                router.push("/pemeriksaan/pemeriksaanTeknis/5-perlengkapan")
+              }
               className="w-1/2 py-3 font-bold text-[#29005E] border border-[#29005E] rounded-md"
             >
               SEBELUMNYA
             </button>
             <button
               disabled={!semuaTerisi}
-              onClick={() => router.push("/pemeriksaan/pemeriksaanTeknis/7-penghapusKaca")}
+              onClick={() =>
+                router.push("/pemeriksaan/pemeriksaanTeknis/7-penghapusKaca")
+              }
               className={`w-1/2 py-3 font-bold text-white rounded-md transition 
-                ${semuaTerisi ? "bg-[#29005E]" : "bg-gray-300 cursor-not-allowed"}`}
+                ${
+                  semuaTerisi
+                    ? "bg-[#29005E]"
+                    : "bg-gray-300 cursor-not-allowed"
+                }`}
             >
               LANJUT
             </button>
