@@ -62,35 +62,37 @@ export default function SistemPengeremanPage() {
     }
   }, [answers]);
 
-  const handleStatusChange = (qId: string, status: string, opt: any) => {
-    setAnswers((prev) => {
-      let updated: Answer = { ...prev[qId], status };
+const handleStatusChange = (qId: string, status: string, opt: any) => {
+  setAnswers((prev) => {
+    let updated: Answer = { status };
 
-      // 🔥 kalau pilih teks, hapus foto & video
-      if (opt.inputext) {
-        updated = { status, text: "", photo: undefined, video: undefined };
-      }
+    // 🔥 kalau pilih teks → hapus foto & video
+    if (opt.inputext) {
+      updated = { status, text: "" }; 
+    }
 
-      // 🔥 kalau pilih foto/video, hapus teks
-      if (opt.inputFoto || opt.inputVideo) {
-        updated = { status, photo: undefined, video: undefined, text: undefined };
-      }
+    // 🔥 kalau pilih foto/video → hapus teks
+    if (opt.inputFoto || opt.inputVideo) {
+      updated = { status, photo: undefined, video: undefined };
+    }
 
-      return { ...prev, [qId]: updated };
-    });
-  };
+    return { ...prev, [qId]: updated };
+  });
+};
+
+// Input teks langsung simpan
+const handleTextChange = (qId: string, value: string) => {
+  setAnswers((prev) => {
+    const updated = { ...prev[qId], text: value };
+    return { ...prev, [qId]: updated };
+  });
+};
+
 
   const handleRemoveFile = (qId: string, type: "photo" | "video") => {
     setAnswers((prev) => ({
       ...prev,
       [qId]: { ...prev[qId], [type]: undefined },
-    }));
-  };
-
-  const handleTextChange = (qId: string, value: string) => {
-    setAnswers((prev) => ({
-      ...prev,
-      [qId]: { ...prev[qId], text: value },
     }));
   };
 
@@ -208,7 +210,7 @@ export default function SistemPengeremanPage() {
                             <div
                               onClick={() =>
                                 router.push(
-                                  `/pemeriksaan/pemeriksaanTeknis/2-sistemPengereman/cameraFoto?qId=${q.id}`
+                                  `/pemeriksaan/pemeriksaanTeknis/7-penghapusKaca/cameraFoto?qId=${q.id}`
                                 )
                               }
                               className="flex flex-col items-center justify-center h-32 w-full border-2 border-dashed 
@@ -239,7 +241,7 @@ export default function SistemPengeremanPage() {
                             <div
                               onClick={() =>
                                 router.push(
-                                  `/pemeriksaan/pemeriksaanTeknis/2-sistemPengereman/cameraVideo?qId=${q.id}`
+                                  `/pemeriksaan/pemeriksaanTeknis/7-penghapusKaca/cameraVideo?qId=${q.id}`
                                 )
                               }
                               className="flex flex-col items-center justify-center h-32 w-full border-2 border-dashed 
