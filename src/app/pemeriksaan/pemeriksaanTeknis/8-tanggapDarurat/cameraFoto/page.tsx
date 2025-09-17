@@ -71,7 +71,7 @@ function CameraFotoInner() {
       console.error("Gagal simpan ke localStorage:", err);
     }
 
-    router.push("/pemeriksaan/pemeriksaanTeknis/2-sistemPengereman");
+    router.push("/pemeriksaan/pemeriksaanTeknis/8-tanggapDarurat");
   };
 
   return (
@@ -83,7 +83,7 @@ function CameraFotoInner() {
             <div className="flex items-center gap-2">
               <button
                 onClick={() =>
-                  router.push("/pemeriksaan/pemeriksaanTeknis/1-sistemPenerangan")
+                  router.push("/pemeriksaan/pemeriksaanTeknis/8-tanggapDarurat")
                 }
               >
                 <svg
