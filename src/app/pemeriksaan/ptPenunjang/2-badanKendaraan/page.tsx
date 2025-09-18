@@ -3,26 +3,36 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 interface Answer {
-  status?: string;
+  status?: "berfungsi" | "tidak";
   photo?: string;
   video?: string;
+  text?: string;
 }
 
 const questions = [
   {
-    id: "kaca_depan",
-    label: "Kondisi Kaca Depan",
+    id: "kaca_spion",
+    label: "Kaca Spion",
     options: [
-      { value: "Baik", label: "Baik", inputFoto: true, inputVideo: true },
-      { value: "Buruk", label: "Buruk", inputFoto: true, inputVideo: true },
+      { value: "sesuai", label: "Sesuai", inputFoto: true, inputVideo: true },
+      { value: "tidak", label: "Tidak Sesuai", inputFoto: true, inputVideo: true },
     ],
   },
   {
-    id: "pintu_utama",
-    label: "Pintu Utama",
+    id: "klakson",
+    label: "Klakson",
     options: [
-      { value: "Berfungsi", label: "Berfungsi", inputFoto: true, inputVideo: true },
-      { value: "Tidak Berfungsi", label: "Tidak Berfungsi", inputFoto: true, inputVideo: true },
+      { value: "ada", label: "Berfungsi", inputFoto: true, inputVideo: true },
+      { value: "tidakBerfuns", label: "Tidak Berfungsi", inputFoto: true, inputVideo: true },
+      { value: "tidakAda", label: "Tidak Ada", inputText: true },
+    ],
+  },
+  {
+    id: "lantai_tangga",
+    label: "Lantai dan Tangga",
+    options: [
+      { value: "baik", label: "Baik", inputFoto: true, inputVideo: true },
+      { value: "keroposBerlubang", label: "Keropos/Berlubang", inputFoto: true, inputVideo: true },
     ],
   },
 ];
@@ -55,6 +65,12 @@ export default function SistemPengeremanPage() {
     });
   }, []);
 
+  const handleTextChange = (qId: string, value: string) => {
+    setAnswers((prev) => ({
+      ...prev,
+      [qId]: { ...prev[qId], text: value },
+    }));
+  };
   // Simpan jawaban tiap kali berubah
   useEffect(() => {
     if (Object.keys(answers).length > 0) {
@@ -62,22 +78,29 @@ export default function SistemPengeremanPage() {
     }
   }, [answers]);
 
-  // ⬇️ Perbaikan: reset photo & video ketika option diganti
-  const handleStatusChange = (qId: string, status: string) => {
+  // ⬇️ Ubah: reset photo & video ketika status diganti
+  const handleStatusChange = (qId: string, status: "berfungsi" | "tidak") => {
     setAnswers((prev) => ({
       ...prev,
       [qId]: {
+        ...prev[qId],
         status,
         photo: undefined,
         video: undefined,
       },
     }));
+    // Hapus juga dari localStorage biar benar-benar kosong
     localStorage.removeItem(`capturedPhoto_${qId}`);
     localStorage.removeItem(`capturedVideo_${qId}`);
   };
 
+  // ⬇️ Ubah: hapus dari state & localStorage
   const handleRemoveFile = (qId: string, type: "photo" | "video") => {
-    setAnswers((prev) => ({ ...prev, [qId]: { ...prev[qId], [type]: undefined } }));
+    setAnswers((prev) => ({
+      ...prev,
+      [qId]: { ...prev[qId], [type]: undefined },
+    }));
+    localStorage.removeItem(`captured${type === "photo" ? "Photo" : "Video"}_${qId}`);
   };
 
   const semuaTerisi = questions.every((q) => answers[q.id]?.status);
@@ -89,7 +112,7 @@ export default function SistemPengeremanPage() {
         <div className="fixed w-full max-w-[414px] z-50">
           <div className="flex items-center justify-between bg-[#29005E] text-white px-4 py-3 shadow">
             <div className="flex items-center gap-2">
-              <button onClick={() => router.push("/pemeriksaan/pemeriksaanTeknis/2-sistemPengereman")}>
+              <button onClick={() => router.push("/pemeriksaan/ptPenunjang/1-sistemPenerangan")}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                   strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                   <path strokeLinecap="round" strokeLinejoin="round"
@@ -102,10 +125,10 @@ export default function SistemPengeremanPage() {
           </div>
         </div>
 
-        {/* Stepper Title */}
+       {/* Stepper Title */}
         <div className="px-4 py-3 pt-16">
           <p className="text-sm text-black ">
-            Langkah 3 dari 8 <br />
+            Langkah 2 dari 4 <br />
             <span className="font-semibold">Badan Kendaraan</span>
           </p>
         </div>
@@ -114,13 +137,13 @@ export default function SistemPengeremanPage() {
       <div className="sticky top-[48px] z-40 bg-gray-100 px-4 py-4">
         <div className="flex items-center justify-between px-4">
           {[...Array(4)].map((_, idx) => {
-            const isCompleted = idx < 2;
-            const isActive = idx === 2;
+            const isCompleted = idx < 1;
+            const isActive = idx === 1;
 
             return (
               <div
                 key={idx}
-                className={`flex items-center ${idx === 7 ? "w-auto" : "w-full"}`}
+                className={`flex items-center ${idx === 3 ? "w-auto" : "w-full"}`}
               >
                 <div
                   className={`flex items-center justify-center w-4 h-4 rounded-full text-[8px] font-bold
@@ -133,7 +156,7 @@ export default function SistemPengeremanPage() {
                   {isCompleted ? "✓" : ""}
                 </div>
 
-                {idx < 7 && (
+                {idx < 3 && (
                   <div
                     className={`flex-1 h-0.5 ${
                       isCompleted ? "bg-[#29005E]" : "bg-gray-300"
@@ -162,7 +185,7 @@ export default function SistemPengeremanPage() {
                         type="radio"
                         name={q.id}
                         checked={answers[q.id]?.status === opt.value}
-                        onChange={() => handleStatusChange(q.id, opt.value)}
+                        onChange={() => handleStatusChange(q.id, opt.value as "berfungsi" | "tidak")}
                         className="accent-[#EBA100]"
                       />
                       {opt.label}
@@ -190,7 +213,7 @@ export default function SistemPengeremanPage() {
                             </div>
                           ) : (
                             <div
-                              onClick={() => router.push(`/pemeriksaan/pemeriksaanTeknis/2-sistemPengereman/cameraFoto?qId=${q.id}`)}
+                              onClick={() => router.push(`/pemeriksaan/ptPenunjang/2-badanKendaraan/cameraFoto?qId=${q.id}`)}
                               className="flex flex-col items-center justify-center h-24 w-full border-2 border-dashed 
                               border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer"
                             >
@@ -214,12 +237,28 @@ export default function SistemPengeremanPage() {
                             </div>
                           ) : (
                             <div
-                              onClick={() => router.push(`/pemeriksaan/pemeriksaanTeknis/2-sistemPengereman/cameraVideo?qId=${q.id}`)}
+                              onClick={() => router.push(`/pemeriksaan/ptPenunjang/2-badanKendaraan/cameraVideo?qId=${q.id}`)}
                               className="flex flex-col items-center justify-center h-24 w-full border-2 border-dashed 
                               border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer"
                             >
                               <img src="/img/icon/video.png" className="w-6 mb-1" />
                               <span className="text-sm text-gray-700">Ambil Video</span>
+                            </div>
+                          )}
+
+                          {/* Input teks */}
+                          {answers[q.id]?.status === opt.value && opt.inputText && (
+                            <div className="ml-2 mt-4">
+                              <div className="mb-2">
+                                <label className="font-bold text-black ">Keterangan</label>
+                              </div>
+                              <input
+                                type="text"
+                                value={answers[q.id]?.text || ""}
+                                onChange={(e) => handleTextChange(q.id, e.target.value)}
+                                placeholder="Masukkan Keterangan"
+                                className="focus:outline-none focus:border-[#29005E] w-full border rounded-md p-3 mb-4 text-black bg-white border-[#E0E0E0]"
+                              />
                             </div>
                           )}
                         </div>
@@ -236,14 +275,14 @@ export default function SistemPengeremanPage() {
         <div className="fixed bottom-0 left-0 w-full bg-gray-100 shadow-lg">
           <div className="max-w-[414px] mx-auto px-4 py-3 flex gap-3">
             <button
-              onClick={() => router.push("/pemeriksaan/pemeriksaanTeknis/2-sistemPengereman")}
+              onClick={() => router.push("/pemeriksaan/ptPenunjang/1-sistemPenerangan")}
               className="w-1/2 py-3 font-bold text-[#29005E] border border-[#29005E] rounded-md"
             >
               SEBELUMNYA
             </button>
             <button
               disabled={!semuaTerisi}
-              onClick={() => router.push("/pemeriksaan/pemeriksaanTeknis/4-kondisiBan")}
+              onClick={() => router.push("/pemeriksaan/ptPenunjang/3-tempatDuduk")}
               className={`w-1/2 py-3 font-bold text-white rounded-md transition 
                 ${semuaTerisi ? "bg-[#29005E]" : "bg-gray-300 cursor-not-allowed"}`}
             >

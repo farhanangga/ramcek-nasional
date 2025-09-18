@@ -129,38 +129,41 @@ export default function SistemPengeremanPage() {
           </p>
         </div>
 
-        {/* Stepper (hanya centang) */}
-        <div className="sticky top-[48px] z-40 bg-gray-100 px-4 py-4">
-          <div className="flex items-center justify-between pl-6">
-            {[...Array(8)].map((_, idx) => {
-              const isCompleted = idx < 4;
-              const isActive = idx === 4;
+      {/* Stepper (hanya centang) */}
+      <div className="sticky top-[48px] z-40 bg-gray-100 px-4 py-4">
+        <div className="flex items-center justify-between px-4">
+          {[...Array(4)].map((_, idx) => {
+            const isCompleted = idx < 4;
+            const isActive = idx === 4;
 
-              return (
-                <div key={idx} className="flex items-center w-full">
-                  <div
-                    className={`flex items-center justify-center w-4 h-4 rounded-full text-[8px] font-bold
-                      ${isCompleted
-                        ? "bg-[#29005E] text-white"
-                        : isActive
-                        ? "bg-white border border-[#29005E] text-[#29005E]"
-                        : "bg-gray-300 text-transparent"}`}
-                  >
-                    {isCompleted ? "✓" : ""}
-                  </div>
-
-                  {idx < 7 && (
-                    <div
-                      className={`flex-1 h-0.5 ${
-                        isCompleted ? "bg-[#29005E]" : "bg-gray-300"
-                      }`}
-                    ></div>
-                  )}
+            return (
+              <div
+                key={idx}
+                className={`flex items-center ${idx === 7 ? "w-auto" : "w-full"}`}
+              >
+                <div
+                  className={`flex items-center justify-center w-4 h-4 rounded-full text-[8px] font-bold
+                    ${isCompleted
+                      ? "bg-[#29005E] text-white"
+                      : isActive
+                      ? "bg-white border border-[#29005E] text-[#29005E]"
+                      : "bg-gray-300 text-transparent"}`}
+                >
+                  {isCompleted ? "✓" : ""}
                 </div>
-              );
-            })}
-          </div>
+
+                {idx < 7 && (
+                  <div
+                    className={`flex-1 h-0.5 ${
+                      isCompleted ? "bg-[#29005E]" : "bg-gray-300"
+                    }`}
+                  ></div>
+                )}
+              </div>
+            );
+          })}
         </div>
+      </div>
 
         {/* Isi pertanyaan */}
         <div className="pt-4 px-4">
