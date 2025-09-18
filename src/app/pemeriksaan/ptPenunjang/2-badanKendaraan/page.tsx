@@ -124,7 +124,7 @@ export default function SistemPengeremanPage() {
         <div className="fixed w-full max-w-[414px] z-50">
           <div className="flex items-center justify-between bg-[#29005E] text-white px-4 py-3 shadow">
             <div className="flex items-center gap-2">
-              <button onClick={() => router.push("/pemeriksaan/pemeriksaanTeknis/4-kondisiBan")}>
+              <button onClick={() => router.push("/pemeriksaan/ptPenunjang/1-sistemPenerangan")}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                   strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                   <path strokeLinecap="round" strokeLinejoin="round"
@@ -140,22 +140,22 @@ export default function SistemPengeremanPage() {
         {/* Stepper Title */}
         <div className="px-4 py-3 pt-16">
           <p className="text-sm text-black ">
-            Langkah 5 dari 8 <br />
-            <span className="font-semibold">Perlengkapan</span>
+            Langkah 2 dari 4 <br />
+            <span className="font-semibold">Badan Kendaraan</span>
           </p>
         </div>
 
       {/* Stepper (hanya centang) */}
       <div className="sticky top-[48px] z-40 bg-gray-100 px-4 py-4">
         <div className="flex items-center justify-between px-4">
-          {[...Array(8)].map((_, idx) => {
-            const isCompleted = idx < 4;
-            const isActive = idx === 4;
+          {[...Array(4)].map((_, idx) => {
+            const isCompleted = idx < 1;
+            const isActive = idx === 1;
 
             return (
               <div
                 key={idx}
-                className={`flex items-center ${idx === 7 ? "w-auto" : "w-full"}`}
+                className={`flex items-center ${idx === 3 ? "w-auto" : "w-full"}`}
               >
                 <div
                   className={`flex items-center justify-center w-4 h-4 rounded-full text-[8px] font-bold
@@ -168,7 +168,7 @@ export default function SistemPengeremanPage() {
                   {isCompleted ? "✓" : ""}
                 </div>
 
-                {idx < 7 && (
+                {idx < 3 && (
                   <div
                     className={`flex-1 h-0.5 ${
                       isCompleted ? "bg-[#29005E]" : "bg-gray-300"
@@ -220,7 +220,7 @@ export default function SistemPengeremanPage() {
                             </div>
                           ) : (
                             <div
-                              onClick={() => router.push(`/pemeriksaan/pemeriksaanTeknis/5-perlengkapan/cameraFoto?qId=${q.id}`)}
+                              onClick={() => router.push(`/pemeriksaan/ptPenunjang/2-badanKendaraan/cameraFoto?qId=${q.id}`)}
                               className="flex flex-col items-center justify-center h-24 w-full border-2 border-dashed 
                                 border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer">
                               <img src="/img/icon/camera.png" className="w-7" />
@@ -240,7 +240,7 @@ export default function SistemPengeremanPage() {
                             </div>
                           ) : (
                             <div
-                              onClick={() => router.push(`/pemeriksaan/pemeriksaanTeknis/5-perlengkapan/cameraVideo?qId=${q.id}`)}
+                              onClick={() => router.push(`/pemeriksaan/ptPenunjang/2-badanKendaraan/cameraVideo?qId=${q.id}`)}
                               className="flex flex-col items-center justify-center h-24 w-full border-2 border-dashed 
                                 border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer">
                               <img src="/img/icon/video.png" className="w-6 mb-1" />
@@ -277,13 +277,13 @@ export default function SistemPengeremanPage() {
         <div className="fixed bottom-0 left-0 w-full bg-gray-100 shadow-lg">
           <div className="max-w-[414px] mx-auto px-4 py-3 flex gap-3">
             <button
-              onClick={() => router.push("/pemeriksaan/pemeriksaanTeknis/4-kondisiBan")}
+              onClick={() => router.push("/pemeriksaan/ptPenunjang/1-sistemPenerangan")}
               className="w-1/2 py-3 font-bold text-[#29005E] border border-[#29005E] rounded-md">
               SEBELUMNYA
             </button>
             <button
               disabled={!semuaTerisi}
-              onClick={() => router.push("/pemeriksaan/pemeriksaanTeknis/6-pengukurKecepatan")}
+              onClick={() => router.push("/pemeriksaan/ptPenunjang/3-tempatDuduk")}
               className={`w-1/2 py-3 font-bold text-white rounded-md transition 
                 ${semuaTerisi ? "bg-[#29005E]" : "bg-gray-300 cursor-not-allowed"}`}>
               LANJUT
