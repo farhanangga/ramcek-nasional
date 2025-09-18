@@ -103,7 +103,7 @@ export default function SistemPengeremanPage() {
                     d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
                 </svg>
               </button>
-              <span className="font-semibold">Pemeriksaan Teknis Utama</span>
+              <span className="font-semibold">Pemeriksaan Teknis Penunjang</span>
             </div>
             <img src="/img/assets/logo.png" alt="logo" className="w-5" />
           </div>

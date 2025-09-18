@@ -132,6 +132,7 @@ export default function SistemPengeremanPage() {
   };
 
   const semuaTerisi = questions.every((q) => answers[q.id]?.status);
+  const [showModal, setShowModal] = useState(false); // 🔥 state untuk modal
 
   return (
     <div className="bg-gray-100 flex justify-center">
@@ -147,7 +148,7 @@ export default function SistemPengeremanPage() {
                     d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
                 </svg>
               </button>
-              <span className="font-semibold">Pemeriksaan Teknis Utama</span>
+              <span className="font-semibold">Pemeriksaan Teknis Penunjang</span>
             </div>
             <img src="/img/assets/logo.png" alt="logo" className="w-5" />
           </div>
@@ -156,7 +157,7 @@ export default function SistemPengeremanPage() {
         {/* Stepper Title */}
         <div className="px-4 py-3 pt-16">
           <p className="text-sm text-black ">
-            Langkah 2 dari 4 <br />
+            Langkah 4 dari 4 <br />
             <span className="font-semibold">Badan Kendaraan</span>
           </p>
         </div>
@@ -165,8 +166,8 @@ export default function SistemPengeremanPage() {
       <div className="sticky top-[48px] z-40 bg-gray-100 px-4 py-4">
         <div className="flex items-center justify-between px-4">
           {[...Array(4)].map((_, idx) => {
-            const isCompleted = idx < 1;
-            const isActive = idx === 1;
+            const isCompleted = idx < 3;
+            const isActive = idx === 3;
 
             return (
               <div
@@ -236,7 +237,7 @@ export default function SistemPengeremanPage() {
                             </div>
                           ) : (
                             <div
-                              onClick={() => router.push(`/pemeriksaan/ptPenunjang/2-badanKendaraan/cameraFoto?qId=${q.id}`)}
+                              onClick={() => router.push(`/pemeriksaan/ptPenunjang/4-perlengkapanKendaraan/cameraFoto?qId=${q.id}`)}
                               className="flex flex-col items-center justify-center h-24 w-full border-2 border-dashed 
                                 border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer">
                               <img src="/img/icon/camera.png" className="w-7" />
@@ -256,7 +257,7 @@ export default function SistemPengeremanPage() {
                             </div>
                           ) : (
                             <div
-                              onClick={() => router.push(`/pemeriksaan/ptPenunjang/2-badanKendaraan/cameraVideo?qId=${q.id}`)}
+                              onClick={() => router.push(`/pemeriksaan/ptPenunjang/4-perlengkapanKendaraan/cameraVideo?qId=${q.id}`)}
                               className="flex flex-col items-center justify-center h-24 w-full border-2 border-dashed 
                                 border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer">
                               <img src="/img/icon/video.png" className="w-6 mb-1" />
@@ -293,19 +294,68 @@ export default function SistemPengeremanPage() {
         <div className="fixed bottom-0 left-0 w-full bg-gray-100 shadow-lg">
           <div className="max-w-[414px] mx-auto px-4 py-3 flex gap-3">
             <button
-              onClick={() => router.push("/pemeriksaan/ptPenunjang/1-sistemPenerangan")}
-              className="w-1/2 py-3 font-bold text-[#29005E] border border-[#29005E] rounded-md">
+              onClick={() => router.push("/pemeriksaan/ptPenunjang/3-tempatDuduk")}
+              className="w-1/2 py-3 font-bold text-[#29005E] border border-[#29005E] rounded-md"
+            >
               SEBELUMNYA
             </button>
             <button
               disabled={!semuaTerisi}
-              onClick={() => router.push("/pemeriksaan/ptPenunjang/3-tempatDuduk")}
+              onClick={() => setShowModal(true)} // buka modal
               className={`w-1/2 py-3 font-bold text-white rounded-md transition 
-                ${semuaTerisi ? "bg-[#29005E]" : "bg-gray-300 cursor-not-allowed"}`}>
+                ${
+                  semuaTerisi
+                    ? "bg-[#29005E]"
+                    : "bg-gray-300 cursor-not-allowed"
+                }`}
+            >
               LANJUT
             </button>
           </div>
         </div>
+
+        {/* Modal notifikasi selesai */}
+        {showModal && (
+          <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+            <div className="bg-white rounded-2xl p-6 text-center w-80 animate-fadeIn">
+              {/* Icon centang */}
+              <div className="flex justify-center mb-4">
+                <div className="w-16 h-16 flex items-center justify-center rounded-full bg-yellow-100">
+                  <span className="text-yellow-500 text-4xl">✔</span>
+                </div>
+              </div>
+
+              {/* Judul */}
+              <h2 className="text-lg font-bold mb-2 text-black">
+                Pemeriksaan Selesai
+              </h2>
+
+              {/* Deskripsi */}
+              <p className="text-gray-600 text-sm mb-6">
+                Semua tahapan sudah selesai diperiksa.  
+                Lanjutkan untuk membuat Berita Acara?
+              </p>
+
+              {/* Tombol aksi */}
+              <div className="flex flex-col gap-3">
+                <button
+                  onClick={() => setShowModal(false)} // Tutup modal / reset
+                  className="w-full py-2 font-bold text-[#29005E] border border-[#29005E] rounded-md"
+                >
+                  PERIKSA ULANG
+                </button>
+                <button
+                  onClick={() => router.push("/pemeriksaan/beritaAcara")}
+                  className="w-full py-2 bg-[#29005E] text-white font-bold rounded-md"
+                >
+                  BUAT BERITA ACARA
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+
       </div>
     </div>
   );
