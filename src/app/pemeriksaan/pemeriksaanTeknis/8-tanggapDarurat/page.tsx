@@ -110,7 +110,7 @@ const handleTextChange = (qId: string, value: string) => {
   }));
 };
 
-
+  const [showModal, setShowModal] = useState(false); // 🔥 state untuk modal
   const semuaTerisi = questions.every((q) => answers[q.id]?.status);
 
   return (
@@ -291,25 +291,43 @@ const handleTextChange = (qId: string, value: string) => {
           ))}
         </div>
 
-        {/* Tombol bawah */}
+        {/* Tombol lanjut */}
         <div className="fixed bottom-0 left-0 w-full bg-gray-100 shadow-lg">
-          <div className="max-w-[414px] mx-auto px-4 py-3 flex gap-3">
-            <button
-              onClick={() => router.push("/pemeriksaan/pemeriksaanTeknis/7-penghapusKaca")}
-              className="w-1/2 py-3 font-bold text-[#29005E] border border-[#29005E] rounded-md"
-            >
-              SEBELUMNYA
-            </button>
+          <div className="max-w-[414px] mx-auto px-4 py-3">
             <button
               disabled={!semuaTerisi}
-              onClick={() => router.push("/pemeriksaan/pemeriksaanTeknis/6-pengukurKecepatan")}
-              className={`w-1/2 py-3 font-bold text-white rounded-md transition 
-                ${semuaTerisi ? "bg-[#29005E]" : "bg-gray-300 cursor-not-allowed"}`}
+              onClick={() => setShowModal(true)} // 🔥 tampilkan modal
+              className={`w-full py-3 font-bold text-white rounded-md transition ${
+                semuaTerisi ? "bg-[#29005E]" : "bg-gray-300 cursor-not-allowed"
+              }`}
             >
               LANJUT
             </button>
           </div>
         </div>
+
+        {/* Modal notifikasi */}
+        {showModal && (
+          <div className="fixed inset-0 bg-black/20 flex items-center justify-center z-50">
+            <div className="bg-white rounded-xl p-6 text-center w-80">
+              <div className="flex justify-center mb-4">
+                <div className="w-16 h-16 flex items-center justify-center rounded-full bg-red-200">
+                  <span className="text-red-700 text-4xl">✔</span>
+                </div>
+              </div>
+              <h2 className="text-lg font-bold mb-2 text-black">Pemeriksaan Administrasi Berhasil</h2>
+              <p className="text-gray-600 text-sm mb-4">
+                Langkah berikutnya, lakukan Pemeriksaan Teknis Utama
+              </p>
+              <button
+                onClick={() => router.push("/pemeriksaan/pemeriksaanTeknis/1-sistemPenerangan")}
+                className="w-full py-2 bg-[#29005E] text-white font-bold rounded-md"
+              >
+                LANJUTKAN
+              </button>
+            </div>
+          </div>
+        )}
         
       </div>
     </div>
