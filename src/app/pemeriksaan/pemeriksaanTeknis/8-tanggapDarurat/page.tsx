@@ -155,13 +155,12 @@ const handleTextChange = (qId: string, value: string) => {
             return (
                 <div key={idx} className="flex items-center w-full">
                 <div
-                    className={`flex items-center justify-center w-5 h-5 rounded-full text-[10px] font-bold
-                    ${isCompleted ? "bg-[#29005E] text-white" :
-                        isActive ? "bg-white border border-[#29005E] text-[#29005E]" :
-                        "bg-gray-300 text-transparent"}
-                    `}
+                  className={`flex items-center justify-center w-4 h-4 rounded-full text-[8px] font-bold
+                  ${isCompleted ? "bg-[#29005E] text-white" :
+                      isActive ? "bg-white border border-[#29005E] text-[#29005E]" :
+                      "bg-gray-300 text-transparent"}`}
                 >
-                    {isCompleted ? "✓" : ""}
+                  {isCompleted ? "✓" : ""}
                 </div>
 
                 {idx < 7 && (
