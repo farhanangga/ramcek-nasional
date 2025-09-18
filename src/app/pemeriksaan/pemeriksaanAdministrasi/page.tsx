@@ -255,8 +255,8 @@ export default function PemeriksaanAdministrasi() {
           <div className="fixed inset-0 bg-black/20 flex items-center justify-center z-50">
             <div className="bg-white rounded-xl p-6 text-center w-80">
               <div className="flex justify-center mb-4">
-                <div className="w-16 h-16 flex items-center justify-center rounded-full bg-red-200">
-                  <span className="text-red-700 text-4xl">✔</span>
+                <div className="w-16 h-16 flex items-center justify-center rounded-full bg-[#faeac8]">
+                  <span className="text-[#f9e3b3] text-4xl">✔</span>
                 </div>
               </div>
               <h2 className="text-lg font-bold mb-2 text-black">Pemeriksaan Administrasi Berhasil</h2>
