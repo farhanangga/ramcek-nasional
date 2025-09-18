@@ -331,7 +331,7 @@ const handleTextChange = (qId: string, value: string) => {
             <div className="bg-white rounded-xl p-6 text-center w-80 animate-fadeIn">
               <div className="flex justify-center mb-4">
                 <div className="w-16 h-16 flex items-center justify-center rounded-full bg-[#faeac8]">
-                  <span className="text-[#f9e3b3] text-4xl">✔</span>
+                  <span className="text-[#EBA100] text-4xl">✔</span>
                 </div>
               </div>
               <h2 className="text-lg font-bold mb-2 text-black">
