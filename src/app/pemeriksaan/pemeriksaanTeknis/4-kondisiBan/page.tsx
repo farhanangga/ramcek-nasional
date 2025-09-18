@@ -111,7 +111,7 @@ export default function KondisiBanPage() {
         {/* Stepper */}
         <div className="px-4 py-3 pt-16">
         <p className="text-sm text-black mb-6">
-            Langkah 8 dari 8 <br />
+            Langkah 4 dari 8 <br />
             <span className="font-semibold">Tanggap Darurat </span>
         </p>
         <div className="flex items-center justify-between mx-4">
