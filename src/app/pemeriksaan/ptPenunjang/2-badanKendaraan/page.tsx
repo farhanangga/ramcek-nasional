@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 interface Answer {
-  status?: "berfungsi" | "tidak";
+  status?: string;   // "adaBerfungsi" | "tidakBerfungsi" | "tidakAda"
   photo?: string;
   video?: string;
   text?: string;
@@ -52,25 +52,25 @@ export default function SistemPengeremanPage() {
       const savedPhoto = localStorage.getItem(`capturedPhoto_${q.id}`);
       if (savedPhoto) {
         const { photo } = JSON.parse(savedPhoto);
-        setAnswers((prev) => ({ ...prev, [q.id]: { ...prev[q.id], photo } }));
+        setAnswers((prev) => ({
+          ...prev,
+          [q.id]: { ...prev[q.id], photo },
+        }));
         localStorage.removeItem(`capturedPhoto_${q.id}`);
       }
 
       const savedVideo = localStorage.getItem(`capturedVideo_${q.id}`);
       if (savedVideo) {
         const { video } = JSON.parse(savedVideo);
-        setAnswers((prev) => ({ ...prev, [q.id]: { ...prev[q.id], video } }));
+        setAnswers((prev) => ({
+          ...prev,
+          [q.id]: { ...prev[q.id], video },
+        }));
         localStorage.removeItem(`capturedVideo_${q.id}`);
       }
     });
   }, []);
 
-  const handleTextChange = (qId: string, value: string) => {
-    setAnswers((prev) => ({
-      ...prev,
-      [qId]: { ...prev[qId], text: value },
-    }));
-  };
   // Simpan jawaban tiap kali berubah
   useEffect(() => {
     if (Object.keys(answers).length > 0) {
@@ -78,29 +78,41 @@ export default function SistemPengeremanPage() {
     }
   }, [answers]);
 
-  // ⬇️ Ubah: reset photo & video ketika status diganti
-  const handleStatusChange = (qId: string, status: "berfungsi" | "tidak") => {
-    setAnswers((prev) => ({
-      ...prev,
-      [qId]: {
-        ...prev[qId],
-        status,
-        photo: undefined,
-        video: undefined,
-      },
-    }));
-    // Hapus juga dari localStorage biar benar-benar kosong
-    localStorage.removeItem(`capturedPhoto_${qId}`);
-    localStorage.removeItem(`capturedVideo_${qId}`);
+  // 🔥 handle ganti status (option radio)
+  const handleStatusChange = (qId: string, status: string, opt: any) => {
+    setAnswers((prev) => {
+      let updated: Answer = { status };
+
+      // kalau pilih teks → reset foto & video
+      if (opt.inputText) {
+        updated.text = "";
+      }
+
+      // kalau pilih foto/video → reset teks
+      if (opt.inputFoto || opt.inputVideo) {
+        updated.photo = undefined;
+        updated.video = undefined;
+        updated.text = undefined;
+      }
+
+      return { ...prev, [qId]: updated };
+    });
   };
 
-  // ⬇️ Ubah: hapus dari state & localStorage
+  // hapus foto/video manual
   const handleRemoveFile = (qId: string, type: "photo" | "video") => {
     setAnswers((prev) => ({
       ...prev,
       [qId]: { ...prev[qId], [type]: undefined },
     }));
-    localStorage.removeItem(`captured${type === "photo" ? "Photo" : "Video"}_${qId}`);
+  };
+
+  // simpan teks langsung
+  const handleTextChange = (qId: string, value: string) => {
+    setAnswers((prev) => ({
+      ...prev,
+      [qId]: { ...prev[qId], text: value },
+    }));
   };
 
   const semuaTerisi = questions.every((q) => answers[q.id]?.status);
@@ -112,7 +124,7 @@ export default function SistemPengeremanPage() {
         <div className="fixed w-full max-w-[414px] z-50">
           <div className="flex items-center justify-between bg-[#29005E] text-white px-4 py-3 shadow">
             <div className="flex items-center gap-2">
-              <button onClick={() => router.push("/pemeriksaan/ptPenunjang/1-sistemPenerangan")}>
+              <button onClick={() => router.push("/pemeriksaan/pemeriksaanTeknis/4-kondisiBan")}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                   strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                   <path strokeLinecap="round" strokeLinejoin="round"
@@ -125,25 +137,25 @@ export default function SistemPengeremanPage() {
           </div>
         </div>
 
-       {/* Stepper Title */}
+        {/* Stepper Title */}
         <div className="px-4 py-3 pt-16">
           <p className="text-sm text-black ">
-            Langkah 2 dari 4 <br />
-            <span className="font-semibold">Badan Kendaraan</span>
+            Langkah 5 dari 8 <br />
+            <span className="font-semibold">Perlengkapan</span>
           </p>
         </div>
 
       {/* Stepper (hanya centang) */}
       <div className="sticky top-[48px] z-40 bg-gray-100 px-4 py-4">
         <div className="flex items-center justify-between px-4">
-          {[...Array(4)].map((_, idx) => {
-            const isCompleted = idx < 1;
-            const isActive = idx === 1;
+          {[...Array(8)].map((_, idx) => {
+            const isCompleted = idx < 4;
+            const isActive = idx === 4;
 
             return (
               <div
                 key={idx}
-                className={`flex items-center ${idx === 3 ? "w-auto" : "w-full"}`}
+                className={`flex items-center ${idx === 7 ? "w-auto" : "w-full"}`}
               >
                 <div
                   className={`flex items-center justify-center w-4 h-4 rounded-full text-[8px] font-bold
@@ -156,7 +168,7 @@ export default function SistemPengeremanPage() {
                   {isCompleted ? "✓" : ""}
                 </div>
 
-                {idx < 3 && (
+                {idx < 7 && (
                   <div
                     className={`flex-1 h-0.5 ${
                       isCompleted ? "bg-[#29005E]" : "bg-gray-300"
@@ -185,20 +197,13 @@ export default function SistemPengeremanPage() {
                         type="radio"
                         name={q.id}
                         checked={answers[q.id]?.status === opt.value}
-                        onChange={() => handleStatusChange(q.id, opt.value as "berfungsi" | "tidak")}
+                        onChange={() => handleStatusChange(q.id, opt.value, opt)}
                         className="accent-[#EBA100]"
                       />
                       {opt.label}
                     </label>
 
-                    {/* Input foto & video (hanya muncul di bawah radio yg dipilih) */}
-                    {answers[q.id]?.status === opt.value && (
-                      <div className="ml-2 mt-4">
-                        <div className="mb-2">
-                          <label className="font-bold text-black">Unggah Foto & Video</label>
-                        </div>
-                        <div className="flex gap-3 mt-2">
-                          {/* Foto & Video */}
+                    {/* Foto & Video */}
                     {answers[q.id]?.status === opt.value && (opt.inputFoto || opt.inputVideo) && (
                       <div className="ml-2 mt-4">
                         <div className="mb-2 font-bold text-black">Unggah Foto & Video</div>
@@ -261,9 +266,6 @@ export default function SistemPengeremanPage() {
                         />
                       </div>
                     )}
-                        </div>
-                      </div>
-                    )}
                   </div>
                 ))}
               </div>
@@ -275,17 +277,15 @@ export default function SistemPengeremanPage() {
         <div className="fixed bottom-0 left-0 w-full bg-gray-100 shadow-lg">
           <div className="max-w-[414px] mx-auto px-4 py-3 flex gap-3">
             <button
-              onClick={() => router.push("/pemeriksaan/ptPenunjang/1-sistemPenerangan")}
-              className="w-1/2 py-3 font-bold text-[#29005E] border border-[#29005E] rounded-md"
-            >
+              onClick={() => router.push("/pemeriksaan/pemeriksaanTeknis/4-kondisiBan")}
+              className="w-1/2 py-3 font-bold text-[#29005E] border border-[#29005E] rounded-md">
               SEBELUMNYA
             </button>
             <button
               disabled={!semuaTerisi}
-              onClick={() => router.push("/pemeriksaan/ptPenunjang/3-tempatDuduk")}
+              onClick={() => router.push("/pemeriksaan/pemeriksaanTeknis/6-pengukurKecepatan")}
               className={`w-1/2 py-3 font-bold text-white rounded-md transition 
-                ${semuaTerisi ? "bg-[#29005E]" : "bg-gray-300 cursor-not-allowed"}`}
-            >
+                ${semuaTerisi ? "bg-[#29005E]" : "bg-gray-300 cursor-not-allowed"}`}>
               LANJUT
             </button>
           </div>
