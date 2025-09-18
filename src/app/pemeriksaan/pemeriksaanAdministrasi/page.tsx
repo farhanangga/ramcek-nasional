@@ -162,16 +162,16 @@ export default function PemeriksaanAdministrasi() {
                         value={opt.value}
                         checked={answers[q.id]?.value === opt.value}
                         onChange={() => handleSelect(q.id, opt)}
-                        className="accent-[#29005E]"
+                        className="accent-[#EBA100]"
                       />
                       {opt.label}
                     </label>
 
                     {/* Foto */}
                     {answers[q.id]?.value === opt.value && opt.showPhoto && (
-                      <div className="mt-3 mb-3">
+                      <div className="ml-2 mt-4 mb-3">
                         {/* Label Foto */}
-                        <div className="mb-3">
+                        <div className="mb-2">
                           <label className="font-bold text-black">{q.labelFoto}</label>
                         </div>
                       
@@ -215,8 +215,8 @@ export default function PemeriksaanAdministrasi() {
                     {/* Input teks */}
                     {answers[q.id]?.value === opt.value && opt.showText && (
                       
-                      <div className="ml-6 mt-2 mb-2">
-                        <div className="mb-3">
+                      <div className="ml-2 mt-4">
+                        <div className="mb-2">
                           <label className="font-bold text-black">Keterangan</label>
                         </div>
                         <input
@@ -224,7 +224,7 @@ export default function PemeriksaanAdministrasi() {
                           value={answers[q.id]?.text || ""}
                           onChange={(e) => handleTextChange(q.id, e.target.value)}
                           placeholder={`Keterangan ${q.label}`}
-                          className="w-full border rounded-md p-3 text-black"
+                          className="focus:outline-none focus:border-[#29005E] w-full border rounded-md p-3 mb-4 text-black bg-white border-[#E0E0E0]"
                         />
                       </div>
                     )}
