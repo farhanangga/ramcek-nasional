@@ -142,37 +142,40 @@ const handleTextChange = (qId: string, value: string) => {
           </div>
         </div>
         {/* Stepper */}
-        <div className="px-4 py-3 pt-16">
-        <p className="text-sm text-black mb-6">
+        <div className="sticky top-[56px] z-40 bg-gray-100 px-4 py-3">
+          <p className="text-sm text-black mb-6">
             Langkah 8 dari 8 <br />
             <span className="font-semibold">Tanggap Darurat </span>
-        </p>
-        <div className="flex items-center justify-between mx-4">
+          </p>
+          <div className="flex items-center justify-between mx-4">
             {[...Array(8)].map((_, idx) => {
-            const isCompleted = idx < 7; // step 1 & 2 selesai
-            const isActive = idx === 7;  // step 3 aktif
+              const isCompleted = idx < 7;
+              const isActive = idx === 7;
 
-            return (
+              return (
                 <div key={idx} className="flex items-center w-full">
-                <div
-                  className={`flex items-center justify-center w-4 h-4 rounded-full text-[8px] font-bold
-                  ${isCompleted ? "bg-[#29005E] text-white" :
-                      isActive ? "bg-white border border-[#29005E] text-[#29005E]" :
-                      "bg-gray-300 text-transparent"}`}
-                >
-                  {isCompleted ? "✓" : ""}
-                </div>
+                  <div
+                    className={`flex items-center justify-center w-4 h-4 rounded-full text-[8px] font-bold
+                      ${isCompleted
+                        ? "bg-[#29005E] text-white"
+                        : isActive
+                        ? "bg-white border border-[#29005E] text-[#29005E]"
+                        : "bg-gray-300 text-transparent"}`}
+                  >
+                    {isCompleted ? "✓" : ""}
+                  </div>
 
-                {idx < 7 && (
+                  {idx < 7 && (
                     <div
-                    className={`flex-1 h-0.5 
-                        ${isCompleted ? "bg-[#29005E]" : "bg-gray-300"}`}
+                      className={`flex-1 h-0.5 ${
+                        isCompleted ? "bg-[#29005E]" : "bg-gray-300"
+                      }`}
                     ></div>
-                )}
+                  )}
                 </div>
-            );
+              );
             })}
-        </div>
+          </div>
         </div>
 
         {/* Isi pertanyaan */}
