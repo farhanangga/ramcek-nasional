@@ -119,7 +119,7 @@ export default function SistemPengeremanPage() {
 
         {/* Stepper (hanya centang) */}
         <div className="sticky top-[48px] z-40 bg-gray-100 px-4 py-4">
-          <div className="flex items-center justify-between mx-4">
+          <div className="flex items-center justify-between pl-6">
             {[...Array(8)].map((_, idx) => {
               const isCompleted = idx < 1;
               const isActive = idx === 1;

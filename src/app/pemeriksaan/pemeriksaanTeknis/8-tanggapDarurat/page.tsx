@@ -150,8 +150,9 @@ const handleTextChange = (qId: string, value: string) => {
         </div>
 
         {/* Stepper (hanya centang) */}
-        <div className="sticky top-[48px] z-40 bg-gray-100 px-4 py-4">
-          <div className="flex items-center justify-between mx-4">
+        <div className="flex items-center justify-center">
+        <div className="sticky top-[48px] z-40 bg-gray-100 px-4 py-4 w-full">
+          <div className="flex items-center justify-between pl-6">
             {[...Array(8)].map((_, idx) => {
               const isCompleted = idx < 7;
               const isActive = idx === 7;
@@ -179,6 +180,7 @@ const handleTextChange = (qId: string, value: string) => {
                 </div>
               );
             })}
+            </div>
           </div>
         </div>
 
