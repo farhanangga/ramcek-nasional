@@ -342,7 +342,7 @@ const handleTextChange = (qId: string, value: string) => {
               </p>
               <button
                 onClick={() =>
-                  router.push("/pemeriksaan/pemeriksaanTeknisPenunjang")
+                  router.push("/pemeriksaan/ptPenunjang/1-sistemPenerangan")
                 }
                 className="w-full py-2 bg-[#29005E] text-white font-bold rounded-md"
               >
