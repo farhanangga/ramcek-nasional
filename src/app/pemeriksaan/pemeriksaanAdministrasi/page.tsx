@@ -157,7 +157,7 @@ export default function PemeriksaanAdministrasi() {
                   <div key={opt.value}>
                     <label className="flex items-center gap-2 text-black">
                       <input
-                        type="radio"
+                        type="radio" 
                         name={q.id}
                         value={opt.value}
                         checked={answers[q.id]?.value === opt.value}

@@ -167,7 +167,7 @@ export default function SistemPengeremanPage() {
                         name={q.id}
                         checked={answers[q.id]?.status === opt.value}
                         onChange={() => handleStatusChange(q.id, opt.value as "berfungsi" | "tidak")}
-                        className="accent-[#29005E]"
+                        className="accent-[#EBA100]"
                       />
                       {opt.label}
                     </label>
@@ -181,7 +181,7 @@ export default function SistemPengeremanPage() {
                         <div className="flex gap-3 mt-2">
                           {/* Foto */}
                           {answers[q.id]?.photo ? (
-                            <div className="relative w-full h-32 border rounded-lg overflow-hidden">
+                            <div className="relative w-full h-24 border rounded-lg overflow-hidden">
                               <img src={answers[q.id]?.photo} alt="foto"
                                 className="object-cover w-full h-full" />
                               <button
@@ -195,7 +195,7 @@ export default function SistemPengeremanPage() {
                           ) : (
                             <div
                               onClick={() => router.push(`/pemeriksaan/pemeriksaanTeknis/2-sistemPengereman/cameraFoto?qId=${q.id}`)}
-                              className="flex flex-col items-center justify-center h-32 w-full border-2 border-dashed 
+                              className="flex flex-col items-center justify-center h-24 w-full border-2 border-dashed 
                               border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer"
                             >
                               <img src="/img/icon/camera.png" className="w-6 mb-1" />
@@ -205,7 +205,7 @@ export default function SistemPengeremanPage() {
 
                           {/* Video */}
                           {answers[q.id]?.video ? (
-                            <div className="relative w-full h-32 border rounded-lg overflow-hidden">
+                            <div className="relative w-full h-24 border rounded-lg overflow-hidden">
                               <video src={answers[q.id]?.video}
                                 className="object-cover w-full h-full" controls />
                               <button
@@ -219,10 +219,10 @@ export default function SistemPengeremanPage() {
                           ) : (
                             <div
                               onClick={() => router.push(`/pemeriksaan/pemeriksaanTeknis/2-sistemPengereman/cameraVideo?qId=${q.id}`)}
-                              className="flex flex-col items-center justify-center h-32 w-full border-2 border-dashed 
+                              className="flex flex-col items-center justify-center h-24 w-full border-2 border-dashed 
                               border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer"
                             >
-                              <img src="/img/icon/video.png" className="w-7 mb-1" />
+                              <img src="/img/icon/video.png" className="w-6 mb-1" />
                               <span className="text-sm text-gray-700">Ambil Video</span>
                             </div>
                           )}

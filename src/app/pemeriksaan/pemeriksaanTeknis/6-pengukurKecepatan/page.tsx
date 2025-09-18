@@ -193,7 +193,7 @@ export default function SistemPengeremanPage() {
                         name={q.id}
                         checked={answers[q.id]?.status === opt.value}
                         onChange={() => handleStatusChange(q.id, opt.value)}
-                        className="accent-[#29005E]"
+                        className="accent-[#EBA100]"
                       />
                       {opt.label}
                     </label>
@@ -220,7 +220,7 @@ export default function SistemPengeremanPage() {
                                   ? `Keterangan ${q.label}`
                                   : "Masukkan angka kecepatan"
                               }
-                              className="w-full border rounded-md p-3 text-black mt-2"
+                              className="mt-2 focus:outline-none focus:border-[#29005E] w-full border rounded-md p-3 text-black bg-white border-[#E0E0E0]"
                             />
                           </div>
                         )}
@@ -234,10 +234,10 @@ export default function SistemPengeremanPage() {
                             <div className="flex gap-3 mt-2">
                               {/* Foto */}
                               {answers[q.id]?.photo ? (
-                                <div className="relative w-full h-32 border rounded-lg overflow-hidden">
+                                <div className="relative w-full h-24 border rounded-lg overflow-hidden">
                                   <img
                                     src={answers[q.id]?.photo}
-                                    alt="foto"
+                                    alt="foto" 
                                     className="object-cover w-full h-full"
                                   />
                                   <button
@@ -257,7 +257,7 @@ export default function SistemPengeremanPage() {
                                       `/pemeriksaan/pemeriksaanTeknis/6-pengukurKecepatan/cameraFoto?qId=${q.id}`
                                     )
                                   }
-                                  className="flex flex-col items-center justify-center h-32 w-full border-2 border-dashed 
+                                  className="flex flex-col items-center justify-center h-24 w-full border-2 border-dashed 
                                   border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer"
                                 >
                                   <img
@@ -272,7 +272,7 @@ export default function SistemPengeremanPage() {
 
                               {/* Video */}
                               {answers[q.id]?.video ? (
-                                <div className="relative w-full h-32 border rounded-lg overflow-hidden">
+                                <div className="relative w-full h-24 border rounded-lg overflow-hidden">
                                   <video
                                     src={answers[q.id]?.video}
                                     className="object-cover w-full h-full"
@@ -295,12 +295,12 @@ export default function SistemPengeremanPage() {
                                       `/pemeriksaan/pemeriksaanTeknis/6-penggukurKecepatan/cameraVideo?qId=${q.id}`
                                     )
                                   }
-                                  className="flex flex-col items-center justify-center h-32 w-full border-2 border-dashed 
+                                  className="flex flex-col items-center justify-center h-24 w-full border-2 border-dashed 
                                   border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer"
                                 >
                                   <img
                                     src="/img/icon/video.png"
-                                    className="w-7 mb-1"
+                                    className="w-6 mb-1"
                                   />
                                   <span className="text-sm text-gray-700">
                                     Ambil Video

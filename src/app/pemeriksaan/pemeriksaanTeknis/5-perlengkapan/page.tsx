@@ -179,7 +179,7 @@ export default function SistemPengeremanPage() {
                         name={q.id}
                         checked={answers[q.id]?.status === opt.value}
                         onChange={() => handleStatusChange(q.id, opt.value, opt)}
-                        className="accent-[#29005E]"
+                        className="accent-[#EBA100]"
                       />
                       {opt.label}
                     </label>
@@ -191,7 +191,7 @@ export default function SistemPengeremanPage() {
                         <div className="flex gap-3 mt-2">
                           {/* Foto */}
                           {answers[q.id]?.photo ? (
-                            <div className="relative w-full h-32 border rounded-lg overflow-hidden">
+                            <div className="relative w-full h-24 border rounded-lg overflow-hidden">
                               <img src={answers[q.id]?.photo} alt="foto" className="object-cover w-full h-full" />
                               <button onClick={() => handleRemoveFile(q.id, "photo")}
                                 className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center 
@@ -202,7 +202,7 @@ export default function SistemPengeremanPage() {
                           ) : (
                             <div
                               onClick={() => router.push(`/pemeriksaan/pemeriksaanTeknis/5-perlengkapan/cameraFoto?qId=${q.id}`)}
-                              className="flex flex-col items-center justify-center h-32 w-full border-2 border-dashed 
+                              className="flex flex-col items-center justify-center h-24 w-full border-2 border-dashed 
                                 border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer">
                               <img src="/img/icon/camera.png" className="w-7" />
                               <span className="text-sm text-gray-700">Ambil Foto</span>
@@ -211,7 +211,7 @@ export default function SistemPengeremanPage() {
 
                           {/* Video */}
                           {answers[q.id]?.video ? (
-                            <div className="relative w-full h-32 border rounded-lg overflow-hidden">
+                            <div className="relative w-full h-24 border rounded-lg overflow-hidden">
                               <video src={answers[q.id]?.video} className="object-cover w-full h-full" controls />
                               <button onClick={() => handleRemoveFile(q.id, "video")}
                                 className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center 
@@ -222,9 +222,9 @@ export default function SistemPengeremanPage() {
                           ) : (
                             <div
                               onClick={() => router.push(`/pemeriksaan/pemeriksaanTeknis/5-perlengkapan/cameraVideo?qId=${q.id}`)}
-                              className="flex flex-col items-center justify-center h-32 w-full border-2 border-dashed 
+                              className="flex flex-col items-center justify-center h-24 w-full border-2 border-dashed 
                                 border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer">
-                              <img src="/img/icon/video.png" className="w-7 mb-1" />
+                              <img src="/img/icon/video.png" className="w-6 mb-1" />
                               <span className="text-sm text-gray-700">Ambil Video</span>
                             </div>
                           )}
@@ -234,14 +234,16 @@ export default function SistemPengeremanPage() {
 
                     {/* Input teks */}
                     {answers[q.id]?.status === opt.value && opt.inputText && (
-                      <div className="ml-2 mt-2 mb-2">
-                        <label className="font-bold text-black">Keterangan</label>
+                      <div className="ml-2 mt-4">
+                        <div className="mb-2">
+                          <label className="font-bold text-black ">Keterangan</label>
+                        </div>
                         <input
                           type="text"
                           value={answers[q.id]?.text || ""}
                           onChange={(e) => handleTextChange(q.id, e.target.value)}
-                          placeholder={`Keterangan ${q.label}`}
-                          className="w-full border rounded-md p-3 text-black mt-2"
+                          placeholder="Masukkan Keterangan"
+                          className="focus:outline-none focus:border-[#29005E] w-full border rounded-md p-3 mb-4 text-black bg-white border-[#E0E0E0]"
                         />
                       </div>
                     )}

@@ -219,7 +219,7 @@ export default function SistemPeneranganPage() {
                         name={q.id}
                         checked={answers[q.id]?.status === opt.value}
                         onChange={() => handleStatusChange(q.id, opt.value as "semua" | "tidak")}
-                        className="accent-[#29005E]"
+                        className="accent-[#EBA100]"
                       />
                       {opt.label}
                     </label>
@@ -244,7 +244,7 @@ export default function SistemPeneranganPage() {
                                 type="checkbox"
                                 checked={answers[q.id]?.side?.kiri || false}
                                 onChange={() => handleSideChange(q.id, "kiri")}
-                                className="accent-[#29005E]"
+                                className="accent-[#EBA100]"
                               />
                               Kiri
                             </label>
@@ -259,7 +259,7 @@ export default function SistemPeneranganPage() {
                           {/* Foto */}
                           
                           {answers[q.id]?.photo ? (
-                            <div className="relative w-full h-32 border rounded-lg overflow-hidden">
+                            <div className="relative w-full h-24 border rounded-lg overflow-hidden">
                               <img src={answers[q.id]?.photo} className="object-cover w-full h-full" />
                               <button
                                 onClick={() => handleRemoveFile(q.id, "photo")}
@@ -273,7 +273,7 @@ export default function SistemPeneranganPage() {
                               onClick={() =>
                                 router.push(`/pemeriksaan/pemeriksaanTeknis/1-sistemPenerangan/cameraFoto?qId=${q.id}`)
                               }
-                              className="flex flex-col items-center justify-center h-32 w-full border-2 border-dashed border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer"
+                              className="flex flex-col items-center justify-center h-24 w-full border-2 border-dashed border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer"
                             >
                               <img src="/img/icon/camera.png" className="w-6 mb-1" />
                               <span className="text-sm text-gray-700">Ambil Foto</span>
@@ -282,7 +282,7 @@ export default function SistemPeneranganPage() {
 
                           {/* Video */}
                           {answers[q.id]?.video ? (
-                            <div className="relative w-full h-32 border rounded-lg overflow-hidden">
+                            <div className="relative w-full h-24 border rounded-lg overflow-hidden">
                               <video src={answers[q.id]?.video} className="object-cover w-full h-full" controls />
                               <button
                                 onClick={() => handleRemoveFile(q.id, "video")}
@@ -296,9 +296,9 @@ export default function SistemPeneranganPage() {
                               onClick={() =>
                                 router.push(`/pemeriksaan/pemeriksaanTeknis/1-sistemPenerangan/cameraVideo?qId=${q.id}`)
                               }
-                              className="flex flex-col items-center justify-center h-32 w-full border-2 border-dashed border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer"
+                              className="flex flex-col items-center justify-center h-24 w-full border-2 border-dashed border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer"
                             >
-                              <img src="/img/icon/video.png" className="w-7 mb-1" />
+                              <img src="/img/icon/video.png" className="w-6 mb-1" />
                               <span className="text-sm text-gray-700">Ambil Video</span>
                             </div>
                           )}

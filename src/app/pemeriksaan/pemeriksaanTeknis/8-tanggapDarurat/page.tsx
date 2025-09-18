@@ -199,7 +199,7 @@ const handleTextChange = (qId: string, value: string) => {
                         name={q.id}
                         checked={answers[q.id]?.status === opt.value}
                         onChange={() => handleStatusChange(q.id, opt.value, opt)}
-                        className="accent-[#29005E]"
+                        className="accent-[#EBA100]"
                       />
                       {opt.label}
                     </label>
@@ -213,7 +213,7 @@ const handleTextChange = (qId: string, value: string) => {
                         <div className="flex gap-3 mt-2">
                           {/* Foto */}
                           {answers[q.id]?.photo ? (
-                            <div className="relative w-full h-32 border rounded-lg overflow-hidden">
+                            <div className="relative w-full h-24 border rounded-lg overflow-hidden">
                               <img
                                 src={answers[q.id]?.photo}
                                 alt="foto"
@@ -234,7 +234,7 @@ const handleTextChange = (qId: string, value: string) => {
                                   `/pemeriksaan/pemeriksaanTeknis/8-tanggapDarurat/cameraFoto?qId=${q.id}`
                                 )
                               }
-                              className="flex flex-col items-center justify-center h-32 w-full border-2 border-dashed 
+                              className="flex flex-col items-center justify-center h-24 w-full border-2 border-dashed 
                               border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer"
                             >
                               <img src="/img/icon/camera.png" className="w-7" />
@@ -244,7 +244,7 @@ const handleTextChange = (qId: string, value: string) => {
 
                           {/* Video */}
                           {answers[q.id]?.video ? (
-                            <div className="relative w-full h-32 border rounded-lg overflow-hidden">
+                            <div className="relative w-full h-24 border rounded-lg overflow-hidden">
                               <video
                                 src={answers[q.id]?.video}
                                 className="object-cover w-full h-full"
@@ -265,7 +265,7 @@ const handleTextChange = (qId: string, value: string) => {
                                   `/pemeriksaan/pemeriksaanTeknis/8-tanggapDarurat/cameraVideo?qId=${q.id}`
                                 )
                               }
-                              className="flex flex-col items-center justify-center h-32 w-full border-2 border-dashed 
+                              className="flex flex-col items-center justify-center h-24 w-full border-2 border-dashed 
                               border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer"
                             >
                               <img src="/img/icon/video.png" className="w-7 mb-1" />
@@ -287,7 +287,7 @@ const handleTextChange = (qId: string, value: string) => {
                           value={answers[q.id]?.text || ""}
                           onChange={(e) => handleTextChange(q.id, e.target.value)}
                           placeholder={`Masukkan Keterangan`}
-                          className="w-full border rounded-md p-3 text-black"
+                          className="focus:outline-none focus:border-[#29005E] w-full border rounded-md p-3 text-black bg-white border-[#E0E0E0]"
                         />
                       </div>
                     )}
