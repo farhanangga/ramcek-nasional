@@ -126,38 +126,45 @@ const handleTextChange = (qId: string, value: string) => {
             <img src="/img/assets/logo.png" alt="logo" className="w-5" />
           </div>
         </div>
-        {/* Stepper */}
+        {/* Stepper Title */}
         <div className="px-4 py-3 pt-16">
-        <p className="text-sm text-black mb-6">
+          <p className="text-sm text-black ">
             Langkah 7 dari 8 <br />
-            <span className="font-semibold">Tanggap Darurat </span>
-        </p>
-        <div className="flex items-center justify-between mx-4">
-            {[...Array(8)].map((_, idx) => {
-            const isCompleted = idx < 6; // step 1 & 2 selesai
-            const isActive = idx === 6;  // step 3 aktif
-
-            return (
-                <div key={idx} className="flex items-center w-full">
-                <div
-                  className={`flex items-center justify-center w-4 h-4 rounded-full text-[8px] font-bold
-                  ${isCompleted ? "bg-[#29005E] text-white" :
-                      isActive ? "bg-white border border-[#29005E] text-[#29005E]" :
-                      "bg-gray-300 text-transparent"}`}
-                >
-                  {isCompleted ? "✓" : ""}
-                </div>
-
-                {idx < 7 && (
-                    <div
-                    className={`flex-1 h-0.5 
-                        ${isCompleted ? "bg-[#29005E]" : "bg-gray-300"}`}
-                    ></div>
-                )}
-                </div>
-            );
-            })}
+            <span className="font-semibold">Penghapus Kaca (Wiper) </span>
+          </p>
         </div>
+
+        {/* Stepper (hanya centang) */}
+        <div className="sticky top-[48px] z-40 bg-gray-100 px-4 py-4">
+          <div className="flex items-center justify-between mx-4">
+            {[...Array(8)].map((_, idx) => {
+              const isCompleted = idx < 6;
+              const isActive = idx === 6;
+
+              return (
+                <div key={idx} className="flex items-center w-full">
+                  <div
+                    className={`flex items-center justify-center w-4 h-4 rounded-full text-[8px] font-bold
+                      ${isCompleted
+                        ? "bg-[#29005E] text-white"
+                        : isActive
+                        ? "bg-white border border-[#29005E] text-[#29005E]"
+                        : "bg-gray-300 text-transparent"}`}
+                  >
+                    {isCompleted ? "✓" : ""}
+                  </div>
+
+                  {idx < 7 && (
+                    <div
+                      className={`flex-1 h-0.5 ${
+                        isCompleted ? "bg-[#29005E]" : "bg-gray-300"
+                      }`}
+                    ></div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </div>
 
         {/* Isi pertanyaan */}

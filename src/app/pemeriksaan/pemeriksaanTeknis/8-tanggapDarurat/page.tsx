@@ -142,45 +142,45 @@ const handleTextChange = (qId: string, value: string) => {
           </div>
         </div>
         {/* Stepper Title */}
-<div className="px-4 py-3 pt-16">
-  <p className="text-sm text-black mb-6">
-    Langkah 8 dari 8 <br />
-    <span className="font-semibold">Tanggap Darurat </span>
-  </p>
-</div>
-
-{/* Stepper (hanya centang) */}
-<div className="sticky top-[56px] z-40 bg-gray-100 px-4 py-2">
-  <div className="flex items-center justify-between">
-    {[...Array(8)].map((_, idx) => {
-      const isCompleted = idx < 7;
-      const isActive = idx === 7;
-
-      return (
-        <div key={idx} className="flex items-center w-full">
-          <div
-            className={`flex items-center justify-center w-4 h-4 rounded-full text-[8px] font-bold
-              ${isCompleted
-                ? "bg-[#29005E] text-white"
-                : isActive
-                ? "bg-white border border-[#29005E] text-[#29005E]"
-                : "bg-gray-300 text-transparent"}`}
-          >
-            {isCompleted ? "✓" : ""}
-          </div>
-
-          {idx < 7 && (
-            <div
-              className={`flex-1 h-0.5 ${
-                isCompleted ? "bg-[#29005E]" : "bg-gray-300"
-              }`}
-            ></div>
-          )}
+        <div className="px-4 py-3 pt-16">
+          <p className="text-sm text-black ">
+            Langkah 8 dari 8 <br />
+            <span className="font-semibold">Tanggap Darurat </span>
+          </p>
         </div>
-      );
-    })}
-  </div>
-</div>
+
+        {/* Stepper (hanya centang) */}
+        <div className="sticky top-[48px] z-40 bg-gray-100 px-4 py-4">
+          <div className="flex items-center justify-between mx-4">
+            {[...Array(8)].map((_, idx) => {
+              const isCompleted = idx < 7;
+              const isActive = idx === 7;
+
+              return (
+                <div key={idx} className="flex items-center w-full">
+                  <div
+                    className={`flex items-center justify-center w-4 h-4 rounded-full text-[8px] font-bold
+                      ${isCompleted
+                        ? "bg-[#29005E] text-white"
+                        : isActive
+                        ? "bg-white border border-[#29005E] text-[#29005E]"
+                        : "bg-gray-300 text-transparent"}`}
+                  >
+                    {isCompleted ? "✓" : ""}
+                  </div>
+
+                  {idx < 7 && (
+                    <div
+                      className={`flex-1 h-0.5 ${
+                        isCompleted ? "bg-[#29005E]" : "bg-gray-300"
+                      }`}
+                    ></div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
 
         {/* Isi pertanyaan */}
         <div className="pt-4 px-4">
@@ -330,8 +330,8 @@ const handleTextChange = (qId: string, value: string) => {
           <div className="fixed inset-0 bg-black/20 flex items-center justify-center z-50">
             <div className="bg-white rounded-xl p-6 text-center w-80 animate-fadeIn">
               <div className="flex justify-center mb-4">
-                <div className="w-16 h-16 flex items-center justify-center rounded-full bg-yellow-200">
-                  <span className="text-yellow-700 text-4xl">✔</span>
+                <div className="w-16 h-16 flex items-center justify-center rounded-full bg-[#faeac8]">
+                  <span className="text-[#f9e3b3] text-4xl">✔</span>
                 </div>
               </div>
               <h2 className="text-lg font-bold mb-2 text-black">
