@@ -123,30 +123,36 @@ export default function SistemPengeremanPage() {
 
         {/* Stepper */}
         <div className="px-4 py-3 pt-16">
-          <p className="text-sm text-black mb-6">
-            Langkah 5 dari 8 <br />
-            <span className="font-semibold">Perlengkapan</span>
-          </p>
-          <div className="flex items-center justify-between mx-4">
+        <p className="text-sm text-black mb-6">
+            Langkah 8 dari 8 <br />
+            <span className="font-semibold">Tanggap Darurat </span>
+        </p>
+        <div className="flex items-center justify-between mx-4">
             {[...Array(8)].map((_, idx) => {
-              const isCompleted = idx < 4;
-              const isActive = idx === 4;
+            const isCompleted = idx < 4; // step 1 & 2 selesai
+            const isActive = idx === 4;  // step 3 aktif
 
-              return (
+            return (
                 <div key={idx} className="flex items-center w-full">
-                  <div className={`flex items-center justify-center w-5 h-5 rounded-full text-[10px] font-bold
-                    ${isCompleted ? "bg-[#29005E] text-white" :
+                <div
+                  className={`flex items-center justify-center w-4 h-4 rounded-full text-[8px] font-bold
+                  ${isCompleted ? "bg-[#29005E] text-white" :
                       isActive ? "bg-white border border-[#29005E] text-[#29005E]" :
-                      "bg-gray-300 text-transparent"}`}>
-                    {isCompleted ? "✓" : ""}
-                  </div>
-                  {idx < 7 && (
-                    <div className={`flex-1 h-0.5 ${isCompleted ? "bg-[#29005E]" : "bg-gray-300"}`}></div>
-                  )}
+                      "bg-gray-300 text-transparent"}`}
+                >
+                  {isCompleted ? "✓" : ""}
                 </div>
-              );
+
+                {idx < 7 && (
+                    <div
+                    className={`flex-1 h-0.5 
+                        ${isCompleted ? "bg-[#29005E]" : "bg-gray-300"}`}
+                    ></div>
+                )}
+                </div>
+            );
             })}
-          </div>
+        </div>
         </div>
 
         {/* Isi pertanyaan */}
