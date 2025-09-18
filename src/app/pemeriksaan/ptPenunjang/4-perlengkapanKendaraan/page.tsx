@@ -11,11 +11,44 @@ interface Answer {
 
 const questions = [
   {
-    id: "jmlh_tmp_dddk",
-    label: "Jumlah Tempat Duduk Penumpang",
+    id: "ban_cadangan",
+    label: "Ban Cadangan",
     options: [
-      { value: "sesuai", label: "Sesuai", inputFoto: true, inputVideo: true },
-      { value: "tidak", label: "Tidak Sesuai", inputFoto: true, inputVideo: true },
+      { value: "ada", label: "Ada dan Baik", inputFoto: true, inputVideo: true },
+      { value: "tidak", label: "Tidak Ada", inputText: true },
+    ],
+  },
+  {
+    id: "segitiga_pengaman",
+    label: "Segitiga Pengaman",
+    options: [
+      { value: "ada", label: "Ada", inputFoto: true, inputVideo: true },
+      { value: "tidak", label: "Tidak Ada", inputText: true },
+    ],
+  },
+  {
+    id: "dongkrak",
+    label: "Dongkrak",
+    options: [
+      { value: "ada", label: "Ada", inputFoto: true, inputVideo: true },
+      { value: "tidak", label: "Tidak Ada", inputText: true },
+    ],
+  },
+  {
+    id: "pembuka_roda",
+    label: "Pembuka Roda",
+    options: [
+      { value: "ada", label: "Ada", inputFoto: true, inputVideo: true },
+      { value: "tidak", label: "Tidak Ada", inputText: true },
+    ],
+  },
+  {
+    id: "lampu_senter",
+    label: "Lampu Senter",
+    options: [
+      { value: "ada", label: "Ada", inputFoto: true, inputVideo: true },
+      { value: "tidakBerfungsi", label: "Tidak Berfungsi", inputFoto: true, inputVideo: true },
+      { value: "tidak", label: "Tidak Ada", inputText: true },
     ],
   },
 ];
@@ -107,7 +140,7 @@ export default function SistemPengeremanPage() {
         <div className="fixed w-full max-w-[414px] z-50">
           <div className="flex items-center justify-between bg-[#29005E] text-white px-4 py-3 shadow">
             <div className="flex items-center gap-2">
-              <button onClick={() => router.push("/pemeriksaan/ptPenunjang/2-badanKendaraan")}>
+              <button onClick={() => router.push("/pemeriksaan/ptPenunjang/1-sistemPenerangan")}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                   strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                   <path strokeLinecap="round" strokeLinejoin="round"
@@ -123,7 +156,7 @@ export default function SistemPengeremanPage() {
         {/* Stepper Title */}
         <div className="px-4 py-3 pt-16">
           <p className="text-sm text-black ">
-            Langkah 3 dari 4 <br />
+            Langkah 2 dari 4 <br />
             <span className="font-semibold">Badan Kendaraan</span>
           </p>
         </div>
@@ -132,8 +165,8 @@ export default function SistemPengeremanPage() {
       <div className="sticky top-[48px] z-40 bg-gray-100 px-4 py-4">
         <div className="flex items-center justify-between px-4">
           {[...Array(4)].map((_, idx) => {
-            const isCompleted = idx < 2;
-            const isActive = idx === 2;
+            const isCompleted = idx < 1;
+            const isActive = idx === 1;
 
             return (
               <div
@@ -203,7 +236,7 @@ export default function SistemPengeremanPage() {
                             </div>
                           ) : (
                             <div
-                              onClick={() => router.push(`/pemeriksaan/ptPenunjang/3-tempatDuduk/cameraFoto?qId=${q.id}`)}
+                              onClick={() => router.push(`/pemeriksaan/ptPenunjang/2-badanKendaraan/cameraFoto?qId=${q.id}`)}
                               className="flex flex-col items-center justify-center h-24 w-full border-2 border-dashed 
                                 border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer">
                               <img src="/img/icon/camera.png" className="w-7" />
@@ -223,7 +256,7 @@ export default function SistemPengeremanPage() {
                             </div>
                           ) : (
                             <div
-                              onClick={() => router.push(`/pemeriksaan/ptPenunjang/3-tempatDuduk/cameraVideo?qId=${q.id}`)}
+                              onClick={() => router.push(`/pemeriksaan/ptPenunjang/2-badanKendaraan/cameraVideo?qId=${q.id}`)}
                               className="flex flex-col items-center justify-center h-24 w-full border-2 border-dashed 
                                 border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer">
                               <img src="/img/icon/video.png" className="w-6 mb-1" />
@@ -231,6 +264,22 @@ export default function SistemPengeremanPage() {
                             </div>
                           )}
                         </div>
+                      </div>
+                    )}
+
+                    {/* Input teks */}
+                    {answers[q.id]?.status === opt.value && opt.inputText && (
+                      <div className="ml-2 mt-4">
+                        <div className="mb-2">
+                          <label className="font-bold text-black ">Keterangan</label>
+                        </div>
+                        <input
+                          type="text"
+                          value={answers[q.id]?.text || ""}
+                          onChange={(e) => handleTextChange(q.id, e.target.value)}
+                          placeholder="Masukkan Keterangan"
+                          className="focus:outline-none focus:border-[#29005E] w-full border rounded-md p-3 mb-4 text-black bg-white border-[#E0E0E0]"
+                        />
                       </div>
                     )}
                   </div>
@@ -244,13 +293,13 @@ export default function SistemPengeremanPage() {
         <div className="fixed bottom-0 left-0 w-full bg-gray-100 shadow-lg">
           <div className="max-w-[414px] mx-auto px-4 py-3 flex gap-3">
             <button
-              onClick={() => router.push("/pemeriksaan/ptPenunjang/2-badanKendaraan")}
+              onClick={() => router.push("/pemeriksaan/ptPenunjang/1-sistemPenerangan")}
               className="w-1/2 py-3 font-bold text-[#29005E] border border-[#29005E] rounded-md">
               SEBELUMNYA
             </button>
             <button
               disabled={!semuaTerisi}
-              onClick={() => router.push("/pemeriksaan/ptPenunjang/4-perlengkapanKendaraan")}
+              onClick={() => router.push("/pemeriksaan/ptPenunjang/3-tempatDuduk")}
               className={`w-1/2 py-3 font-bold text-white rounded-md transition 
                 ${semuaTerisi ? "bg-[#29005E]" : "bg-gray-300 cursor-not-allowed"}`}>
               LANJUT
