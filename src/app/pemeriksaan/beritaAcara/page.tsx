@@ -257,16 +257,16 @@ export default function TerbitkanBeritaAcara() {
               </div>
 
               {/* Canvas */}
-              <div className="bg-white p-2">
-                <SignatureCanvas
+              <div className="relative">
+              <SignatureCanvas
                 ref={sigCanvas}
                 penColor="black"
                 canvasProps={{
                   className:
-                    "border border-gray-300 rounded-md w-full h-72 bg-white touch-none",
+                    "border border-gray-300 rounded-md w-full h-72 bg-white pointer-events-auto",
                 }}
               />
-              </div>
+            </div>
 
               {/* Tombol aksi */}
               <div className="flex justify-between gap-3 p-4">
