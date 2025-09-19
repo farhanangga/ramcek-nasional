@@ -1,11 +1,10 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function TerbitkanBeritaAcara() {
   const router = useRouter();
 
-  // state untuk nama, nik, dan tanda tangan
   const [pengujiNik, setPengujiNik] = useState("");
   const [pengemudi, setPengemudi] = useState("");
   const [petugas, setPetugas] = useState("");
@@ -15,7 +14,7 @@ export default function TerbitkanBeritaAcara() {
     petugas: null as string | null,
   });
 
-  // upload tanda tangan
+  // handle upload
   const handleUpload = (role: keyof typeof signatures, file: File | null) => {
     if (file) {
       const reader = new FileReader();
@@ -26,15 +25,17 @@ export default function TerbitkanBeritaAcara() {
     }
   };
 
+  const handleRemove = (role: keyof typeof signatures) => {
+    setSignatures((prev) => ({ ...prev, [role]: null }));
+  };
+
   const allSigned = signatures.penguji && signatures.pengemudi && signatures.petugas;
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
       {/* Header */}
       <div className="bg-[#29005E] text-white p-4 flex items-center">
-        <button onClick={() => router.back()} className="mr-3">
-          ⬅
-        </button>
+        <button onClick={() => router.back()} className="mr-3">⬅</button>
         <h1 className="text-lg font-semibold">Terbitkan Berita Acara</h1>
       </div>
 
@@ -50,23 +51,13 @@ export default function TerbitkanBeritaAcara() {
             placeholder="NIK Penguji"
             className="w-full border rounded p-2 text-sm"
           />
-          <div>
-            <label className="text-sm font-medium">Tanda Tangan</label>
-            {signatures.penguji ? (
-              <img
-                src={signatures.penguji}
-                alt="ttd penguji"
-                className="mt-2 w-40 h-20 object-contain border"
-              />
-            ) : (
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => handleUpload("penguji", e.target.files?.[0] || null)}
-                className="mt-2"
-              />
-            )}
-          </div>
+          <SignatureUpload
+            label="Tanda Tangan"
+            role="penguji"
+            fileUrl={signatures.penguji}
+            onUpload={handleUpload}
+            onRemove={handleRemove}
+          />
         </div>
 
         {/* Pengemudi */}
@@ -81,23 +72,13 @@ export default function TerbitkanBeritaAcara() {
             <option value="Budi">Budi</option>
             <option value="Andi">Andi</option>
           </select>
-          <div>
-            <label className="text-sm font-medium">Tanda Tangan</label>
-            {signatures.pengemudi ? (
-              <img
-                src={signatures.pengemudi}
-                alt="ttd pengemudi"
-                className="mt-2 w-40 h-20 object-contain border"
-              />
-            ) : (
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => handleUpload("pengemudi", e.target.files?.[0] || null)}
-                className="mt-2"
-              />
-            )}
-          </div>
+          <SignatureUpload
+            label="Tanda Tangan"
+            role="pengemudi"
+            fileUrl={signatures.pengemudi}
+            onUpload={handleUpload}
+            onRemove={handleRemove}
+          />
         </div>
 
         {/* Petugas */}
@@ -112,23 +93,13 @@ export default function TerbitkanBeritaAcara() {
             <option value="Petugas A">Petugas A</option>
             <option value="Petugas B">Petugas B</option>
           </select>
-          <div>
-            <label className="text-sm font-medium">Tanda Tangan</label>
-            {signatures.petugas ? (
-              <img
-                src={signatures.petugas}
-                alt="ttd petugas"
-                className="mt-2 w-40 h-20 object-contain border"
-              />
-            ) : (
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => handleUpload("petugas", e.target.files?.[0] || null)}
-                className="mt-2"
-              />
-            )}
-          </div>
+          <SignatureUpload
+            label="Tanda Tangan"
+            role="petugas"
+            fileUrl={signatures.petugas}
+            onUpload={handleUpload}
+            onRemove={handleRemove}
+          />
         </div>
       </div>
 
@@ -144,6 +115,55 @@ export default function TerbitkanBeritaAcara() {
           TERBITKAN BERITA ACARA
         </button>
       </div>
+    </div>
+  );
+}
+
+// Komponen Upload TTD
+function SignatureUpload({
+  label,
+  role,
+  fileUrl,
+  onUpload,
+  onRemove,
+}: {
+  label: string;
+  role: string;
+  fileUrl: string | null;
+  onUpload: (role: any, file: File | null) => void;
+  onRemove: (role: any) => void;
+}) {
+  return (
+    <div>
+      <label className="text-sm font-medium">{label}</label>
+      {fileUrl ? (
+        <div className="relative w-full h-24 border rounded-lg overflow-hidden">
+          <img
+            src={fileUrl}
+            alt="ttd"
+            className="object-contain w-full h-full bg-white"
+          />
+          <button
+            onClick={() => onRemove(role)}
+            className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center 
+              bg-red-200 text-red-700 rounded-full shadow hover:bg-red-400 hover:text-white"
+          >
+            ✕
+          </button>
+        </div>
+      ) : (
+        <label className="flex flex-col items-center justify-center h-24 w-full border-2 border-dashed 
+            border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer">
+          <img src="/img/icon/sign.png" className="w-6 mb-1" />
+          <span className="text-sm text-gray-700">Upload Tanda Tangan</span>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => onUpload(role, e.target.files?.[0] || null)}
+            className="hidden"
+          />
+        </label>
+      )}
     </div>
   );
 }
