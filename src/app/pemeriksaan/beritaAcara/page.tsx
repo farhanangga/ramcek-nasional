@@ -103,7 +103,7 @@ export default function TerbitkanBeritaAcara() {
                 <img
                   src={signatures.penguji}
                   alt="Tanda tangan penguji"
-                  className="w-full h-24 object-contain border rounded-md"
+                  className="w-full h-34 object-contain border rounded-md"
                 />
               ) : (
                 <div
@@ -137,7 +137,7 @@ export default function TerbitkanBeritaAcara() {
                 <img
                   src={signatures.pengemudi}
                   alt="Tanda tangan pengemudi"
-                  className="w-full h-24 object-contain border rounded-md"
+                  className="w-full h-34 object-contain border rounded-md"
                 />
               ) : (
                 <div
@@ -171,7 +171,7 @@ export default function TerbitkanBeritaAcara() {
                 <img
                   src={signatures.petugas}
                   alt="Tanda tangan petugas"
-                  className="w-full h-24 object-contain border rounded-md"
+                  className="w-full h-34 object-contain border rounded-md"
                 />
               ) : (
                 <div
