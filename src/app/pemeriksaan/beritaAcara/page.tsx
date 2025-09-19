@@ -278,10 +278,12 @@ export default function TerbitkanBeritaAcara() {
                 </button>
                 <button
                   onClick={handleSave}
+                  onTouchEnd={handleSave}
                   className="w-1/2 py-3 rounded-md bg-[#29005E] text-white font-bold"
                 >
                   SIMPAN
                 </button>
+
               </div>
             </div>
           </div>          
