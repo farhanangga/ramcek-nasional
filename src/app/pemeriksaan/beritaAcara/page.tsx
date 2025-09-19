@@ -38,21 +38,33 @@ export default function TerbitkanBeritaAcara() {
   };
 
   const handleSave = () => {
-    if (sigCanvas.current?.isEmpty()) {
-      alert("Tanda tangan belum diisi");
-      return;
-    }
-    const dataUrl = sigCanvas.current
+  if (sigCanvas.current?.isEmpty()) {
+    alert("Tanda tangan belum diisi");
+    return;
+  }
+
+  let dataUrl: string | undefined;
+
+  try {
+    dataUrl = sigCanvas.current
       ?.getTrimmedCanvas()
       .toDataURL("image/png");
-    if (openSignature) {
-      setSignatures((prev) => ({
-        ...prev,
-        [openSignature]: dataUrl || null,
-      }));
-    }
-    setOpenSignature(null);
-  };
+  } catch (err) {
+    console.warn("getTrimmedCanvas gagal, fallback ke getCanvas()", err);
+    dataUrl = sigCanvas.current
+      ?.getCanvas()
+      .toDataURL("image/png");
+  }
+
+  if (openSignature && dataUrl) {
+    setSignatures((prev) => ({
+      ...prev,
+      [openSignature]: dataUrl,
+    }));
+  }
+  setOpenSignature(null);
+};
+
 
   return (
     <div className="bg-gray-100 flex justify-center">
@@ -259,13 +271,15 @@ export default function TerbitkanBeritaAcara() {
               {/* Canvas */}
               <div className="relative">
               <SignatureCanvas
-                ref={sigCanvas}
-                penColor="black"
-                canvasProps={{
-                  className:
-                    "border border-gray-300 rounded-md w-full h-72 bg-white pointer-events-auto",
-                }}
-              />
+  ref={sigCanvas}
+  penColor="black"
+  canvasProps={{
+    className:
+      "border border-gray-300 rounded-md w-full h-72 bg-white",
+    style: { width: "100%", height: "100%" }, // biar ikut container
+  }}
+/>
+
             </div>
 
               {/* Tombol aksi */}
