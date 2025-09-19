@@ -33,11 +33,22 @@ export default function TerbitkanBeritaAcara() {
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
-      {/* Header */}
-      <div className="bg-[#29005E] text-white p-4 flex items-center">
-        <button onClick={() => router.back()} className="mr-3">⬅</button>
-        <h1 className="text-lg font-semibold">Terbitkan Berita Acara</h1>
-      </div>
+       {/* Header */}
+         <div className="fixed w-full max-w-[414px] z-50">
+           <div className="flex items-center justify-between bg-[#29005E] text-white px-4 py-3 shadow">
+             <div className="flex items-center gap-2">
+               <button onClick={() => router.push("/pemeriksaan/ptPenunjang/4-perlengkapanKendaraan")}>
+                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                   strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                   <path strokeLinecap="round" strokeLinejoin="round"
+                     d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+                 </svg>
+               </button>
+               <span className="font-semibold">Terbitkan Berita Acara</span>
+             </div>
+             <img src="/img/assets/logo.png" alt="logo" className="w-5" />
+           </div>
+         </div>
 
       {/* Form */}
       <div className="flex-1 p-4 space-y-6 max-w-xl mx-auto">
