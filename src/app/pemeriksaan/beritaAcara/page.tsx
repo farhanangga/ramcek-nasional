@@ -29,28 +29,38 @@ export default function TerbitkanBeritaAcara() {
     setSignatures((prev) => ({ ...prev, [role]: null }));
   };
 
-  const allSigned = signatures.penguji && signatures.pengemudi && signatures.petugas;
+  const semuaTerisi = signatures.penguji && signatures.pengemudi && signatures.petugas;
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
-       {/* Header */}
-         <div className="fixed w-full max-w-[414px] z-50">
-           <div className="flex items-center justify-between bg-[#29005E] text-white px-4 py-3 shadow">
-             <div className="flex items-center gap-2">
-               <button onClick={() => router.push("/pemeriksaan/ptPenunjang/4-perlengkapanKendaraan")}>
-                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                   strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                   <path strokeLinecap="round" strokeLinejoin="round"
-                     d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
-                 </svg>
-               </button>
-               <span className="font-semibold">Terbitkan Berita Acara</span>
-             </div>
-             <img src="/img/assets/logo.png" alt="logo" className="w-5" />
-           </div>
-         </div>
+<div className="bg-gray-100 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-100 pb-20 w-[414px]">
+        {/* Header */}
+        <div className="fixed w-full p-auto max-w-[414px]">
+          <div className="top-0 left-0 w-full flex items-center justify-between bg-[#29005E] text-white px-4 py-3 shadow z-50">
+            <div className="flex items-center gap-2">
+              <button onClick={() => router.push("/pemeriksaan/ptPenunjang/")}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+                  />
+                </svg>
+              </button>
+              <span className="font-semibold">Data Pemeriksaan</span>
+            </div>
+            <img src="/img/assets/logo.png" alt="logo" className="w-5" />
+          </div>
+        </div>
 
-      {/* Form */}
+        {/* Form */}
       <div className="flex-1 p-4 space-y-6 max-w-xl mx-auto">
         {/* Penguji */}
         <div className="bg-white rounded-2xl shadow p-4 space-y-3">
@@ -114,17 +124,20 @@ export default function TerbitkanBeritaAcara() {
         </div>
       </div>
 
-      {/* Footer */}
-      <div className="p-4 border-t bg-white">
-        <button
-          disabled={!allSigned}
-          onClick={() => alert("Berita Acara diterbitkan ✅")}
-          className={`w-full py-3 rounded-xl font-semibold ${
-            allSigned ? "bg-[#29005E] text-white" : "bg-gray-300 text-gray-500"
-          }`}
-        >
-          TERBITKAN BERITA ACARA
-        </button>
+        {/* Tombol lanjut */}
+        <div className="fixed bottom-0 left-0 w-full shadow-lg bg-gray-100">
+          <div className="max-w-md mx-auto px-4 py-3">
+            <button
+              type="button"
+              disabled={!semuaTerisi}
+              onClick={() => router.push("/pemeriksaan/ptPenunjang/4-perlengkapanKendaraan")}
+              className={`w-full py-3 font-bold text-white rounded-md transition
+              ${semuaTerisi ? "bg-[#29005E]" : "bg-gray-300 cursor-not-allowed"}`}
+            >
+              LANJUT
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
