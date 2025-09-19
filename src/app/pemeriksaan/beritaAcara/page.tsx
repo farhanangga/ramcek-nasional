@@ -275,7 +275,7 @@ export default function TerbitkanBeritaAcara() {
   penColor="black"
   canvasProps={{
     className:
-      "border border-gray-300 rounded-md w-full h-72 bg-white",
+      "border border-gray-300 rounded-md w-full h-172 bg-white",
     style: { width: "100%", height: "100%" }, // biar ikut container
   }}
 />
