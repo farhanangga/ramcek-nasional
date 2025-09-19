@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import {
   ArrowUpTrayIcon,
@@ -23,12 +23,12 @@ export default function TerbitkanBeritaAcara() {
     petugas: null,
   });
 
+  const sigCanvas = useRef<SignatureCanvas>(null);
+  const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 });
   const [openMenu, setOpenMenu] = useState<null | keyof typeof signatures>(null);
   const [openSignature, setOpenSignature] = useState<
     null | keyof typeof signatures
   >(null);
-
-  const sigCanvas = useRef<SignatureCanvas>(null);
 
   const semuaTerisi =
     signatures.penguji && signatures.pengemudi && signatures.petugas;
@@ -65,6 +65,17 @@ export default function TerbitkanBeritaAcara() {
   setOpenSignature(null);
 };
 
+useEffect(() => {
+    const updateSize = () => {
+      const width = window.innerWidth * 0.9; // 90% dari layar
+      const height = Math.round(width * 0.6); // tinggi 60% dari lebar
+      setCanvasSize({ width, height });
+    };
+
+    updateSize();
+    window.addEventListener("resize", updateSize);
+    return () => window.removeEventListener("resize", updateSize);
+  }, []);
 
   return (
     <div className="bg-gray-100 flex justify-center">
@@ -268,19 +279,22 @@ export default function TerbitkanBeritaAcara() {
                 </button>
               </div>
 
-              {/* Canvas */}
-              <div className="relative">
-              <SignatureCanvas
-  ref={sigCanvas}
-  penColor="black"
-  canvasProps={{
-    className:
-      "border border-gray-300 rounded-md w-full h-172 bg-white",
-    style: { width: "100%", height: "100%" }, // biar ikut container
-  }}
-/>
-
-            </div>
+               {/* Canvas */}
+                <div className="bg-white p-2">
+                  {canvasSize.width > 0 && (
+                    <SignatureCanvas
+                      ref={sigCanvas}
+                      penColor="black"
+                      canvasProps={{
+                        width: canvasSize.width,
+                        height: canvasSize.height,
+                        className:
+                          "border border-gray-300 rounded-md w-full bg-white",
+                        willReadFrequently: true,
+                      } as any}
+                    />
+                  )}
+                </div>
 
               {/* Tombol aksi */}
               <div className="flex justify-between gap-3 p-4">
