@@ -54,7 +54,7 @@ export default function TerbitkanBeritaAcara() {
                   />
                 </svg>
               </button>
-              <span className="font-semibold">Data Pemeriksaan</span>
+              <span className="font-semibold">Terbitkan Berita Acara</span>
             </div>
             <img src="/img/assets/logo.png" alt="logo" className="w-5" />
           </div>
@@ -64,13 +64,13 @@ export default function TerbitkanBeritaAcara() {
       <div className="flex-1 p-4 space-y-6 max-w-xl mx-auto">
         {/* Penguji */}
         <div className="bg-white rounded-2xl shadow p-4 space-y-3">
-          <h2 className="font-semibold">Penguji Kendaraan Bermotor</h2>
+          <h2 className="font-semibold text-black">Penguji Kendaraan Bermotor</h2>
           <input
             type="text"
             value={pengujiNik}
             onChange={(e) => setPengujiNik(e.target.value)}
             placeholder="NIK Penguji"
-            className="w-full border rounded p-2 text-sm"
+            className="w-full border rounded p-2 text-sm text-black"
           />
           <SignatureUpload
             label="Tanda Tangan"
@@ -83,11 +83,11 @@ export default function TerbitkanBeritaAcara() {
 
         {/* Pengemudi */}
         <div className="bg-white rounded-2xl shadow p-4 space-y-3">
-          <h2 className="font-semibold">Pengemudi</h2>
+          <h2 className="font-semibold text-black">Pengemudi</h2>
           <select
             value={pengemudi}
             onChange={(e) => setPengemudi(e.target.value)}
-            className="w-full border rounded p-2 text-sm"
+            className="w-full border rounded p-2 text-sm text-black"
           >
             <option value="">Pilih Pengemudi</option>
             <option value="Budi">Budi</option>
@@ -104,11 +104,11 @@ export default function TerbitkanBeritaAcara() {
 
         {/* Petugas */}
         <div className="bg-white rounded-2xl shadow p-4 space-y-3">
-          <h2 className="font-semibold">Petugas Kemenhub</h2>
+          <h2 className="font-semibold text-black">Petugas Kemenhub</h2>
           <select
             value={petugas}
             onChange={(e) => setPetugas(e.target.value)}
-            className="w-full border rounded p-2 text-sm"
+            className="w-full border rounded p-2 text-sm text-black"
           >
             <option value="">Pilih Petugas</option>
             <option value="Petugas A">Petugas A</option>
@@ -125,8 +125,8 @@ export default function TerbitkanBeritaAcara() {
       </div>
 
         {/* Tombol lanjut */}
-        <div className="fixed bottom-0 left-0 w-full shadow-lg bg-gray-100">
-          <div className="max-w-md mx-auto px-4 py-3">
+        <div className="fixed bottom-0 left-0 w-full shadow-lg bg-gray-100 text-black">
+          <div className="max-w-md mx-auto px-4 py-3 text-black">
             <button
               type="button"
               disabled={!semuaTerisi}
@@ -134,7 +134,7 @@ export default function TerbitkanBeritaAcara() {
               className={`w-full py-3 font-bold text-white rounded-md transition
               ${semuaTerisi ? "bg-[#29005E]" : "bg-gray-300 cursor-not-allowed"}`}
             >
-              LANJUT
+              TERBITKAN BERITA ACARA
             </button>
           </div>
         </div>
