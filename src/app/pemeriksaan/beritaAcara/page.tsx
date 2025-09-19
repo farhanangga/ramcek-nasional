@@ -259,15 +259,13 @@ export default function TerbitkanBeritaAcara() {
               {/* Canvas */}
               <div className="bg-white p-2">
                 <SignatureCanvas
-                  ref={sigCanvas}
-                  penColor="black"
-                  canvasProps={{
-                    width: 400,
-                    height: 300,
-                    className:
-                      "border border-gray-300 rounded-md w-full h-72 bg-white",
-                  }}
-                />
+                ref={sigCanvas}
+                penColor="black"
+                canvasProps={{
+                  className:
+                    "border border-gray-300 rounded-md w-full h-72 bg-white touch-none",
+                }}
+              />
               </div>
 
               {/* Tombol aksi */}
@@ -286,7 +284,7 @@ export default function TerbitkanBeritaAcara() {
                 </button>
               </div>
             </div>
-          </div>
+          </div>          
         )}
       </div>
     </div>
