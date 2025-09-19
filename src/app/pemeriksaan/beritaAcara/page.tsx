@@ -33,7 +33,8 @@ export default function TerbitkanBeritaAcara() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center pb-20 w-[414px]">
+    <div className="bg-gray-100 flex justify-center">
+       <div className="min-h-screen w-[414px] bg-gray-100 pb-24">
       {/* Header */}
       <div className="fixed w-full max-w-[414px] top-0 left-0 z-50">
         <div className="flex items-center justify-between bg-[#29005E] text-white px-4 py-3 shadow">
@@ -224,6 +225,7 @@ export default function TerbitkanBeritaAcara() {
           </button>
         </div>
       </div>
+    </div>
     </div>
   );
 }
