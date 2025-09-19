@@ -276,7 +276,7 @@ const questions = [
           <div className="max-w-[414px] mx-auto px-4 py-3">
             <button
               disabled={!semuaTerisi}
-              onClick={() => router.push("/pemeriksaan/pemerikasaanTeknis/2-sistemPenegereman")}
+              onClick={() => router.push("/pemeriksaan/pemerikasaanTeknis/2-sistemPengereman")}
               className={`w-full py-3 font-bold text-white rounded-md transition ${
                 semuaTerisi ? "bg-[#29005E]" : "bg-gray-300 cursor-not-allowed"
               }`}
