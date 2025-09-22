@@ -115,7 +115,7 @@ export default function TerbitkanBeritaAcara() {
             <div className="flex items-center gap-2">
               <button
                 onClick={() =>
-                  router.push("/pemeriksaan/ptPenunjang/4-perlengkapanKendaraan")
+                  router.push("/pemeriksaan/pemeriksaanPenunjang/4-perlengkapanKendaraan")
                 }
               >
                 <svg
@@ -294,7 +294,7 @@ export default function TerbitkanBeritaAcara() {
                 <button
                   onClick={() => {
                     setShowSuccessModal(false);
-                    router.push("/pemeriksaan/previewBeritaAcara");
+                    router.push("/previewBeritaAcara");
                   }}
                   className="w-full py-2 font-bold text-[#29005E] border border-[#29005E] rounded-md"
                 >

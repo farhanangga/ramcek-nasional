@@ -3,35 +3,26 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 interface Answer {
-  status?: string;   // bisa "adaBerfungsi" | "tidakBerfungsi" | "tidakAda"
+  status?: "berfungsi" | "tidak";
   photo?: string;
   video?: string;
-  text?: string;
 }
 
 const questions = [
   {
-    id: "pintu_darurat",
-    label: "Pintu Darurat",
+    id: "Lampu_depan",
+    label: "Lampu Posisi Depan",
     options: [
-      { value: "ada", label: "Ada", inputFoto: true, inputVideo: true },
-      { value: "tidakAda", label: "Tidak Ada", inputext: true},
+      { value: "semua", label: "Semua Menyala", inputFoto: true, inputVideo: true },
+      { value: "tidak", label: "Tidak Menyala", inputFoto: true, inputVideo: true },
     ],
   },
   {
-    id: "jendela_darurat",
-    label: "Jendela Darurat",
+    id: "lampu_Belakang",
+    label: "Lampu Posisi Belakang",
     options: [
-      { value: "ada", label: "Ada", inputFoto: true, inputVideo: true },
-      { value: "tidakAda", label: "Tidak Ada", inputext: true},
-    ],
-  },
-  {
-    id: "pemecah_kaca",
-    label: "Alatt Pemukul/Pemecah Kaca",
-    options: [
-      { value: "ada", label: "Ada", inputFoto: true, inputVideo: true },
-      { value: "tidakAda", label: "Tidak Ada", inputext: true},
+      { value: "semua", label: "Semua Menyala", inputFoto: true, inputVideo: true },
+      { value: "tidak", label: "Tidak Menyala", inputFoto: true, inputVideo: true },
     ],
   },
 ];
@@ -51,20 +42,14 @@ export default function SistemPengeremanPage() {
       const savedPhoto = localStorage.getItem(`capturedPhoto_${q.id}`);
       if (savedPhoto) {
         const { photo } = JSON.parse(savedPhoto);
-        setAnswers((prev) => ({
-          ...prev,
-          [q.id]: { ...prev[q.id], photo },
-        }));
+        setAnswers((prev) => ({ ...prev, [q.id]: { ...prev[q.id], photo } }));
         localStorage.removeItem(`capturedPhoto_${q.id}`);
       }
 
       const savedVideo = localStorage.getItem(`capturedVideo_${q.id}`);
       if (savedVideo) {
         const { video } = JSON.parse(savedVideo);
-        setAnswers((prev) => ({
-          ...prev,
-          [q.id]: { ...prev[q.id], video },
-        }));
+        setAnswers((prev) => ({ ...prev, [q.id]: { ...prev[q.id], video } }));
         localStorage.removeItem(`capturedVideo_${q.id}`);
       }
     });
@@ -77,40 +62,31 @@ export default function SistemPengeremanPage() {
     }
   }, [answers]);
 
-const handleStatusChange = (qId: string, status: string, opt: any) => {
-  setAnswers((prev) => {
-    let updated: Answer = { status };
+  // ⬇️ Ubah: reset photo & video ketika status diganti
+  const handleStatusChange = (qId: string, status: "berfungsi" | "tidak") => {
+    setAnswers((prev) => ({
+      ...prev,
+      [qId]: {
+        ...prev[qId],
+        status,
+        photo: undefined,
+        video: undefined,
+      },
+    }));
+    // Hapus juga dari localStorage biar benar-benar kosong
+    localStorage.removeItem(`capturedPhoto_${qId}`);
+    localStorage.removeItem(`capturedVideo_${qId}`);
+  };
 
-    if (opt.inputext) {
-      // kalau pilih teks → reset foto & video
-      updated = { status, text: "" };
-    }
-
-    if (opt.inputFoto || opt.inputVideo) {
-      // kalau pilih foto/video → reset teks
-      updated = { status, photo: undefined, video: undefined };
-    }
-
-    return { ...prev, [qId]: updated };
-  });
-};
-
-
+  // ⬇️ Ubah: hapus dari state & localStorage
   const handleRemoveFile = (qId: string, type: "photo" | "video") => {
     setAnswers((prev) => ({
       ...prev,
       [qId]: { ...prev[qId], [type]: undefined },
     }));
+    localStorage.removeItem(`captured${type === "photo" ? "Photo" : "Video"}_${qId}`);
   };
 
-const handleTextChange = (qId: string, value: string) => {
-  setAnswers((prev) => ({
-    ...prev,
-    [qId]: { ...prev[qId], text: value },
-  }));
-};
-
-  const [showModal, setShowModal] = useState(false); // 🔥 state untuk modal
   const semuaTerisi = questions.every((q) => answers[q.id]?.status);
 
   return (
@@ -120,46 +96,38 @@ const handleTextChange = (qId: string, value: string) => {
         <div className="fixed w-full max-w-[414px] z-50">
           <div className="flex items-center justify-between bg-[#29005E] text-white px-4 py-3 shadow">
             <div className="flex items-center gap-2">
-              <button onClick={() => router.push("/pemeriksaan/pemeriksaanTeknis/7-penghapusKaca")}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-4 h-4"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
-                  />
+              <button onClick={() => router.push("/pemeriksaan/pemeriksaanTeknis/8-tanggapDarurat")}>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                  strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                  <path strokeLinecap="round" strokeLinejoin="round"
+                    d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
                 </svg>
               </button>
-              <span className="font-semibold">Pemeriksaan Teknis Utama</span>
+              <span className="font-semibold">Pemeriksaan Teknis Penunjang</span>
             </div>
             <img src="/img/assets/logo.png" alt="logo" className="w-5" />
           </div>
         </div>
-        {/* Stepper Title */}
+
+       {/* Stepper Title */}
         <div className="px-4 py-3 pt-16">
           <p className="text-sm text-black ">
-            Langkah 8 dari 8 <br />
-            <span className="font-semibold">Tanggap Darurat</span>
+            Langkah 1 dari 4 <br />
+            <span className="font-semibold">Sistem Pengereman</span>
           </p>
         </div>
 
       {/* Stepper (hanya centang) */}
       <div className="sticky top-[48px] z-40 bg-gray-100 px-4 py-4">
         <div className="flex items-center justify-between px-4">
-          {[...Array(8)].map((_, idx) => {
-            const isCompleted = idx < 7;
-            const isActive = idx === 7;
+          {[...Array(4)].map((_, idx) => {
+            const isCompleted = idx < 0;
+            const isActive = idx === 0;
 
             return (
               <div
                 key={idx}
-                className={`flex items-center ${idx === 7 ? "w-auto" : "w-full"}`}
+                className={`flex items-center ${idx === 3 ? "w-auto" : "w-full"}`}
               >
                 <div
                   className={`flex items-center justify-center w-4 h-4 rounded-full text-[8px] font-bold
@@ -172,7 +140,7 @@ const handleTextChange = (qId: string, value: string) => {
                   {isCompleted ? "✓" : ""}
                 </div>
 
-                {idx < 7 && (
+                {idx < 3 && (
                   <div
                     className={`flex-1 h-0.5 ${
                       isCompleted ? "bg-[#29005E]" : "bg-gray-300"
@@ -184,7 +152,6 @@ const handleTextChange = (qId: string, value: string) => {
           })}
         </div>
       </div>
-
 
         {/* Isi pertanyaan */}
         <div className="pt-4 px-4">
@@ -202,14 +169,14 @@ const handleTextChange = (qId: string, value: string) => {
                         type="radio"
                         name={q.id}
                         checked={answers[q.id]?.status === opt.value}
-                        onChange={() => handleStatusChange(q.id, opt.value, opt)}
+                        onChange={() => handleStatusChange(q.id, opt.value as "berfungsi" | "tidak")}
                         className="accent-[#EBA100]"
                       />
                       {opt.label}
                     </label>
 
-                    {/* Input foto & video */}
-                    {answers[q.id]?.status === opt.value && (opt.inputFoto || opt.inputVideo) && (
+                    {/* Input foto & video (hanya muncul di bawah radio yg dipilih) */}
+                    {answers[q.id]?.status === opt.value && (
                       <div className="ml-2 mt-4">
                         <div className="mb-2">
                           <label className="font-bold text-black">Unggah Foto & Video</label>
@@ -218,11 +185,8 @@ const handleTextChange = (qId: string, value: string) => {
                           {/* Foto */}
                           {answers[q.id]?.photo ? (
                             <div className="relative w-full h-24 border rounded-lg overflow-hidden">
-                              <img
-                                src={answers[q.id]?.photo}
-                                alt="foto"
-                                className="object-cover w-full h-full"
-                              />
+                              <img src={answers[q.id]?.photo} alt="foto"
+                                className="object-cover w-full h-full" />
                               <button
                                 onClick={() => handleRemoveFile(q.id, "photo")}
                                 className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center 
@@ -233,15 +197,11 @@ const handleTextChange = (qId: string, value: string) => {
                             </div>
                           ) : (
                             <div
-                              onClick={() =>
-                                router.push(
-                                  `/pemeriksaan/pemeriksaanTeknis/8-tanggapDarurat/cameraFoto?qId=${q.id}`
-                                )
-                              }
+                              onClick={() => router.push(`/pemeriksaan/pemeriksaanPenunjang/1-sistemPenerangan/cameraFoto?qId=${q.id}`)}
                               className="flex flex-col items-center justify-center h-24 w-full border-2 border-dashed 
                               border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer"
                             >
-                              <img src="/img/icon/camera.png" className="w-7" />
+                              <img src="/img/icon/camera.png" className="w-6 mb-1" />
                               <span className="text-sm text-gray-700">Ambil Foto</span>
                             </div>
                           )}
@@ -249,11 +209,8 @@ const handleTextChange = (qId: string, value: string) => {
                           {/* Video */}
                           {answers[q.id]?.video ? (
                             <div className="relative w-full h-24 border rounded-lg overflow-hidden">
-                              <video
-                                src={answers[q.id]?.video}
-                                className="object-cover w-full h-full"
-                                controls
-                              />
+                              <video src={answers[q.id]?.video}
+                                className="object-cover w-full h-full" controls />
                               <button
                                 onClick={() => handleRemoveFile(q.id, "video")}
                                 className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center 
@@ -264,35 +221,15 @@ const handleTextChange = (qId: string, value: string) => {
                             </div>
                           ) : (
                             <div
-                              onClick={() =>
-                                router.push(
-                                  `/pemeriksaan/pemeriksaanTeknis/8-tanggapDarurat/cameraVideo?qId=${q.id}`
-                                )
-                              }
+                              onClick={() => router.push(`/pemeriksaan/pemeriksaanPenunjang/1-sistemPenerangan/cameraVideo?qId=${q.id}`)}
                               className="flex flex-col items-center justify-center h-24 w-full border-2 border-dashed 
                               border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer"
                             >
-                              <img src="/img/icon/video.png" className="w-7 mb-1" />
+                              <img src="/img/icon/video.png" className="w-6 mb-1" />
                               <span className="text-sm text-gray-700">Ambil Video</span>
                             </div>
                           )}
                         </div>
-                      </div>
-                    )}
-
-                    {/* Input teks */}
-                    {answers[q.id]?.status === opt.value && opt.inputext && (
-                      <div className="ml-2 mt-4 mb-2">
-                        <div className="mb-1">
-                          <label className="font-bold text-black">Keterangan</label>
-                        </div>
-                        <input
-                          type="text"
-                          value={answers[q.id]?.text || ""}
-                          onChange={(e) => handleTextChange(q.id, e.target.value)}
-                          placeholder={`Masukkan Keterangan`}
-                          className="focus:outline-none focus:border-[#29005E] w-full border rounded-md p-3 text-black bg-white border-[#E0E0E0]"
-                        />
                       </div>
                     )}
                   </div>
@@ -302,62 +239,20 @@ const handleTextChange = (qId: string, value: string) => {
           ))}
         </div>
 
-         <div>
-        {/* Tombol bawah */}
+       {/* Tombol lanjut */}
         <div className="fixed bottom-0 left-0 w-full bg-gray-100 shadow-lg">
-          <div className="max-w-[414px] mx-auto px-4 py-3 flex gap-3">
-            <button
-              onClick={() =>
-                router.push("/pemeriksaan/pemeriksaanTeknis/7-penghapusKaca")
-              }
-              className="w-1/2 py-3 font-bold text-[#29005E] border border-[#29005E] rounded-md"
-            >
-              SEBELUMNYA
-            </button>
+          <div className="max-w-[414px] mx-auto px-4 py-3">
             <button
               disabled={!semuaTerisi}
-              onClick={() => setShowModal(true)} // buka modal dulu
-              className={`w-1/2 py-3 font-bold text-white rounded-md transition 
-                ${
-                  semuaTerisi
-                    ? "bg-[#29005E]"
-                    : "bg-gray-300 cursor-not-allowed"
-                }`}
+              onClick={() => router.push("/pemeriksaan/pemeriksaanPenunjang/2-badanKendaraan")}
+              className={`w-full py-3 font-bold text-white rounded-md transition ${
+                semuaTerisi ? "bg-[#29005E]" : "bg-gray-300 cursor-not-allowed"
+              }`}
             >
-              LANJUT
+              SELANJUTNYA
             </button>
           </div>
         </div>
-
-        {/* Modal notifikasi */}
-        {showModal && (
-          <div className="fixed inset-0 bg-black/20 flex items-center justify-center z-50">
-            <div className="bg-white rounded-xl p-6 text-center w-80 animate-fadeIn">
-              <div className="flex justify-center mb-4">
-                <div className="w-16 h-16 flex items-center justify-center rounded-full bg-[#faeac8]">
-                  <span className="text-[#EBA100] text-4xl">✔</span>
-                </div>
-              </div>
-              <h2 className="text-lg font-bold mb-2 text-black">
-                Pemeriksaan Teknis Utama Berhasil
-              </h2>
-              <p className="text-gray-600 text-sm mb-4">
-                Langkah berikutnya, lakukan Pemeriksaan Teknis Penunjang
-              </p>
-              <button
-                onClick={() =>
-                  router.push("/pemeriksaan/pemeriksaanPenunjang/1-sistemPenerangan")
-                }
-                className="w-full py-2 bg-[#29005E] text-white font-bold rounded-md"
-              >
-                LANJUTKAN
-              </button>
-            </div>
-          </div>
-        )}
-      </div>
-    );
-        
       </div>
     </div>
   );

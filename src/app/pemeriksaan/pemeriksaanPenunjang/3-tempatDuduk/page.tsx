@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 interface Answer {
-  status?: string;   // bisa "adaBerfungsi" | "tidakBerfungsi" | "tidakAda"
+  status?: string;   // "adaBerfungsi" | "tidakBerfungsi" | "tidakAda"
   photo?: string;
   video?: string;
   text?: string;
@@ -11,27 +11,11 @@ interface Answer {
 
 const questions = [
   {
-    id: "pintu_darurat",
-    label: "Pintu Darurat",
+    id: "jmlh_tmp_dddk",
+    label: "Jumlah Tempat Duduk Penumpang",
     options: [
-      { value: "ada", label: "Ada", inputFoto: true, inputVideo: true },
-      { value: "tidakAda", label: "Tidak Ada", inputext: true},
-    ],
-  },
-  {
-    id: "jendela_darurat",
-    label: "Jendela Darurat",
-    options: [
-      { value: "ada", label: "Ada", inputFoto: true, inputVideo: true },
-      { value: "tidakAda", label: "Tidak Ada", inputext: true},
-    ],
-  },
-  {
-    id: "pemecah_kaca",
-    label: "Alatt Pemukul/Pemecah Kaca",
-    options: [
-      { value: "ada", label: "Ada", inputFoto: true, inputVideo: true },
-      { value: "tidakAda", label: "Tidak Ada", inputext: true},
+      { value: "sesuai", label: "Sesuai", inputFoto: true, inputVideo: true },
+      { value: "tidak", label: "Tidak Sesuai", inputFoto: true, inputVideo: true },
     ],
   },
 ];
@@ -77,25 +61,28 @@ export default function SistemPengeremanPage() {
     }
   }, [answers]);
 
-const handleStatusChange = (qId: string, status: string, opt: any) => {
-  setAnswers((prev) => {
-    let updated: Answer = { status };
+  // 🔥 handle ganti status (option radio)
+  const handleStatusChange = (qId: string, status: string, opt: any) => {
+    setAnswers((prev) => {
+      let updated: Answer = { status };
 
-    if (opt.inputext) {
       // kalau pilih teks → reset foto & video
-      updated = { status, text: "" };
-    }
+      if (opt.inputText) {
+        updated.text = "";
+      }
 
-    if (opt.inputFoto || opt.inputVideo) {
       // kalau pilih foto/video → reset teks
-      updated = { status, photo: undefined, video: undefined };
-    }
+      if (opt.inputFoto || opt.inputVideo) {
+        updated.photo = undefined;
+        updated.video = undefined;
+        updated.text = undefined;
+      }
 
-    return { ...prev, [qId]: updated };
-  });
-};
+      return { ...prev, [qId]: updated };
+    });
+  };
 
-
+  // hapus foto/video manual
   const handleRemoveFile = (qId: string, type: "photo" | "video") => {
     setAnswers((prev) => ({
       ...prev,
@@ -103,14 +90,14 @@ const handleStatusChange = (qId: string, status: string, opt: any) => {
     }));
   };
 
-const handleTextChange = (qId: string, value: string) => {
-  setAnswers((prev) => ({
-    ...prev,
-    [qId]: { ...prev[qId], text: value },
-  }));
-};
+  // simpan teks langsung
+  const handleTextChange = (qId: string, value: string) => {
+    setAnswers((prev) => ({
+      ...prev,
+      [qId]: { ...prev[qId], text: value },
+    }));
+  };
 
-  const [showModal, setShowModal] = useState(false); // 🔥 state untuk modal
   const semuaTerisi = questions.every((q) => answers[q.id]?.status);
 
   return (
@@ -120,46 +107,38 @@ const handleTextChange = (qId: string, value: string) => {
         <div className="fixed w-full max-w-[414px] z-50">
           <div className="flex items-center justify-between bg-[#29005E] text-white px-4 py-3 shadow">
             <div className="flex items-center gap-2">
-              <button onClick={() => router.push("/pemeriksaan/pemeriksaanTeknis/7-penghapusKaca")}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-4 h-4"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
-                  />
+              <button onClick={() => router.push("/pemeriksaan/pemeriksaanPenunjang/2-badanKendaraan")}>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                  strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                  <path strokeLinecap="round" strokeLinejoin="round"
+                    d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
                 </svg>
               </button>
-              <span className="font-semibold">Pemeriksaan Teknis Utama</span>
+              <span className="font-semibold">Pemeriksaan Teknis Penunjang</span>
             </div>
             <img src="/img/assets/logo.png" alt="logo" className="w-5" />
           </div>
         </div>
+
         {/* Stepper Title */}
         <div className="px-4 py-3 pt-16">
           <p className="text-sm text-black ">
-            Langkah 8 dari 8 <br />
-            <span className="font-semibold">Tanggap Darurat</span>
+            Langkah 3 dari 4 <br />
+            <span className="font-semibold">Badan Kendaraan</span>
           </p>
         </div>
 
       {/* Stepper (hanya centang) */}
       <div className="sticky top-[48px] z-40 bg-gray-100 px-4 py-4">
         <div className="flex items-center justify-between px-4">
-          {[...Array(8)].map((_, idx) => {
-            const isCompleted = idx < 7;
-            const isActive = idx === 7;
+          {[...Array(4)].map((_, idx) => {
+            const isCompleted = idx < 2;
+            const isActive = idx === 2;
 
             return (
               <div
                 key={idx}
-                className={`flex items-center ${idx === 7 ? "w-auto" : "w-full"}`}
+                className={`flex items-center ${idx === 3 ? "w-auto" : "w-full"}`}
               >
                 <div
                   className={`flex items-center justify-center w-4 h-4 rounded-full text-[8px] font-bold
@@ -172,7 +151,7 @@ const handleTextChange = (qId: string, value: string) => {
                   {isCompleted ? "✓" : ""}
                 </div>
 
-                {idx < 7 && (
+                {idx < 3 && (
                   <div
                     className={`flex-1 h-0.5 ${
                       isCompleted ? "bg-[#29005E]" : "bg-gray-300"
@@ -184,7 +163,6 @@ const handleTextChange = (qId: string, value: string) => {
           })}
         </div>
       </div>
-
 
         {/* Isi pertanyaan */}
         <div className="pt-4 px-4">
@@ -208,39 +186,26 @@ const handleTextChange = (qId: string, value: string) => {
                       {opt.label}
                     </label>
 
-                    {/* Input foto & video */}
+                    {/* Foto & Video */}
                     {answers[q.id]?.status === opt.value && (opt.inputFoto || opt.inputVideo) && (
                       <div className="ml-2 mt-4">
-                        <div className="mb-2">
-                          <label className="font-bold text-black">Unggah Foto & Video</label>
-                        </div>
+                        <div className="mb-2 font-bold text-black">Unggah Foto & Video</div>
                         <div className="flex gap-3 mt-2">
                           {/* Foto */}
                           {answers[q.id]?.photo ? (
                             <div className="relative w-full h-24 border rounded-lg overflow-hidden">
-                              <img
-                                src={answers[q.id]?.photo}
-                                alt="foto"
-                                className="object-cover w-full h-full"
-                              />
-                              <button
-                                onClick={() => handleRemoveFile(q.id, "photo")}
+                              <img src={answers[q.id]?.photo} alt="foto" className="object-cover w-full h-full" />
+                              <button onClick={() => handleRemoveFile(q.id, "photo")}
                                 className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center 
-                                bg-red-200 text-red-700 rounded-full shadow hover:bg-red-400 hover:text-white"
-                              >
+                                  bg-red-200 text-red-700 rounded-full shadow hover:bg-red-400 hover:text-white">
                                 ✕
                               </button>
                             </div>
                           ) : (
                             <div
-                              onClick={() =>
-                                router.push(
-                                  `/pemeriksaan/pemeriksaanTeknis/8-tanggapDarurat/cameraFoto?qId=${q.id}`
-                                )
-                              }
+                              onClick={() => router.push(`/pemeriksaan/pemeriksaanPenunjang/3-tempatDuduk/cameraFoto?qId=${q.id}`)}
                               className="flex flex-col items-center justify-center h-24 w-full border-2 border-dashed 
-                              border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer"
-                            >
+                                border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer">
                               <img src="/img/icon/camera.png" className="w-7" />
                               <span className="text-sm text-gray-700">Ambil Foto</span>
                             </div>
@@ -249,50 +214,23 @@ const handleTextChange = (qId: string, value: string) => {
                           {/* Video */}
                           {answers[q.id]?.video ? (
                             <div className="relative w-full h-24 border rounded-lg overflow-hidden">
-                              <video
-                                src={answers[q.id]?.video}
-                                className="object-cover w-full h-full"
-                                controls
-                              />
-                              <button
-                                onClick={() => handleRemoveFile(q.id, "video")}
+                              <video src={answers[q.id]?.video} className="object-cover w-full h-full" controls />
+                              <button onClick={() => handleRemoveFile(q.id, "video")}
                                 className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center 
-                                bg-red-200 text-red-700 rounded-full shadow hover:bg-red-400 hover:text-white"
-                              >
+                                  bg-red-200 text-red-700 rounded-full shadow hover:bg-red-400 hover:text-white">
                                 ✕
                               </button>
                             </div>
                           ) : (
                             <div
-                              onClick={() =>
-                                router.push(
-                                  `/pemeriksaan/pemeriksaanTeknis/8-tanggapDarurat/cameraVideo?qId=${q.id}`
-                                )
-                              }
+                              onClick={() => router.push(`/pemeriksaan/pemeriksaanPenunjang/3-tempatDuduk/cameraVideo?qId=${q.id}`)}
                               className="flex flex-col items-center justify-center h-24 w-full border-2 border-dashed 
-                              border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer"
-                            >
-                              <img src="/img/icon/video.png" className="w-7 mb-1" />
+                                border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer">
+                              <img src="/img/icon/video.png" className="w-6 mb-1" />
                               <span className="text-sm text-gray-700">Ambil Video</span>
                             </div>
                           )}
                         </div>
-                      </div>
-                    )}
-
-                    {/* Input teks */}
-                    {answers[q.id]?.status === opt.value && opt.inputext && (
-                      <div className="ml-2 mt-4 mb-2">
-                        <div className="mb-1">
-                          <label className="font-bold text-black">Keterangan</label>
-                        </div>
-                        <input
-                          type="text"
-                          value={answers[q.id]?.text || ""}
-                          onChange={(e) => handleTextChange(q.id, e.target.value)}
-                          placeholder={`Masukkan Keterangan`}
-                          className="focus:outline-none focus:border-[#29005E] w-full border rounded-md p-3 text-black bg-white border-[#E0E0E0]"
-                        />
                       </div>
                     )}
                   </div>
@@ -302,62 +240,23 @@ const handleTextChange = (qId: string, value: string) => {
           ))}
         </div>
 
-         <div>
         {/* Tombol bawah */}
         <div className="fixed bottom-0 left-0 w-full bg-gray-100 shadow-lg">
           <div className="max-w-[414px] mx-auto px-4 py-3 flex gap-3">
             <button
-              onClick={() =>
-                router.push("/pemeriksaan/pemeriksaanTeknis/7-penghapusKaca")
-              }
-              className="w-1/2 py-3 font-bold text-[#29005E] border border-[#29005E] rounded-md"
-            >
+              onClick={() => router.push("/pemeriksaan/pemeriksaanPenunjang/2-badanKendaraan")}
+              className="w-1/2 py-3 font-bold text-[#29005E] border border-[#29005E] rounded-md">
               SEBELUMNYA
             </button>
             <button
               disabled={!semuaTerisi}
-              onClick={() => setShowModal(true)} // buka modal dulu
+              onClick={() => router.push("/pemeriksaan/pemeriksaanPenunjang/4-perlengkapanKendaraan")}
               className={`w-1/2 py-3 font-bold text-white rounded-md transition 
-                ${
-                  semuaTerisi
-                    ? "bg-[#29005E]"
-                    : "bg-gray-300 cursor-not-allowed"
-                }`}
-            >
+                ${semuaTerisi ? "bg-[#29005E]" : "bg-gray-300 cursor-not-allowed"}`}>
               LANJUT
             </button>
           </div>
         </div>
-
-        {/* Modal notifikasi */}
-        {showModal && (
-          <div className="fixed inset-0 bg-black/20 flex items-center justify-center z-50">
-            <div className="bg-white rounded-xl p-6 text-center w-80 animate-fadeIn">
-              <div className="flex justify-center mb-4">
-                <div className="w-16 h-16 flex items-center justify-center rounded-full bg-[#faeac8]">
-                  <span className="text-[#EBA100] text-4xl">✔</span>
-                </div>
-              </div>
-              <h2 className="text-lg font-bold mb-2 text-black">
-                Pemeriksaan Teknis Utama Berhasil
-              </h2>
-              <p className="text-gray-600 text-sm mb-4">
-                Langkah berikutnya, lakukan Pemeriksaan Teknis Penunjang
-              </p>
-              <button
-                onClick={() =>
-                  router.push("/pemeriksaan/pemeriksaanPenunjang/1-sistemPenerangan")
-                }
-                className="w-full py-2 bg-[#29005E] text-white font-bold rounded-md"
-              >
-                LANJUTKAN
-              </button>
-            </div>
-          </div>
-        )}
-      </div>
-    );
-        
       </div>
     </div>
   );
