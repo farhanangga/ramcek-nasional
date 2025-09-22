@@ -124,7 +124,7 @@ export default function SistemPengeremanPage() {
         <div className="px-4 py-3 pt-16">
           <p className="text-sm text-black ">
             Langkah 3 dari 4 <br />
-            <span className="font-semibold">Badan Kendaraan</span>
+            <span className="font-semibold">Kapasitas Tempat Duduk</span>
           </p>
         </div>
 

@@ -113,7 +113,7 @@ export default function SistemPengeremanPage() {
         <div className="px-4 py-3 pt-16">
           <p className="text-sm text-black ">
             Langkah 1 dari 4 <br />
-            <span className="font-semibold">Sistem Pengereman</span>
+            <span className="font-semibold">Sistem Penerangan</span>
           </p>
         </div>
 

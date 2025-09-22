@@ -53,7 +53,7 @@ function CameraVideoInner() {
           }
 
           chunksRef.current = [];
-          router.push("/pemeriksaan/pemeriksaanPenunjang/2-badanKendaraan");
+          router.push("/pemeriksaan/pemeriksaanPenunjang/4-perlengkapanKendaraan");
         };
       })
       .catch((err) => {

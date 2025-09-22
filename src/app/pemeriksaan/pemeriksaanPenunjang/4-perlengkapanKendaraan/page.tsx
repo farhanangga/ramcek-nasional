@@ -158,7 +158,7 @@ export default function SistemPengeremanPage() {
         <div className="px-4 py-3 pt-16">
           <p className="text-sm text-black ">
             Langkah 4 dari 4 <br />
-            <span className="font-semibold">Badan Kendaraan</span>
+            <span className="font-semibold">Perlengkapan Kendaraan</span>
           </p>
         </div>
 

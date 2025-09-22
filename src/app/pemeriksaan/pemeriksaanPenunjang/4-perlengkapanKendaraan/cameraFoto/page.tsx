@@ -71,7 +71,7 @@ function CameraFotoInner() {
       console.error("Gagal simpan ke localStorage:", err);
     }
 
-    router.push("/pemeriksaan/pemeriksaanPenunjang/2-badanKendaraan");
+    router.push("/pemeriksaan/pemeriksaanPenunjang/4-perlengkapanKendaraan");
   };
 
   return (
