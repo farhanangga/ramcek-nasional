@@ -35,7 +35,7 @@ export default function PemeriksaanAdministrasi() {
         { value: "ada", label: "Ada, Berlaku", showPhoto: true },
         { value: "tidak_berlaku", label: "Tidak Berlaku", showPhoto: true },
         { value: "tidak_ada", label: "Tidak Ada", showText: true },
-        { value: "tidak_sesuai", label: "Tidak Sesuai Fisik" },
+        { value: "tidak_sesuai", label: "Tidak Sesuai Fisik" }, // 🔥 hanya simpan pilihan
       ],
     },
     {
@@ -46,7 +46,7 @@ export default function PemeriksaanAdministrasi() {
         { value: "ada", label: "Ada, Berlaku", showPhoto: true },
         { value: "tidak_berlaku", label: "Tidak Berlaku", showPhoto: true },
         { value: "tidak_ada", label: "Tidak Ada", showText: true },
-        { value: "tidak_sesuai", label: "Tidak Sesuai Fisik" },
+        { value: "tidak_sesuai", label: "Tidak Sesuai Fisik" }, // 🔥 hanya simpan pilihan
       ],
     },
     {
@@ -57,7 +57,7 @@ export default function PemeriksaanAdministrasi() {
         { value: "ada", label: "Ada, Berlaku", showPhoto: true },
         { value: "tidak_berlaku", label: "Tidak Berlaku", showPhoto: true },
         { value: "tidak_ada", label: "Tidak Ada", showText: true },
-        { value: "tidak_sesuai", label: "Tidak Sesuai Fisik" },
+        { value: "tidak_sesuai", label: "Tidak Sesuai Fisik" }, // 🔥 hanya simpan pilihan
       ],
     },
     {
@@ -77,9 +77,18 @@ export default function PemeriksaanAdministrasi() {
   const handleSelect = (qId: string, option: Option) => {
     setAnswers((prev) => {
       const newAnswer: Answer = { ...option };
-      return { ...prev, [qId]: newAnswer };
+      const updated = { ...prev, [qId]: newAnswer };
+
+      // 🔥 selalu simpan ke localStorage (termasuk opsi tanpa foto/teks)
+      localStorage.setItem(`answer_${qId}`, JSON.stringify(newAnswer));
+
+      // hapus foto lama kalau bukan showPhoto
+      if (!option.showPhoto) {
+        localStorage.removeItem(`capturedPhoto_${qId}`);
+      }
+
+      return updated;
     });
-    localStorage.removeItem(`capturedPhoto_${qId}`);
   };
 
   // Input teks
@@ -92,7 +101,7 @@ export default function PemeriksaanAdministrasi() {
     });
   };
 
-  // Ambil foto tersimpan
+  // Ambil data tersimpan dari localStorage
   useEffect(() => {
     questions.forEach((q) => {
       const saved = localStorage.getItem(`answer_${q.id}`);
@@ -124,7 +133,7 @@ export default function PemeriksaanAdministrasi() {
           <div className="top-0 left-0 w-full flex items-center justify-between bg-[#29005E] text-white px-4 py-3 shadow z-50">
             <div className="flex items-center gap-2">
               <button onClick={() => router.push("/pemeriksaan/fotoKendaraan/preview")}>
-                  <svg
+                <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
@@ -157,7 +166,7 @@ export default function PemeriksaanAdministrasi() {
                   <div key={opt.value}>
                     <label className="flex items-center gap-2 text-black">
                       <input
-                        type="radio" 
+                        type="radio"
                         name={q.id}
                         value={opt.value}
                         checked={answers[q.id]?.value === opt.value}
@@ -170,11 +179,10 @@ export default function PemeriksaanAdministrasi() {
                     {/* Foto */}
                     {answers[q.id]?.value === opt.value && opt.showPhoto && (
                       <div className="ml-2 mt-4 mb-3">
-                        {/* Label Foto */}
                         <div className="mb-2">
                           <label className="font-bold text-black">{q.labelFoto}</label>
                         </div>
-                      
+
                         {answers[q.id]?.photo ? (
                           <div className="relative w-52 h-32 border rounded-lg overflow-hidden">
                             <img
@@ -211,10 +219,8 @@ export default function PemeriksaanAdministrasi() {
                       </div>
                     )}
 
-
                     {/* Input teks */}
                     {answers[q.id]?.value === opt.value && opt.showText && (
-                      
                       <div className="ml-2 mt-4">
                         <div className="mb-2">
                           <label className="font-bold text-black">Keterangan</label>
@@ -224,7 +230,7 @@ export default function PemeriksaanAdministrasi() {
                           value={answers[q.id]?.text || ""}
                           onChange={(e) => handleTextChange(q.id, e.target.value)}
                           placeholder={`Keterangan ${q.label}`}
-                          className="focus:outline-none focus:border-[#29005E] w-full border rounded-md p-3 mb-4 text-black bg-white border-[#E0E0E0]"
+                          className="focus:outline-none focus:border-[#29005E] w-full border rounded-md p-3 mb-4 text-black bg-white border-[#E0E0E0]"`
                         />
                       </div>
                     )}
@@ -240,7 +246,7 @@ export default function PemeriksaanAdministrasi() {
           <div className="max-w-[414px] mx-auto px-4 py-3">
             <button
               disabled={!semuaTerisi}
-              onClick={() => setShowModal(true)} // 🔥 tampilkan modal
+              onClick={() => setShowModal(true)}
               className={`w-full py-3 font-bold text-white rounded-md transition ${
                 semuaTerisi ? "bg-[#29005E]" : "bg-gray-300 cursor-not-allowed"
               }`}
@@ -259,7 +265,9 @@ export default function PemeriksaanAdministrasi() {
                   <span className="text-[#EBA100] text-4xl">✔</span>
                 </div>
               </div>
-              <h2 className="text-lg font-bold mb-2 text-black">Pemeriksaan Administrasi Berhasil</h2>
+              <h2 className="text-lg font-bold mb-2 text-black">
+                Pemeriksaan Administrasi Berhasil
+              </h2>
               <p className="text-gray-600 text-sm mb-4">
                 Langkah berikutnya, lakukan Pemeriksaan Teknis Utama
               </p>
