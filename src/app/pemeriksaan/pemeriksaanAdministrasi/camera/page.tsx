@@ -80,7 +80,7 @@ function KameraPageInner() {
 
   return (
     <div className="bg-black flex items-center justify-center">
-      <div className=" bg-gray-100 pb-20 w-[414px]">
+      <div className=" bg-black pb-20 w-[414px]">
         {/* Header */}
         <div className="fixed w-full p-auto max-w-[414px]">
           <div className="top-0 left-0 w-full flex items-center justify-between bg-black text-white px-4 py-3 shadow z-50">
