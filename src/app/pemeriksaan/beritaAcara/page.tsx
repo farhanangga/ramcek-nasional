@@ -105,6 +105,7 @@ export default function TerbitkanBeritaAcara() {
     }));
   };
 
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   return (
     <div className="bg-gray-100 flex justify-center">
       <div className="min-h-screen w-[414px] bg-gray-100 pb-24 relative">
@@ -265,25 +266,71 @@ export default function TerbitkanBeritaAcara() {
           </div>
         </div>
 
-        {/* Tombol lanjut */}
-        <div className="fixed bottom-0 left-0 w-full shadow-lg bg-gray-100 text-black">
-          <div className="max-w-md mx-auto px-4 py-3 text-black">
-            <button
-              type="button"
-              disabled={!semuaTerisi}
-              onClick={() =>
-                router.push("/pemeriksaan/terbitkanBA")
-              }
-              className={`w-full py-3 font-bold text-white rounded-md transition ${
-                semuaTerisi
-                  ? "bg-[#29005E]"
-                  : "bg-gray-300 cursor-not-allowed"
-              }`}
-            >
-              TERBITKAN BERITA ACARA
-            </button>
+
+        {/* Modal Berita Acara berhasil diterbitkan */}
+        {showSuccessModal && (
+          <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+            <div className="bg-white rounded-2xl p-6 text-center w-80 animate-fadeIn">
+              {/* Icon centang */}
+              <div className="flex justify-center mb-4">
+                <div className="w-16 h-16 flex items-center justify-center rounded-full bg-yellow-100">
+                  <span className="text-yellow-500 text-4xl">✔</span>
+                </div>
+              </div>
+
+              {/* Judul */}
+              <h2 className="text-lg font-bold mb-2 text-black">
+                Berita Acara Berhasil Diterbitkan
+              </h2>
+
+              {/* Deskripsi */}
+              <p className="text-gray-600 text-sm mb-6">
+                Anda dapat mengakses kembali hasil Berita Acara di menu{" "}
+                <span className="font-semibold">Riwayat Pemeriksaan</span>
+              </p>
+
+              {/* Tombol aksi */}
+              <div className="flex flex-col gap-3">
+                <button
+                  onClick={() => {
+                    setShowSuccessModal(false);
+                    router.push("/pemeriksaan/previewBeritaAcara");
+                  }}
+                  className="w-full py-2 font-bold text-[#29005E] border border-[#29005E] rounded-md"
+                >
+                  LIHAT PREVIEW
+                </button>
+                <button
+                  onClick={() => {
+                    setShowSuccessModal(false);
+                    router.push("/"); // arahkan sesuai kebutuhan Anda
+                  }}
+                  className="w-full py-2 bg-[#29005E] text-white font-bold rounded-md"
+                >
+                  UNDUH DAN SELESAI
+                </button>
+              </div>
+            </div>
           </div>
+        )}
+
+        {/* Tombol TERBITKAN BERITA ACARA */}
+      <div className="fixed bottom-0 left-0 w-full shadow-lg bg-gray-100 text-black">
+        <div className="max-w-md mx-auto px-4 py-3 text-black">
+          <button
+            type="button"
+            disabled={!semuaTerisi}
+            onClick={() => setShowSuccessModal(true)} // munculkan modal
+            className={`w-full py-3 font-bold text-white rounded-md transition ${
+              semuaTerisi
+                ? "bg-[#29005E]"
+                : "bg-gray-300 cursor-not-allowed"
+            }`}
+          >
+            TERBITKAN BERITA ACARA
+          </button>
         </div>
+      </div>
 
         {/* Bottom Sheet Pilihan */}
         {openMenu && (
