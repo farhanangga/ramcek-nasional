@@ -77,6 +77,15 @@ useEffect(() => {
     return () => window.removeEventListener("resize", updateSize);
   }, []);
 
+  // fungsi hapus signature (buat sekali saja di atas)
+    const handleRemoveSignature = (role: keyof typeof signatures) => {
+      setSignatures((prev) => ({
+        ...prev,
+        [role]: null,
+      }));
+    };
+
+
   return (
     <div className="bg-gray-100 flex justify-center">
       <div className="min-h-screen w-[414px] bg-gray-100 pb-24 relative">
@@ -122,12 +131,22 @@ useEffect(() => {
               <p className="text-sm text-black">354654654</p>
               <hr className="my-3" />
               <p className="font-medium mb-2 text-black">TTD Penguji</p>
+              <p className="font-medium mb-2 text-black">TTD Penguji</p>
               {signatures.penguji ? (
-                <img
-                  src={signatures.penguji}
-                  alt="Tanda tangan penguji"
-                  className="w-full h-34 object-contain border rounded-md"
-                />
+                <div className="relative w-full h-24 border rounded-lg overflow-hidden">
+                  <img
+                    src={signatures.penguji}
+                    alt="Tanda tangan penguji"
+                    className="object-contain w-full h-full bg-white"
+                  />
+                  <button
+                    onClick={() => handleRemoveSignature("penguji")}
+                    className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center 
+                    bg-red-200 text-red-700 rounded-full shadow hover:bg-red-400 hover:text-white"
+                  >
+                    ✕
+                  </button>
+                </div>
               ) : (
                 <div
                   onClick={() => setOpenMenu("penguji")}
@@ -156,12 +175,22 @@ useEffect(() => {
               </select>
               <hr className="my-3" />
               <p className="font-medium mb-2 text-black">TTD Pengemudi</p>
+              <p className="font-medium mb-2 text-black">TTD Pengemudi</p>
               {signatures.pengemudi ? (
-                <img
-                  src={signatures.pengemudi}
-                  alt="Tanda tangan pengemudi"
-                  className="w-full h-34 object-contain border rounded-md"
-                />
+                <div className="relative w-full h-24 border rounded-lg overflow-hidden">
+                  <img
+                    src={signatures.pengemudi}
+                    alt="Tanda tangan pengemudi"
+                    className="object-contain w-full h-full bg-white"
+                  />
+                  <button
+                    onClick={() => handleRemoveSignature("pengemudi")}
+                    className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center 
+                    bg-red-200 text-red-700 rounded-full shadow hover:bg-red-400 hover:text-white"
+                  >
+                    ✕
+                  </button>
+                </div>
               ) : (
                 <div
                   onClick={() => setOpenMenu("pengemudi")}
@@ -172,6 +201,7 @@ useEffect(() => {
                   <span className="text-sm text-gray-700">Tanda Tangan</span>
                 </div>
               )}
+
             </div>
           </div>
 
@@ -190,12 +220,22 @@ useEffect(() => {
               </select>
               <hr className="my-3" />
               <p className="font-medium mb-2 text-black">TTD Petugas Kemenhub</p>
+              <p className="font-medium mb-2 text-black">TTD Petugas Kemenhub</p>
               {signatures.petugas ? (
-                <img
-                  src={signatures.petugas}
-                  alt="Tanda tangan petugas"
-                  className="w-full h-34 object-contain border rounded-md"
-                />
+                <div className="relative w-full h-24 border rounded-lg overflow-hidden">
+                  <img
+                    src={signatures.petugas}
+                    alt="Tanda tangan petugas"
+                    className="object-contain w-full h-full bg-white"
+                  />
+                  <button
+                    onClick={() => handleRemoveSignature("petugas")}
+                    className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center 
+                    bg-red-200 text-red-700 rounded-full shadow hover:bg-red-400 hover:text-white"
+                  >
+                    ✕
+                  </button>
+                </div>
               ) : (
                 <div
                   onClick={() => setOpenMenu("petugas")}
