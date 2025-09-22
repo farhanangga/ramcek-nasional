@@ -16,6 +16,14 @@ export default function DataPemeriksaan() {
     { id: 2, noBerita: "13613876827641", terbit: "20/08/2025" },
     { id: 3, noBerita: "13613876827641", terbit: "14/08/2025" },
     { id: 4, noBerita: "13613876827641", terbit: "10/08/2025" },
+    { id: 1, noBerita: "13613876827641", terbit: "25/08/2025" },
+    { id: 2, noBerita: "13613876827641", terbit: "20/08/2025" },
+    { id: 3, noBerita: "13613876827641", terbit: "14/08/2025" },
+    { id: 4, noBerita: "13613876827641", terbit: "10/08/2025" },
+    { id: 1, noBerita: "13613876827641", terbit: "25/08/2025" },
+    { id: 2, noBerita: "13613876827641", terbit: "20/08/2025" },
+    { id: 3, noBerita: "13613876827641", terbit: "14/08/2025" },
+    { id: 4, noBerita: "13613876827641", terbit: "10/08/2025" },
   ];
 
   return (
@@ -78,16 +86,15 @@ export default function DataPemeriksaan() {
               {dataBelum.map((item) => (
                 <div
                   key={item.id}
-                  onClick={() => router.push("/previewBeritaAcara-1")}
                   className="bg-white rounded-lg shadow p-4 flex justify-between cursor-pointer"
                 >
                   <div>
                     <p className="text-sm text-gray-500">Nomor Kendaraan</p>
-                    <p className="font-bold">{item.noKendaraan}</p>
+                    <p className="font-bold text-black">{item.noKendaraan}</p>
                   </div>
                   <div className="text-right">
                     <p className="text-sm text-gray-500">Tanggal Pemeriksaan</p>
-                    <p className="font-bold">{item.tanggal}</p>
+                    <p className="font-bold text-black">{item.tanggal}</p>
                   </div>
                 </div>
               ))}
@@ -102,11 +109,11 @@ export default function DataPemeriksaan() {
                 >
                   <div>
                     <p className="text-sm text-gray-500">Nomor Berita Acara</p>
-                    <p className="font-bold">{item.noBerita}</p>
+                    <p className="font-bold text-black">{item.noBerita}</p>
                   </div>
                   <div className="text-right">
                     <p className="text-sm text-gray-500">Terbit pada</p>
-                    <p className="font-bold">{item.terbit}</p>
+                    <p className="font-bold text-black">{item.terbit}</p>
                   </div>
                 </div>
               ))}
