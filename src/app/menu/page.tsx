@@ -27,7 +27,7 @@ export default function MenuPage() {
           <span className="font-bold text-white text-lg" >PEMERIKSAAN</span>
         </button>
 
-        <button onClick={() => router.push("/riwayat/belumSelesai")} className="bg-yellow-500 rounded-2xl flex items-center p-4 shadow-md hover:bg-yellow-600 transition">
+        <button onClick={() => router.push("/riwayat")} className="bg-yellow-500 rounded-2xl flex items-center p-4 shadow-md hover:bg-yellow-600 transition">
           <img src="/img/assets/analyzingSite.png" alt="Riwayat" className="w-10 h-10 mr-4" />
           <span className="font-bold text-white text-lg">RIWAYAT PEMERIKSAAN</span>
         </button>
