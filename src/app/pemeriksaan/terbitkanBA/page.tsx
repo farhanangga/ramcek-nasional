@@ -25,7 +25,7 @@ export default function PreviewBeritaAcara() {
         </div>
 
         {/* Isi berupa gambar penuh */}
-        <div className="pt-16 px-2">
+        <div className="pt-16">
           <img
             src="/img/assets/previewBeritaAcara.png"
             alt="Preview Berita Acara"
