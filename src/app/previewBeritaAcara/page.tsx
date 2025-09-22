@@ -47,12 +47,12 @@ export default function PreviewBeritaAcara() {
 
               {/* Judul */}
               <h2 className="text-lg font-bold mb-2 text-black">
-                Berita Acara Berhasil Diunduhh
+                Berita Acara Berhasil Diunduh
               </h2>
 
               {/* Deskripsi */}
               <p className="text-gray-600 text-sm mb-6">
-                Anda dapat mengakses kembali hasil Berita Acara di riwayat pemeriksaan{" "}
+                Anda dapat mengakses kembali hasil Berita Acara di {" "}
                 <span className="font-semibold">Riwayat Pemeriksaan</span>
               </p>
 

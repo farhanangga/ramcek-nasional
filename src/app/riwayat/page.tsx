@@ -16,23 +16,22 @@ export default function DataPemeriksaan() {
     { id: 2, noBerita: "13613876827641", terbit: "20/08/2025" },
     { id: 3, noBerita: "13613876827641", terbit: "14/08/2025" },
     { id: 4, noBerita: "13613876827641", terbit: "10/08/2025" },
-    { id: 1, noBerita: "13613876827641", terbit: "25/08/2025" },
-    { id: 2, noBerita: "13613876827641", terbit: "20/08/2025" },
-    { id: 3, noBerita: "13613876827641", terbit: "14/08/2025" },
-    { id: 4, noBerita: "13613876827641", terbit: "10/08/2025" },
-    { id: 1, noBerita: "13613876827641", terbit: "25/08/2025" },
-    { id: 2, noBerita: "13613876827641", terbit: "20/08/2025" },
-    { id: 3, noBerita: "13613876827641", terbit: "14/08/2025" },
-    { id: 4, noBerita: "13613876827641", terbit: "10/08/2025" },
+    { id: 5, noBerita: "13613876827641", terbit: "25/08/2025" },
+    { id: 6, noBerita: "13613876827641", terbit: "20/08/2025" },
+    { id: 7, noBerita: "13613876827641", terbit: "14/08/2025" },
+    { id: 8, noBerita: "13613876827641", terbit: "10/08/2025" },
+    { id: 9, noBerita: "13613876827641", terbit: "25/08/2025" },
+    { id: 10, noBerita: "13613876827641", terbit: "20/08/2025" },
+    { id: 11, noBerita: "13613876827641", terbit: "14/08/2025" },
+    { id: 12, noBerita: "13613876827641", terbit: "10/08/2025" },
   ];
 
   return (
     <div className="bg-gray-100 flex items-center justify-center">
       <div className="min-h-screen bg-gray-100 pb-20 w-[414px]">
         {/* Header + Tabs fixed */}
-        <div className="fixed w-full max-w-[414px] top-0 left-0 z-50">
-          {/* Header */}
-          <div className="flex items-center justify-between bg-[#29005E] text-white px-4 py-3 shadow">
+        <div className="fixed w-full p-auto max-w-[414px]">
+          <div className="top-0 left-0 w-full flex items-center justify-between bg-[#29005E] text-white px-4 py-3 shadow z-50">
             <div className="flex items-center gap-2">
               <button onClick={() => router.push("/menu")}>
                 <svg
@@ -81,7 +80,7 @@ export default function DataPemeriksaan() {
         </div>
 
         {/* Content */}
-        <div className="px-4 py-6">
+        <div className="p-4 mt-25">
           {activeTab === "belum" ? (
             <div className="space-y-3">
               {dataBelum.map((item) => (

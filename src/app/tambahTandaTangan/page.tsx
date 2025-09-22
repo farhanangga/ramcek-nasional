@@ -86,17 +86,19 @@ export default function TerbitkanBeritaAcara() {
     setOpenSignature(null);
   };
 
-  useEffect(() => {
-    const updateSize = () => {
-      const width = window.innerWidth * 0.9;
-      const height = Math.round(width * 0.6);
-      setCanvasSize({ width, height });
-    };
+ useEffect(() => {
+  const updateSize = () => {
+    const maxWidth = Math.min(window.innerWidth * 0.9, 500); // batasi max 500px di desktop
+    const width = maxWidth;
+    const height = Math.round(width * 0.6);
+    setCanvasSize({ width, height });
+  };
 
-    updateSize();
-    window.addEventListener("resize", updateSize);
-    return () => window.removeEventListener("resize", updateSize);
-  }, []);
+  updateSize();
+  window.addEventListener("resize", updateSize);
+  return () => window.removeEventListener("resize", updateSize);
+}, []);
+
 
   const handleRemoveSignature = (role: keyof typeof signatures) => {
     setSignatures((prev) => ({
@@ -413,11 +415,11 @@ export default function TerbitkanBeritaAcara() {
                     canvasProps={{
                       width: canvasSize.width,
                       height: canvasSize.height,
-                      className:
-                        "border border-gray-300 rounded-md w-full bg-white",
-                      willReadFrequently: true,
+                      className: "border border-gray-300 rounded-md bg-white",
+                      willReadFrequently: true, // ini valid
                     } as any}
                   />
+
                 )}
               </div>
 
