@@ -190,7 +190,7 @@ export default function SistemPengeremanPage() {
                             </div>
                           ) : (
                             <div
-                              onClick={() => router.push(`/pemeriksaan/pemeriksaanTeknis/2-sistemPengereman/cameraFoto?qId=${q.id}`)}
+                              onClick={() => router.push(`/pemeriksaan/pemeriksaanTeknis/3-badanKendaraan/cameraFoto?qId=${q.id}`)}
                               className="flex flex-col items-center justify-center h-24 w-full border-2 border-dashed 
                               border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer"
                             >
@@ -214,7 +214,7 @@ export default function SistemPengeremanPage() {
                             </div>
                           ) : (
                             <div
-                              onClick={() => router.push(`/pemeriksaan/pemeriksaanTeknis/2-sistemPengereman/cameraVideo?qId=${q.id}`)}
+                              onClick={() => router.push(`/pemeriksaan/pemeriksaanTeknis/3-badanKendaraan/cameraVideo?qId=${q.id}`)}
                               className="flex flex-col items-center justify-center h-24 w-full border-2 border-dashed 
                               border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer"
                             >
