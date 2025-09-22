@@ -27,7 +27,7 @@ export default function PreviewBeritaAcara() {
         {/* Isi berupa gambar penuh */}
         <div className="pt-16 px-2">
           <img
-            src="/img/preview_berita_acara.png"
+            src="/img/assets/previewBeritaAcara.png"
             alt="Preview Berita Acara"
             className="w-full rounded-lg shadow"
           />
