@@ -12,7 +12,7 @@ export default function PreviewBeritaAcara() {
         <div className="fixed w-full max-w-[414px] z-50">
           <div className="flex items-center justify-between bg-[#29005E] text-white px-4 py-3 shadow">
             <div className="flex items-center gap-2">
-              <button onClick={() => router.push("/tambahTandaTangan")}>
+              <button onClick={() => router.push("/riwayat")}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                   strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                   <path strokeLinecap="round" strokeLinejoin="round"
@@ -36,7 +36,7 @@ export default function PreviewBeritaAcara() {
 
         {/* Modal Berita Acara berhasil diterbitkan */}
         {showSuccessModal && (
-          <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
             <div className="bg-white rounded-2xl p-6 text-center w-80 animate-fadeIn">
               {/* Icon centang */}
               <div className="flex justify-center mb-4">
@@ -61,11 +61,11 @@ export default function PreviewBeritaAcara() {
                 <button
                   onClick={() => {
                     setShowSuccessModal(false);
-                    router.push("/menu"); // arahkan sesuai kebutuhan Anda
+                    router.push("/riwayat"); // arahkan sesuai kebutuhan Anda
                   }}
                   className="w-full py-2 bg-[#29005E] text-white font-bold rounded-md"
                 >
-                  KEMBALI KE MENU
+                  KEMBALI 
                 </button>
               </div>
             </div>
@@ -84,7 +84,7 @@ export default function PreviewBeritaAcara() {
             </button>
           </div>
         </div>
-        
+
       </div>
     </div>
   );
