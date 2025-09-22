@@ -197,7 +197,7 @@ export default function SistemPengeremanPage() {
                             </div>
                           ) : (
                             <div
-                              onClick={() => router.push(`/pemeriksaan/ptPenunjang/2-sistemPengereman/cameraFoto?qId=${q.id}`)}
+                              onClick={() => router.push(`/pemeriksaan/ptPenunjang/1-sistemPenerangan/cameraFoto?qId=${q.id}`)}
                               className="flex flex-col items-center justify-center h-24 w-full border-2 border-dashed 
                               border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer"
                             >
@@ -221,7 +221,7 @@ export default function SistemPengeremanPage() {
                             </div>
                           ) : (
                             <div
-                              onClick={() => router.push(`/pemeriksaan/ptPenunjang/2-sistemPengereman/cameraVideo?qId=${q.id}`)}
+                              onClick={() => router.push(`/pemeriksaan/ptPenunjang/1-sistemPenerangan/cameraVideo?qId=${q.id}`)}
                               className="flex flex-col items-center justify-center h-24 w-full border-2 border-dashed 
                               border-[#29005E] rounded-lg bg-[#F3E9FF] cursor-pointer"
                             >
