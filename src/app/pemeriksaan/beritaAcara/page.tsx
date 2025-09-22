@@ -131,9 +131,8 @@ useEffect(() => {
               <p className="text-sm text-black">354654654</p>
               <hr className="my-3" />
               <p className="font-medium mb-2 text-black">TTD Penguji</p>
-              <p className="font-medium mb-2 text-black">TTD Penguji</p>
               {signatures.penguji ? (
-                <div className="relative w-full h-24 border rounded-lg overflow-hidden">
+                <div className="relative w-full h-34 border rounded-lg overflow-hidden">
                   <img
                     src={signatures.penguji}
                     alt="Tanda tangan penguji"
@@ -175,9 +174,8 @@ useEffect(() => {
               </select>
               <hr className="my-3" />
               <p className="font-medium mb-2 text-black">TTD Pengemudi</p>
-              <p className="font-medium mb-2 text-black">TTD Pengemudi</p>
               {signatures.pengemudi ? (
-                <div className="relative w-full h-24 border rounded-lg overflow-hidden">
+                <div className="relative w-full h-34 border rounded-lg overflow-hidden">
                   <img
                     src={signatures.pengemudi}
                     alt="Tanda tangan pengemudi"
@@ -220,9 +218,8 @@ useEffect(() => {
               </select>
               <hr className="my-3" />
               <p className="font-medium mb-2 text-black">TTD Petugas Kemenhub</p>
-              <p className="font-medium mb-2 text-black">TTD Petugas Kemenhub</p>
               {signatures.petugas ? (
-                <div className="relative w-full h-24 border rounded-lg overflow-hidden">
+                <div className="relative w-full h-34 border rounded-lg overflow-hidden">
                   <img
                     src={signatures.petugas}
                     alt="Tanda tangan petugas"
