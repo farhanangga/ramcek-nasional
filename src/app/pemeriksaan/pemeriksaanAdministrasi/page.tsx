@@ -24,7 +24,7 @@ interface Answer extends Option {
 export default function PemeriksaanAdministrasi() {
   const router = useRouter();
   const [answers, setAnswers] = useState<Record<string, Answer>>({});
-  const [showModal, setShowModal] = useState(false); // 🔥 state untuk modal
+  const [showModal, setShowModal] = useState(false);
 
   const questions: Question[] = [
     {
@@ -35,7 +35,7 @@ export default function PemeriksaanAdministrasi() {
         { value: "ada", label: "Ada, Berlaku", showPhoto: true },
         { value: "tidak_berlaku", label: "Tidak Berlaku", showPhoto: true },
         { value: "tidak_ada", label: "Tidak Ada", showText: true },
-        { value: "tidak_sesuai", label: "Tidak Sesuai Fisik" }, // 🔥 hanya simpan pilihan
+        { value: "tidak_sesuai", label: "Tidak Sesuai Fisik" },
       ],
     },
     {
@@ -46,7 +46,7 @@ export default function PemeriksaanAdministrasi() {
         { value: "ada", label: "Ada, Berlaku", showPhoto: true },
         { value: "tidak_berlaku", label: "Tidak Berlaku", showPhoto: true },
         { value: "tidak_ada", label: "Tidak Ada", showText: true },
-        { value: "tidak_sesuai", label: "Tidak Sesuai Fisik" }, // 🔥 hanya simpan pilihan
+        { value: "tidak_sesuai", label: "Tidak Sesuai Fisik" },
       ],
     },
     {
@@ -57,7 +57,7 @@ export default function PemeriksaanAdministrasi() {
         { value: "ada", label: "Ada, Berlaku", showPhoto: true },
         { value: "tidak_berlaku", label: "Tidak Berlaku", showPhoto: true },
         { value: "tidak_ada", label: "Tidak Ada", showText: true },
-        { value: "tidak_sesuai", label: "Tidak Sesuai Fisik" }, // 🔥 hanya simpan pilihan
+        { value: "tidak_sesuai", label: "Tidak Sesuai Fisik" },
       ],
     },
     {
@@ -79,10 +79,8 @@ export default function PemeriksaanAdministrasi() {
       const newAnswer: Answer = { ...option };
       const updated = { ...prev, [qId]: newAnswer };
 
-      // 🔥 selalu simpan ke localStorage (termasuk opsi tanpa foto/teks)
       localStorage.setItem(`answer_${qId}`, JSON.stringify(newAnswer));
 
-      // hapus foto lama kalau bukan showPhoto
       if (!option.showPhoto) {
         localStorage.removeItem(`capturedPhoto_${qId}`);
       }
@@ -230,7 +228,7 @@ export default function PemeriksaanAdministrasi() {
                           value={answers[q.id]?.text || ""}
                           onChange={(e) => handleTextChange(q.id, e.target.value)}
                           placeholder={`Keterangan ${q.label}`}
-                          className="focus:outline-none focus:border-[#29005E] w-full border rounded-md p-3 mb-4 text-black bg-white border-[#E0E0E0]"`
+                          className="focus:outline-none focus:border-[#29005E] w-full border rounded-md p-3 mb-4 text-black bg-white border-[#E0E0E0]"
                         />
                       </div>
                     )}
