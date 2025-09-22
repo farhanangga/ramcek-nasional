@@ -81,7 +81,7 @@ export default function DataPemeriksaan() {
         </div>
 
         {/* Content */}
-        <div className="p-4">
+        <div className="px-4 py-6">
           {activeTab === "belum" ? (
             <div className="space-y-3">
               {dataBelum.map((item) => (
