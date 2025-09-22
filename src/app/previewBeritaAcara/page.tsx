@@ -11,7 +11,7 @@ export default function PreviewBeritaAcara() {
         <div className="fixed w-full max-w-[414px] z-50">
           <div className="flex items-center justify-between bg-[#29005E] text-white px-4 py-3 shadow">
             <div className="flex items-center gap-2">
-              <button onClick={() => router.push("/pemeriksaan/tambahTandaTangan")}>
+              <button onClick={() => router.push("/tambahTandaTangan")}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                   strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                   <path strokeLinecap="round" strokeLinejoin="round"
@@ -38,7 +38,7 @@ export default function PreviewBeritaAcara() {
           <div className="max-w-md mx-auto px-4 py-3">
             <button
               type="button"
-              onClick={() => alert("Mengunduh dokumen...")}
+              onClick={() => router.push("/menu")}
               className="w-full py-3 font-bold text-white rounded-md transition bg-[#29005E]"
             >
               UNDUH
