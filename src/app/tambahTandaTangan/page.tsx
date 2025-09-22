@@ -88,7 +88,7 @@ export default function TerbitkanBeritaAcara() {
 
  useEffect(() => {
   const updateSize = () => {
-    const maxWidth = Math.min(window.innerWidth * 0.9, 500); // batasi max 500px di desktop
+    const maxWidth = Math.min(window.innerWidth * 0.95, 430); // batasi max 500px di desktop
     const width = maxWidth;
     const height = Math.round(width * 0.6);
     setCanvasSize({ width, height });
@@ -106,6 +106,18 @@ export default function TerbitkanBeritaAcara() {
       [role]: null,
     }));
   };
+
+  useEffect(() => {
+  if (sigCanvas.current) {
+    const canvas = sigCanvas.current.getCanvas();
+    // ambil context dengan opsi willReadFrequently
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
+    if (!ctx) {
+      console.warn("Context 2D gagal diinisialisasi");
+    }
+  }
+}, [canvasSize]);
+
 
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   return (
@@ -344,6 +356,12 @@ export default function TerbitkanBeritaAcara() {
               onClick={(e) => e.stopPropagation()}
               className="w-full max-w-md bg-white rounded-t-2xl p-4 transform transition-transform duration-300"
             >
+              {/* Garis hitam di atas */}
+              <div
+                className="w-12 h-1.5 bg-black rounded-full mx-auto mb-4 cursor-pointer"
+                onClick={() => setOpenMenu(null)}
+              ></div>
+
               <button
                 className="w-full text-left py-3 flex items-center gap-3 text-black"
                 onClick={() => {
@@ -392,9 +410,10 @@ export default function TerbitkanBeritaAcara() {
           </div>
         )}
 
+
         {/* Modal Canvas Tanda Tangan */}
         {openSignature && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
             <div className="w-full max-w-md bg-white rounded-lg overflow-hidden">
               {/* Header */}
               <div className="flex items-center justify-between px-4 py-2 bg-gray-200">
@@ -406,8 +425,8 @@ export default function TerbitkanBeritaAcara() {
                 </button>
               </div>
 
-              {/* Canvas */}
-              <div className="bg-white p-2">
+              {/* canvas */}
+              <div className="bg-white p-2 flex items-center justify-center">
                 {canvasSize.width > 0 && (
                   <SignatureCanvas
                     ref={sigCanvas}
@@ -416,12 +435,11 @@ export default function TerbitkanBeritaAcara() {
                       width: canvasSize.width,
                       height: canvasSize.height,
                       className: "border border-gray-300 rounded-md bg-white",
-                      willReadFrequently: true, // ini valid
-                    } as any}
+                    }}
                   />
-
                 )}
               </div>
+
 
               {/* Tombol aksi */}
               <div className="flex justify-between gap-3 p-4">
