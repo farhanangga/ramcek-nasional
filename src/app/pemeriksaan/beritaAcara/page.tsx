@@ -233,7 +233,7 @@ useEffect(() => {
         {/* Bottom Sheet Pilihan */}
         {openMenu && (
           <div
-            className="fixed inset-0 z-50 flex items-end justify-center bg-black bg-opacity-50"
+            className="fixed inset-0 z-50 flex items-end justify-center bg-black/50"
             onClick={() => setOpenMenu(null)}
           >
             <div
