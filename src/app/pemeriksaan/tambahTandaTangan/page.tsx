@@ -303,7 +303,7 @@ export default function TerbitkanBeritaAcara() {
                 <button
                   onClick={() => {
                     setShowSuccessModal(false);
-                    router.push("/"); // arahkan sesuai kebutuhan Anda
+                    router.push("/menu"); // arahkan sesuai kebutuhan Anda
                   }}
                   className="w-full py-2 bg-[#29005E] text-white font-bold rounded-md"
                 >

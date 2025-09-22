@@ -345,7 +345,7 @@ export default function SistemPengeremanPage() {
                   PERIKSA ULANG
                 </button>
                 <button
-                  onClick={() => router.push("/pemeriksaan/beritaAcara")}
+                  onClick={() => router.push("/pemeriksaan/tambahTandaTangan")}
                   className="w-full py-2 bg-[#29005E] text-white font-bold rounded-md"
                 >
                   BUAT BERITA ACARA
