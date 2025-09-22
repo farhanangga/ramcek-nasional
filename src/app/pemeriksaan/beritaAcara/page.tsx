@@ -241,15 +241,40 @@ useEffect(() => {
               className="w-full max-w-md bg-white rounded-t-2xl p-4 transform transition-transform duration-300"
             >
               <button
-                className="w-full text-left py-3 flex items-center gap-3 text-black"
-                onClick={() => {
-                  alert("Unggah Tanda Tangan: " + openMenu);
-                  setOpenMenu(null);
-                }}
-              >
-                <ArrowUpTrayIcon className="w-6 h-6 text-black" />
-                Unggah Tanda Tangan
-              </button>
+              className="w-full text-left py-3 flex items-center gap-3 text-black"
+              onClick={() => {
+                // klik otomatis input file
+                document.getElementById("fileInput-" + openMenu)?.click();
+              }}
+            >
+              <ArrowUpTrayIcon className="w-6 h-6 text-black" />
+              Unggah Tanda Tangan
+            </button>
+
+            {/* Hidden input file */}
+            <input
+              id={"fileInput-" + openMenu}
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) {
+                  const reader = new FileReader();
+                  reader.onloadend = () => {
+                    if (reader.result && openMenu) {
+                      setSignatures((prev) => ({
+                        ...prev,
+                        [openMenu]: reader.result as string,
+                      }));
+                    }
+                  };
+                  reader.readAsDataURL(file);
+                }
+                setOpenMenu(null);
+              }}
+            />
+
               <hr />
               <button
                 className="w-full text-left py-3 flex items-center gap-3 text-black"
