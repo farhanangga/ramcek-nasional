@@ -272,7 +272,7 @@ export default function TerbitkanBeritaAcara() {
               type="button"
               disabled={!semuaTerisi}
               onClick={() =>
-                router.push("/pemeriksaan/ptPenunjang/4-perlengkapanKendaraan")
+                router.push("/pemeriksaan/terbitkanBA")
               }
               className={`w-full py-3 font-bold text-white rounded-md transition ${
                 semuaTerisi
