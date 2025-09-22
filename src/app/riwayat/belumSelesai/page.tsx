@@ -29,9 +29,10 @@ export default function DataPemeriksaan() {
   return (
     <div className="bg-gray-100 flex items-center justify-center">
       <div className="min-h-screen bg-gray-100 pb-20 w-[414px]">
-        {/* Header */}
-        <div className="fixed w-full p-auto max-w-[414px]">
-          <div className="top-0 left-0 w-full flex items-center justify-between bg-[#29005E] text-white px-4 py-3 shadow z-50">
+        {/* Header + Tabs fixed */}
+        <div className="fixed w-full max-w-[414px] top-0 left-0 z-50">
+          {/* Header */}
+          <div className="flex items-center justify-between bg-[#29005E] text-white px-4 py-3 shadow">
             <div className="flex items-center gap-2">
               <button onClick={() => router.push("/menu")}>
                 <svg
@@ -53,30 +54,30 @@ export default function DataPemeriksaan() {
             </div>
             <img src="/img/assets/logo.png" alt="logo" className="w-5" />
           </div>
-        </div>
 
-        {/* Tabs */}
-        <div className="flex pt-16">
-          <button
-            className={`flex-1 py-3 text-center font-semibold ${
-              activeTab === "belum"
-                ? "text-yellow-500 border-b-2 border-yellow-500"
-                : "text-gray-400"
-            }`}
-            onClick={() => setActiveTab("belum")}
-          >
-            Belum Selesai
-          </button>
-          <button
-            className={`flex-1 py-3 text-center font-semibold ${
-              activeTab === "selesai"
-                ? "text-yellow-500 border-b-2 border-yellow-500"
-                : "text-gray-400"
-            }`}
-            onClick={() => setActiveTab("selesai")}
-          >
-            Selesai
-          </button>
+          {/* Tabs */}
+          <div className="flex bg-white">
+            <button
+              className={`flex-1 py-3 text-center font-semibold ${
+                activeTab === "belum"
+                  ? "text-yellow-500 border-b-2 border-yellow-500"
+                  : "text-gray-400"
+              }`}
+              onClick={() => setActiveTab("belum")}
+            >
+              Belum Selesai
+            </button>
+            <button
+              className={`flex-1 py-3 text-center font-semibold ${
+                activeTab === "selesai"
+                  ? "text-yellow-500 border-b-2 border-yellow-500"
+                  : "text-gray-400"
+              }`}
+              onClick={() => setActiveTab("selesai")}
+            >
+              Selesai
+            </button>
+          </div>
         </div>
 
         {/* Content */}
