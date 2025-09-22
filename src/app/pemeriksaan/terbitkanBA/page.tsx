@@ -25,11 +25,11 @@ export default function PreviewBeritaAcara() {
         </div>
 
         {/* Isi berupa gambar penuh */}
-        <div className="pt-16">
+        <div className="pt-16 px-2">
           <img
             src="/img/assets/previewBeritaAcara.png"
             alt="Preview Berita Acara"
-            className="w-full rounded-lg shadow"
+            className="w-full shadow"
           />
         </div>
 
