@@ -33,42 +33,63 @@ export default function TerbitkanBeritaAcara() {
   const semuaTerisi =
     signatures.penguji && signatures.pengemudi && signatures.petugas;
 
+  // --- LOAD dari localStorage saat mount ---
+  useEffect(() => {
+    const savedData = localStorage.getItem("beritaAcara");
+    if (savedData) {
+      const parsed = JSON.parse(savedData);
+      setPengemudi(parsed.pengemudi || "");
+      setPetugas(parsed.petugas || "");
+      setSignatures(parsed.signatures || {});
+    }
+  }, []);
+
+  // --- SIMPAN ke localStorage setiap ada perubahan ---
+  useEffect(() => {
+    localStorage.setItem(
+      "beritaAcara",
+      JSON.stringify({
+        pengemudi,
+        petugas,
+        signatures,
+      })
+    );
+  }, [pengemudi, petugas, signatures]);
+
   const handleClear = () => {
     sigCanvas.current?.clear();
   };
 
   const handleSave = () => {
-  if (sigCanvas.current?.isEmpty()) {
-    alert("Tanda tangan belum diisi");
-    return;
-  }
+    if (sigCanvas.current?.isEmpty()) {
+      alert("Tanda tangan belum diisi");
+      return;
+    }
 
-  let dataUrl: string | undefined;
+    let dataUrl: string | undefined;
 
-  try {
-    dataUrl = sigCanvas.current
-      ?.getTrimmedCanvas()
-      .toDataURL("image/png");
-  } catch (err) {
-    console.warn("getTrimmedCanvas gagal, fallback ke getCanvas()", err);
-    dataUrl = sigCanvas.current
-      ?.getCanvas()
-      .toDataURL("image/png");
-  }
+    try {
+      dataUrl = sigCanvas.current
+        ?.getTrimmedCanvas()
+        .toDataURL("image/png");
+    } catch (err) {
+      console.warn("getTrimmedCanvas gagal, fallback ke getCanvas()", err);
+      dataUrl = sigCanvas.current?.getCanvas().toDataURL("image/png");
+    }
 
-  if (openSignature && dataUrl) {
-    setSignatures((prev) => ({
-      ...prev,
-      [openSignature]: dataUrl,
-    }));
-  }
-  setOpenSignature(null);
-};
+    if (openSignature && dataUrl) {
+      setSignatures((prev) => ({
+        ...prev,
+        [openSignature]: dataUrl,
+      }));
+    }
+    setOpenSignature(null);
+  };
 
-useEffect(() => {
+  useEffect(() => {
     const updateSize = () => {
-      const width = window.innerWidth * 0.9; // 90% dari layar
-      const height = Math.round(width * 0.6); // tinggi 60% dari lebar
+      const width = window.innerWidth * 0.9;
+      const height = Math.round(width * 0.6);
       setCanvasSize({ width, height });
     };
 
@@ -77,14 +98,12 @@ useEffect(() => {
     return () => window.removeEventListener("resize", updateSize);
   }, []);
 
-  // fungsi hapus signature (buat sekali saja di atas)
-    const handleRemoveSignature = (role: keyof typeof signatures) => {
-      setSignatures((prev) => ({
-        ...prev,
-        [role]: null,
-      }));
-    };
-
+  const handleRemoveSignature = (role: keyof typeof signatures) => {
+    setSignatures((prev) => ({
+      ...prev,
+      [role]: null,
+    }));
+  };
 
   return (
     <div className="bg-gray-100 flex justify-center">
@@ -199,7 +218,6 @@ useEffect(() => {
                   <span className="text-sm text-gray-700">Tanda Tangan</span>
                 </div>
               )}
-
             </div>
           </div>
 
@@ -278,39 +296,37 @@ useEffect(() => {
               className="w-full max-w-md bg-white rounded-t-2xl p-4 transform transition-transform duration-300"
             >
               <button
-              className="w-full text-left py-3 flex items-center gap-3 text-black"
-              onClick={() => {
-                // klik otomatis input file
-                document.getElementById("fileInput-" + openMenu)?.click();
-              }}
-            >
-              <ArrowUpTrayIcon className="w-6 h-6 text-black" />
-              Unggah Tanda Tangan
-            </button>
+                className="w-full text-left py-3 flex items-center gap-3 text-black"
+                onClick={() => {
+                  document.getElementById("fileInput-" + openMenu)?.click();
+                }}
+              >
+                <ArrowUpTrayIcon className="w-6 h-6 text-black" />
+                Unggah Tanda Tangan
+              </button>
 
-            {/* Hidden input file */} 
-            <input
-              id={"fileInput-" + openMenu}
-              type="file"
-              accept="image/*"
-              className="hidden"
-              onChange={(e) => {
-                const file = e.target.files?.[0];
-                if (file) {
-                  const reader = new FileReader();
-                  reader.onloadend = () => {
-                    if (reader.result && openMenu) {
-                      setSignatures((prev) => ({
-                        ...prev,
-                        [openMenu]: reader.result as string,
-                      }));
-                    }
-                  };
-                  reader.readAsDataURL(file);
-                }
-                setOpenMenu(null);
-              }}
-            />
+              <input
+                id={"fileInput-" + openMenu}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    const reader = new FileReader();
+                    reader.onloadend = () => {
+                      if (reader.result && openMenu) {
+                        setSignatures((prev) => ({
+                          ...prev,
+                          [openMenu]: reader.result as string,
+                        }));
+                      }
+                    };
+                    reader.readAsDataURL(file);
+                  }
+                  setOpenMenu(null);
+                }}
+              />
 
               <hr />
               <button
@@ -341,22 +357,22 @@ useEffect(() => {
                 </button>
               </div>
 
-               {/* Canvas */}
-                <div className="bg-white p-2">
-                  {canvasSize.width > 0 && (
-                    <SignatureCanvas
-                      ref={sigCanvas}
-                      penColor="black"
-                      canvasProps={{
-                        width: canvasSize.width,
-                        height: canvasSize.height,
-                        className:
-                          "border border-gray-300 rounded-md w-full bg-white",
-                        willReadFrequently: true,
-                      } as any}
-                    />
-                  )}
-                </div>
+              {/* Canvas */}
+              <div className="bg-white p-2">
+                {canvasSize.width > 0 && (
+                  <SignatureCanvas
+                    ref={sigCanvas}
+                    penColor="black"
+                    canvasProps={{
+                      width: canvasSize.width,
+                      height: canvasSize.height,
+                      className:
+                        "border border-gray-300 rounded-md w-full bg-white",
+                      willReadFrequently: true,
+                    } as any}
+                  />
+                )}
+              </div>
 
               {/* Tombol aksi */}
               <div className="flex justify-between gap-3 p-4">
@@ -373,10 +389,9 @@ useEffect(() => {
                 >
                   SIMPAN
                 </button>
-
               </div>
             </div>
-          </div>          
+          </div>
         )}
       </div>
     </div>
