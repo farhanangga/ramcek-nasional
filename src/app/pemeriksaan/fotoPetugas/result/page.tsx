@@ -43,7 +43,7 @@ export default function FotoPetugas() {
         </div>
 
         {/* Isi */}
-        <div className="pt-20 px-6 text-center">
+        <div className="pt-15 px-6 text-center">
           <h2 className="font-semibold text-lg mb-4 text-black">Foto Petugas</h2>
           {foto ? (
             <img
