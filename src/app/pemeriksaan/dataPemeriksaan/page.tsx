@@ -80,10 +80,11 @@ export default function DataPemeriksaan() {
           {/* Tanggal */}
           <label className="block mb-2 font-medium text-black">Tanggal Pemeriksaan</label>
           <input
+            disabled
             type="date"
             value={tanggal}
             onChange={(e) => setTanggal(e.target.value)}
-            className="w-full border rounded-md p-3 mb-4 text-black bg-white border-[#E0E0E0] focus:outline-none focus:border-[#29005E]"
+            className="w-full border rounded-md p-3 mb-4 text-black bg-[#E0E0E0] border-[#E0E0E0] focus:outline-none focus:border-[#29005E]"
           />
 
           {/* Lokasi */}
@@ -121,7 +122,7 @@ export default function DataPemeriksaan() {
                 value={latitude}
                 onChange={(e) => setLatitude(e.target.value)}
                 placeholder="Masukkan Latitude"
-                className="w-full border rounded-md p-3 text-black cursor-not-allowed bg-white border-[#E0E0E0] focus:outline-none focus:border-[#29005E]"
+                className="w-full border rounded-md p-3 text-black cursor-not-allowed bg-[#E0E0E0] border-[#E0E0E0] focus:outline-none focus:border-[#29005E]"
               />
             </div>
             <div className="flex-1">
@@ -132,7 +133,7 @@ export default function DataPemeriksaan() {
                 value={longitude}
                 onChange={(e) => setLongitude(e.target.value)}
                 placeholder="Masukkan Longitude"
-                className="w-full border rounded-md p-3 text-black cursor-not-allowed bg-white border-[#E0E0E0] focus:outline-none focus:border-[#29005E]"
+                className="w-full border rounded-md p-3 text-black cursor-not-allowed bg-[#E0E0E0] border-[#E0E0E0] focus:outline-none focus:border-[#29005E]"
               />
             </div>
           </div>
