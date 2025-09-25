@@ -120,7 +120,7 @@ export default function DataPemeriksaan() {
                 type="text"
                 value={latitude}
                 onChange={(e) => setLatitude(e.target.value)}
-                placeholder="Masukkan Latitude"
+                placeholder=".........."
                 className="w-full border rounded-md p-3 text-black cursor-not-allowed bg-white border-[#E0E0E0] focus:outline-none focus:border-[#29005E]"
               />
             </div>
@@ -131,7 +131,7 @@ export default function DataPemeriksaan() {
                 type="text"
                 value={longitude}
                 onChange={(e) => setLongitude(e.target.value)}
-                placeholder="Masukkan Longitude"
+                placeholder=".........."
                 className="w-full border rounded-md p-3 text-black cursor-not-allowed bg-white border-[#E0E0E0] focus:outline-none focus:border-[#29005E]"
               />
             </div>
