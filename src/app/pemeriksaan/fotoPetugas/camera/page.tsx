@@ -94,6 +94,11 @@ export default function KameraPage() {
         {/* Tombol ambil gambar */}
         <div className="fixed bottom-0 left-0 w-full shadow-lg">
           <div className="bg-black w-full h-[25vh] mx-auto flex flex-col items-center justify-center">
+            
+            {/* Teks di atas tombol */}
+            <p className="text-white mb-4">
+            Pastikan Petugas dan Kendaraan terlihat jelas
+            </p>
             {/* Tombol */}
             <div className="rounded-full border-2 border-white h-19 w-19">
               <button
