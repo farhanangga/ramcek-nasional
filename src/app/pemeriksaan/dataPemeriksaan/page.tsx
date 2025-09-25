@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState , useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export default function DataPemeriksaan() {
@@ -11,6 +11,12 @@ export default function DataPemeriksaan() {
 
   const semuaTerisi = tanggal && lokasi && latitude && longitude;
   const router = useRouter();
+
+  useEffect(() => {
+    const today = new Date();
+    const formatted = today.toISOString().split("T")[0]; // hasil: YYYY-MM-DD
+    setTanggal(formatted);
+  }, []);
 
   // Fungsi ambil lokasi otomatis
   const handleGunakanLokasi = () => {
@@ -147,7 +153,7 @@ export default function DataPemeriksaan() {
             <button
               type="button"
               disabled={!semuaTerisi}
-              onClick={() => router.push("/pemeriksaan/dataPemeriksaan-1")}
+              onClick={() => router.push("/pemeriksaan/fotoPetugas")}
               className={`w-full py-3 font-bold text-white rounded-md transition
               ${semuaTerisi ? "bg-[#29005E]" : "bg-gray-300 cursor-not-allowed"}`}
             >

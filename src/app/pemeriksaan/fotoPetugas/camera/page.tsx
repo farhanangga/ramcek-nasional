@@ -60,7 +60,7 @@ export default function KameraPage() {
           <div className="top-0 left-0 w-full flex items-center justify-between bg-black text-white px-4 py-3 shadow z-50">
             <div className="flex items-center gap-2">
               {/* Tombol back */}
-              <button onClick={() => router.push("pemeriksaan/fotoKendaraan/preview")}>
+              <button onClick={() => router.push("pemeriksaan/dataPemeriksaan")}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -76,7 +76,7 @@ export default function KameraPage() {
                   />
                 </svg>
               </button>
-              <span className="font-semibold">Ambil Gambar KIR Kendaraan</span>
+              <span className="font-semibold">Ambil Foto Petugas</span>
             </div>
           </div>
         </div>
@@ -89,16 +89,6 @@ export default function KameraPage() {
             playsInline
             className="w-full h-full object-cover"
           />
-
-          {/* Overlay */}
-          <div className="absolute top-0 left-0 w-full h-full bg-black/10">
-            <div
-              className="absolute top-1/2 left-1/2 w-[400px] h-[200px] 
-                        -translate-x-1/2 -translate-y-1/2 
-                        rounded-md bg-transparent"
-              style={{ boxShadow: "0 0 0 9999px rgba(0, 0, 0, 0.3)" }}
-            />
-          </div>
         </div>
 
         {/* Tombol ambil gambar */}

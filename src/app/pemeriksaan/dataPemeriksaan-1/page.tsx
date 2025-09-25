@@ -37,7 +37,7 @@ export default function DataPemeriksaan() {
         <div className="fixed w-full p-auto max-w-[414px]">
           <div className="top-0 left-0 w-full flex items-center justify-between bg-[#29005E] text-white px-4 py-3 shadow z-50">
             <div className="flex items-center gap-2">
-              <button onClick={() => router.push("/pemeriksaan/dataPemeriksaan")}>
+              <button onClick={() => router.push("/pemeriksaan/fotoPetugas/result")}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                   viewBox="0 0 24 24" strokeWidth={1.5}
                   stroke="currentColor" className="w-4 h-4">
