@@ -91,7 +91,7 @@ export default function KameraPage() {
         </div>
 
         {/* Tombol ambil gambar */}
-        <div className=" bottom-0 left-0 w-full shadow-lg">
+        <div className="fixed bottom-0 left-0 w-full shadow-lg">
           <div className="bg-black w-full h-[25vh] mx-auto flex flex-col items-center justify-center">
             
             {/* Teks di atas tombol */}
