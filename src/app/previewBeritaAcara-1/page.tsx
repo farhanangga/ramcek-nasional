@@ -89,8 +89,8 @@ export default function PreviewBeritaAcara() {
                   {idx > 0 && (
                     <button
                       onClick={() => handleRemoveEmail(idx)}
-                      className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center 
-                                bg-red-200 text-red-700 rounded-full shadow hover:bg-red-400 hover:text-white"
+                      className="ml-2 text-red-500 text-xl font-bold w-8 h-8
+                                bg-red-200 text-red-700 rounded-full hover:bg-red-400 hover:text-white"
                     >
                       −
                     </button>
