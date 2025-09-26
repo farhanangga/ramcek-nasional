@@ -6,6 +6,16 @@ export default function KameraPage() {
   const router = useRouter();
   const videoRef = useRef<HTMLVideoElement>(null);
 
+useEffect(() => {
+    if (!sessionStorage.getItem("refreshed-kendaraan")) {
+      sessionStorage.setItem("refreshed-kendaraan", "true");
+      window.location.reload();
+    } else {
+      // setelah refresh hapus flag
+      sessionStorage.removeItem("refreshed-kendaraan");
+    }
+  }, []);
+
   useEffect(() => {
     if (!videoRef.current) return;
 

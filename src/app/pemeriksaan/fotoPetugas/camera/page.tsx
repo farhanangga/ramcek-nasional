@@ -6,6 +6,17 @@ export default function KameraPage() {
   const router = useRouter();
   const videoRef = useRef<HTMLVideoElement>(null);
 
+  // 🔄 Refresh otomatis saat pertama kali masuk halaman
+  useEffect(() => {
+    if (!sessionStorage.getItem("refreshed")) {
+      sessionStorage.setItem("refreshed", "true");
+      window.location.reload();
+    } else {
+      // setelah refresh hapus flag biar bisa dipakai lagi nanti
+      sessionStorage.removeItem("refreshed");
+    }
+  }, []);
+
   useEffect(() => {
     if (!videoRef.current) return;
 
