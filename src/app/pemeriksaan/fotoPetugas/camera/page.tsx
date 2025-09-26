@@ -52,7 +52,7 @@ export default function KameraPage() {
   };
 
   return (
-    <div className="bg-black flex items-center justify-center">
+    <div className="fixed bg-black flex items-center justify-center">
       <div className="min-h-screen bg-black pb-20 w-[414px]">
         {/* Header fixed */}
         <div className="fixed w-full p-auto max-w-[414px]">
