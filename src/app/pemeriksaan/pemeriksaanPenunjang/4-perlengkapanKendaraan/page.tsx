@@ -56,7 +56,8 @@ const questions = [
 export default function SistemPengeremanPage() {
   const router = useRouter();
   const [answers, setAnswers] = useState<Record<string, Answer>>({});
-
+  const semuaTerisi = questions.every((q) => answers[q.id]?.status);
+  const [showModal, setShowModal] = useState(false); // 🔥 state untuk modal
   // Load jawaban lama + merge foto/video baru
   useEffect(() => {
     const savedAnswers = localStorage.getItem("sistemPengeremanAnswers");
@@ -131,8 +132,19 @@ export default function SistemPengeremanPage() {
     }));
   };
 
-  const semuaTerisi = questions.every((q) => answers[q.id]?.status);
-  const [showModal, setShowModal] = useState(false); // 🔥 state untuk modal
+
+
+   useEffect(() => {
+    if (showModal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto"; // reset saat unmount
+    };
+  }, [showModal]);
 
   return (
     <div className="bg-gray-100 flex justify-center">

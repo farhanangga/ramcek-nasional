@@ -25,6 +25,7 @@ export default function TerbitkanBeritaAcara() {
 
   const sigCanvas = useRef<SignatureCanvas>(null);
   const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 });
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [openMenu, setOpenMenu] = useState<null | keyof typeof signatures>(null);
   const [openSignature, setOpenSignature] = useState<
     null | keyof typeof signatures
@@ -117,9 +118,19 @@ export default function TerbitkanBeritaAcara() {
     }
   }
 }, [canvasSize]);
+    // Lock scroll body saat ada modal terbuka
+  useEffect(() => {
+    if (showSuccessModal || openMenu || openSignature) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    return () => {
+      document.body.style.overflow = "auto"; // reset saat unmount
+    };
+  }, [showSuccessModal, openMenu, openSignature]);
 
 
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
   return (
     <div className="bg-gray-100 flex justify-center">
       <div className="min-h-screen w-[414px] bg-gray-100 pb-24 relative">

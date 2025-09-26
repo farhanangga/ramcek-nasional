@@ -120,6 +120,18 @@ export default function PemeriksaanAdministrasi() {
       }
     });
   }, []);
+  
+   useEffect(() => {
+    if (showModal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto"; // reset saat unmount
+    };
+  }, [showModal]);
 
   const semuaTerisi = questions.every((q) => answers[q.id]);
 

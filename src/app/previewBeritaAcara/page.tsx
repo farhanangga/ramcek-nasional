@@ -1,10 +1,23 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function PreviewBeritaAcara() {
   const router = useRouter();
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+
+// 🚫 Disable scroll ketika modal muncul
+  useEffect(() => {
+    if (showSuccessModal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    return () => {
+      document.body.style.overflow = "auto"; // reset saat unmount
+    };
+  }, [showSuccessModal]);
+
   return (
     <div className="bg-gray-100 flex justify-center">
       <div className="min-h-screen w-[414px] bg-gray-100 pb-24">
