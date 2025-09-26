@@ -9,7 +9,8 @@ export default function KameraPage() {
   useEffect(() => {
     if (!videoRef.current) return;
 
-    const facingMode = { facingMode: "user" };
+    const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+    const facingMode = isMobile ? { facingMode: "user" } : { facingMode: "user" };
 
     navigator.mediaDevices
       .getUserMedia({ video: facingMode })
