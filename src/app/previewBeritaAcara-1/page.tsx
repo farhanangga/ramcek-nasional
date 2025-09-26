@@ -66,7 +66,7 @@ export default function PreviewBeritaAcara() {
         {/* Modal Kirim Email */}
         {showEmailModal && (
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-2xl p-6 w-[90%] max-w-md animate-fadeIn">
+            <div className="bg-white rounded-2xl p-6 w-[90%] max-w-md max-h-[80vh] overflow-y-auto animate-fadeIn">
               {/* Icon */}
               <div className="flex justify-center mb-4">
                 <svg xmlns="http://www.w3.org/2000/svg" className="w-12 h-12 text-[#29005E]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -84,12 +84,13 @@ export default function PreviewBeritaAcara() {
                     value={email}
                     onChange={(e) => handleChangeEmail(idx, e.target.value)}
                     placeholder="Masukkan email"
-                    className="flex-1 border rounded-md px-3 py-2 text-sm text-black"
+                    className="flex-1 border border-[#E0E0E0] focus:outline-none focus:border-[#29005E] rounded-md px-3 py-2 text-sm text-black"
                   />
                   {idx > 0 && (
                     <button
                       onClick={() => handleRemoveEmail(idx)}
-                      className="ml-2 text-red-500 text-xl font-bold"
+                      className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center 
+                                bg-red-200 text-red-700 rounded-full shadow hover:bg-red-400 hover:text-white"
                     >
                       −
                     </button>
