@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function PreviewBeritaAcara() {
   const router = useRouter();
@@ -26,6 +26,15 @@ export default function PreviewBeritaAcara() {
     updated.splice(index, 1);
     setEmails(updated);
   };
+
+useEffect(() => {
+  if (showEmailModal || showSuccessModal) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "auto";
+  }
+}, [showEmailModal, showSuccessModal]);
+
 
   return (
     <div className="bg-gray-100 flex justify-center">
